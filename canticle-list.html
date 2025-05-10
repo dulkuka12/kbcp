@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>독서후 송가 목록</title>
+  <link rel="stylesheet" href="style.css">
+  
+<style>
+ /* 송가목록 그리드*/
+ .grid.single-column {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   margin: 20px;
+   max-height: 80vh;
+   overflow-y: auto;
+   padding-bottom: 100px; /* 하단 여백 추가 */
+ }
+
+.grid.single-column > button {
+  font-size: 1em;
+  padding: 16px 12px;
+  min-height: 60px;
+  width: 100%;              /* 버튼을 전체 너비로 설정 */
+  box-sizing: border-box;   /* 여백까지 포함해서 폭 계산 */
+}
+
+ </style>
+ 
+</head>
+<body>
+<!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon">☰</div>
+    <h1>독서후 송가목록</h1>
+  </div>
+ 
+  <div class="grid single-column" id="buttonGrid"></div>
+  <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='morning-prayer.html#canticle-button'">아침기도</button>
+  <button class="sub-button fixed-bottom-left2" onclick="location.href='index.html#guide-button'">송가안내</button>
+  <script src="main.js" defer></script>
+
+  <script>
+
+   const titles = [
+    "1) 모세송가",
+    "2) 하느님 찬미(테데움)",
+    "3) 창조송가",
+    "4) 이사야 첫째송가",
+    "5) 이사야 둘째송가",
+    "6) 이사야 셋째 송가",
+    "7) 참회송가",
+    "8) 어린양송가",
+    "9) 구원송가",
+    "10) 찬양송가",
+    "11) 성모 마리아송가",
+    "12) 즈가리야 송가",
+    "13) 시므온송가" 
+   ];
+
+  const grid = document.getElementById('buttonGrid');
+
+  for (let i = 0; i < titles.length; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = titles[i];
+    btn.onclick = function() {
+      location.href = 'canticle-full.html#canticle' + (i + 1);
+    };
+    grid.appendChild(btn);
+  }
+</script>
+
+</body>
+</html>

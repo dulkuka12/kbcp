@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>성공회 사목예식서</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4CAF50">
+</head>
+<body>
+
+  <!-- 상단 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <h1>성공회 사목예식서</h1>
+  </div>
+
+  <!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
+  <div class="menu-container">
+    <a href="daily-office.html" class="menu-button">1) 성무일과</a>
+    <div class="menu-button">2) 감사성찬례</div>
+    <div class="menu-button">3) 성사예식</div>
+    <div class="menu-button">4) 상장예식</div>
+    <div class="menu-button">5) 축복예식</div>
+    <div class="menu-button">6) 본문보기</div>
+    <div class="menu-button">7) 월별축일표</div>
+    <div class="menu-button">8) 주요기도문</div>
+    <div class="menu-button">9) 사용안내</div>
+  </div>
+
+  <!-- JavaScript로 사이드 메뉴 제어 및 PWA 등록 -->
+  <script>
+    function toggleMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      sideMenu.classList.toggle("menu-open");
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker 등록됨"))
+        .catch(err => console.error("Service Worker 등록 실패:", err));
+    }
+  </script>
+</body>
+</html>

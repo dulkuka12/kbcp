@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시편 목록</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+   /* 시편목록 버튼*/
+  .grid {
+    display: grid;
+//    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr); /*4칸 → 3칸 */
+    gap: 10px;
+    margin: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 100px; /* 하단 여백 추가 */
+  }
+
+  .grid > button {
+    font-size: 1em;      /* 글씨 크기 키움 */
+    padding: 5px 10px;   /* 버튼 크기 증가 (위아래/좌우) */
+    min-height: 40px;    /* 버튼 최소 높이 증가 */
+    line-height: 1em;    /* 줄 간격(텍스트가 두 줄일 경우 여백) */
+  }
+     
+</style>
+
+</head>
+
+<body>
+  
+<!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon">☰</div>
+    <h1>30일 아침 시편 목록</h1>
+  </div>
+
+
+  <!--<div class="big-title">30일 아침 시편 목록</div>-->
+   <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='morning-prayer.html#psalm-button'">아침기도</button>
+  <button class="sub-button fixed-bottom-left2" onclick="location.href='index.html#psalm-button'">시편안내</button>
+
+  <script src="main.js" defer></script>
+ 
+
+<div class="grid" id="thirtyGrid"></div>
+
+<script>
+
+  const grid = document.getElementById('thirtyGrid');
+
+  for (let day = 1; day <= 30; day++) {
+    const btn = document.createElement('button');
+    btn.textContent = `${day}일 아침`;
+
+    const targetId = 'm' + day;
+
+    btn.onclick = function () {
+      location.href = 'psalm-full.html?morningId=' + targetId;
+    };
+
+    grid.appendChild(btn);
+  }
+
+  // 스크롤이 부드럽게 움직이기
+  document.addEventListener("DOMContentLoaded", () => {
+    const hash = window.location.hash.substring(1);
+    const target = document.getElementById(hash);
+
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+</script>
+
+
+</body>
+
+
+</html>

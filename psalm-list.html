@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시편 목록</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+   /* 시편목록 버튼*/
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); 4칸 → 3칸 */
+    gap: 10px;
+    margin: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 100px; /* 하단 여백 추가 */
+  }
+
+  .grid > button {
+    font-size: 1em;      /* 글씨 크기 키움 */
+    padding: 5px 10px;   /* 버튼 크기 증가 (위아래/좌우) */
+    min-height: 40px;    /* 버튼 최소 높이 증가 */
+    line-height: 1em;    /* 줄 간격(텍스트가 두 줄일 경우 여백) */
+  }
+     
+</style>
+
+</head>
+
+<body>
+ 
+<!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon">☰</div>
+    <h1>시편 목록</h1>
+  </div>
+
+ <!--<div class="big-title">시편 목록</div>-->
+
+  <button class="fixed-top-right" onclick="location.href='psalm-list2.html#psalm-button'">아침시편</button>
+  <div class="grid" id="buttonGrid"></div>
+  <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='morning-prayer.html#psalm-button'">아침기도</button>
+  <button class="sub-button fixed-bottom-left2" onclick="location.href='index.html#psalm-button'">시편안내</button>
+
+  <script src="main.js" defer></script>
+  
+<script>
+
+const grid = document.getElementById('buttonGrid');
+function createButtonGrid({ containerId, buttons, textFormatter, urlPrefix }) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+  buttons.forEach((btnInfo) => {
+    const btn = document.createElement('button');
+    btn.textContent = textFormatter(btnInfo)+'편';
+    btn.onclick = function () {
+      location.href = urlPrefix + btnInfo.id;
+    };
+    grid.appendChild(btn);
+  });
+}
+
+// 시편 분절 정보
+const splitPsalms = {
+  18: 2,
+  37: 2,
+  89: 2,
+  105: 2,
+  106: 2,
+  107: 2,
+  119: 22
+};
+
+const psalmButtons = [];
+
+// 1편부터 150편까지 순회
+for (let i = 1; i <= 150; i++) {
+  if (splitPsalms[i]) {
+    for (let j = 1; j <= splitPsalms[i]; j++) {
+      psalmButtons.push({
+        id: `${i}-${j}`,
+        label: `${i} (${j})`,
+        sortKey: i + j / 10 // 정렬을 위해 82.1, 82.2 등
+      });
+    }
+  } else {
+    psalmButtons.push({
+      id: i.toString(),
+      label: `${i}`,
+      sortKey: i
+    });
+  }
+}
+
+// 정렬: sortKey 기준으로 오름차순
+psalmButtons.sort((a, b) => a.sortKey - b.sortKey);
+
+// 버튼 생성
+createButtonGrid({
+  containerId: 'buttonGrid',
+  buttons: psalmButtons,
+  textFormatter: (item) => item.label,
+  urlPrefix: 'psalm-full.html#psalm'
+});
+
+
+
+
+
+
+</script>
+
+
+</body>
+
+
+</html>

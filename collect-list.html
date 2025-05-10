@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>본기도 목록</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+<style>
+
+   /* 시편목록 버튼*/
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); 4칸 → 3칸 */
+    gap: 10px;
+    margin: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 100px; /* 하단 여백 추가 */
+  }
+
+  .grid > button {
+    font-size: 1em;      /* 글씨 크기 키움 */
+    padding: 5px 10px;   /* 버튼 크기 증가 (위아래/좌우) */
+    min-height: 40px;    /* 버튼 최소 높이 증가 */
+    line-height: 1em;    /* 줄 간격(텍스트가 두 줄일 경우 여백) */
+  }
+
+  
+</style>
+
+</head>
+<body>
+<!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon">☰</div>
+    <h1>절기 및 축일 본기도 목록</h1>
+  </div>
+
+  <div class="grid" id="buttonGrid"></div>
+  <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='morning-prayer.html#collect-button'">아침기도</button>
+  <script src="main.js" defer></script>
+
+  
+  <script>
+
+    const grid = document.getElementById('buttonGrid');
+    for (let i = 1; i <= 80; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i + '번';
+      btn.onclick = function() {
+        location.href = 'collect-full.html#collect' + i;
+      };
+      grid.appendChild(btn);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="stylesheet" href="style.css">
+  <title>성공회 사목예식서</title>
+
+</head>
+<body>
+
+  <!-- 사이드 메뉴 -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="#">메뉴 1</a>
+    <a href="#">메뉴 2</a>
+    <a href="#">메뉴 3</a>
+    <a href="#">설정</a>
+    <a href="#">도움말</a>
+  </div>
+
+  <!-- 상단 네비게이션 바 -->
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <h1>성무일과</h1>
+  </div>
+
+  <!-- 메인 콘텐츠 -->
+  <div class="menu-container">
+    <div class="menu-button" onclick="location.href='morning-prayer.html'">1) 아침기도</div>
+    <div class="menu-button">2) 낮기도</div>
+    <div class="menu-button">3) 저녁기도</div>
+    <div class="menu-button">4) 밤기도</div>
+    <div class="menu-button">5) 간략한 예배</div>
+  </div>
+
+  <button class="sub-button fixed-bottom-right" onclick="location.href='index.html'">시작메뉴</button>
+ 
+ <!-- JavaScript로 사이드 메뉴 제어 -->
+  <script>
+    function toggleMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      sideMenu.classList.toggle("menu-open");
+    }
+  </script>
+</body>
+</html>
