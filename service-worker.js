@@ -1,6 +1,6 @@
 // service-worker.js
 
-const CACHE_NAME = "sung-prayer-v1";
+const CACHE_NAME = "kbcp-v1";
 const CACHE_FILES = [
   "/",
   "/index.html",
