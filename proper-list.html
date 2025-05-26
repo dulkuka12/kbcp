@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script src="main.js" defer></script> 
+  <title>성찬 특정문 목록</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+<style>
+
+   
+  
+</style>
+
+</head>
+<body>
+
+  <div class="grid2" id="buttonGrid"></div>
+  <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='index.html'">시작메뉴</button>
+  <script src="main.js" defer></script>
+
+  
+  <script>
+
+    const grid = document.getElementById('buttonGrid');
+    for (let i = 1; i <= 24; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i + '번';
+      btn.onclick = function() {
+        location.href = 'proper-text.html#section' + i;
+      };
+      grid.appendChild(btn);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <title>감사성찬례 1형식</title>
+</head>
+
+<body>
+ <c id="proper-button"></c> 
+   
+ <button class="common-button small-gap2" onclick="rememberPosition('proper', 'proper-button'); location.href='proper-list.html';">특정문 검색</button></br>
+ <button class="common-button2" id="bookmarkProper1" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(1);">책갈피A</button>
+ <button class="common-button2" id="bookmarkProper2" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(2);">책갈피B</button>
+ <button class="common-button2" id="bookmarkProper3" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(3);">책갈피C</button>
+ <button class="common-button2" id="bookmarkProper4" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(4);">책갈피D</button>
+ <button class="common-button2" id="bookmarkProper5" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(5);">책갈피E</button>
+ <button class="common-button2" id="bookmarkProper6" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(6);">책갈피F</button>
+ <button class="common-button2" id="bookmarkProper7" onclick="rememberPosition('proper', 'proper-button'); goToProperBookmark(7);">책갈피G</button>
+
+  
+<!--<button class="common-button2" onclick="goToProperBookmark(1)" id="bookmarkProper1">책갈피 A</button>-->
+<!--<button class="common-button2" onclick="goToProperBookmark(2)" id="bookmarkProper2">책갈피 B</button>-->
+
+  <button class="sub-button fixed-bottom-right" onclick="location.href='index.html'">시작메뉴</button>
+  <script src="main.js" defer></script>
+
+  <script>
+
+function goToProperBookmark(index) {
+  const data = localStorage.getItem(`rememberedProper${index}`);
+  if (data) {
+    const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
+    if (path && targetId) {
+      // 쿼리로 full ID 전달
+      location.href = `${path}?proper=${targetId}#${targetId}`;
+    }
+  } else {
+    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
+  }
+}
+
+
+function updateProperBookmarkLabels() {
+  for (let i = 1; i <= 7; i++) {
+    const btn = document.getElementById(`bookmarkProper${i}`);
+    const data = localStorage.getItem(`rememberedProper${i}`);
+    if (btn && data) {
+      try {
+        const { label } = JSON.parse(data);
+        btn.textContent = label || `책갈피 ${String.fromCharCode(64 + i)}`;
+      } catch (e) {
+        btn.textContent = `책갈피 ${String.fromCharCode(64 + i)}`;
+      }
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+
+
+ </script>
+</body>
+</html>
