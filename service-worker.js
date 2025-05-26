@@ -1,13 +1,12 @@
 // service-worker.js
 
-const CACHE_NAME = "kbcp-v1";
+const CACHE_NAME = "kbcp";
 const CACHE_FILES = [
   "/",
   "/index.html",
   "/style.css",
   "/icon-192.png",
-  "/icon-512.png",
-  "/daily-office.html"
+  "/icon-512.png"
 ];
 
 // 설치 (Install) 이벤트

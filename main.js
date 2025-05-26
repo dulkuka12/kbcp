@@ -299,12 +299,10 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
-    themeColor = '#9e150e';
-  } else {themeColor = '#183b5c';
-    
-  }
+    themeColor = '#9e150e'; 
+  } 
 
-
+  
   // 상단바 색상 적용
   if (navbar) {
     navbar.style.backgroundColor = themeColor;

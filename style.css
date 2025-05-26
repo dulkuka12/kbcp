@@ -124,12 +124,26 @@ body {
   margin-top: 15px;
   scroll-margin-top: 86px; /* 상단바로 가리지 않게 */
 }
+.subtitle2 {
+  color: #d31717; /* 글자색 */ 
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 8px;
+  scroll-margin-top: 86px; /* 상단바로 가리지 않게 */
+}
+.subtitle3 {
+  color: navy; /* 글자색 */ 
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 8px;
+  scroll-margin-top: 86px; /* 상단바로 가리지 않게 */
+}
 .rubric {
   color: red;
   font-size: 1.1em;
   margin-top: 10px;
 }
-rubric2 {
+.rubric2 {
   color: blue;
   font-size: 1.1em;
   margin-top: 10px;
@@ -139,10 +153,14 @@ rubric2 {
   font-size: 0.9em;
   margin-top: 8px;
 }
- .body-text {
+
+.body-text {
+  color: black;
   font-size: 1.2em;
   margin-top: 8px;
 }
+
+
 .small-gap {
   margin-bottom: 18px; /* 반줄 정도 띄우기 */
 }
@@ -209,7 +227,7 @@ rubric2 {
   cursor: pointer;
   /* 여기에 위치 관련 속성은 넣지 않음 좌우 두개 따로 표기위해*/
 }
- /* sub-botton 시작,아침기도로 가기*/
+ /*시작메뉴*/
 .fixed-bottom-right {
   position: fixed;
   bottom: 20px;
@@ -219,16 +237,18 @@ rubric2 {
 .fixed-bottom-right:hover {
   background-color: #2f6b1e; /* 마우스 올리면 색 변화 */
 }
- /* sub-botton 예식문 돌아가기*/
-.fixed-bottom-right-2 {
+ /* 돌아가기*/
+.fixed-bottom-right2 {
   position: fixed;
   bottom: 20px;
   right: 20px;
   background-color: #c1620a;
 }
-.fixed-bottom-right-2:hover {
+.fixed-bottom-right2:hover {
   background-color: #9e150e; /* 마우스 올리면 색 변화 */
 }
+
+
 /* 책갈피 버튼*/
 .fixed-bottom-left {
   position: fixed;
@@ -240,40 +260,6 @@ rubric2 {
   background-color:  #5606a7; /* 마우스 올리면 색 변화 */
 }
 
-/* 간구 버튼*/
-.fixed-bottom-left-1 {
-  position: fixed;
-  bottom: 20px;
-  left: 0px;
-  background-color: #8224e3; /* 버튼 색 */
-}
-.fixed-bottom-left:hover {
-  background-color:  #5606a7; /* 마우스 올리면 색 변화 */
-}
-
-.fixed-bottom-left-2 {
-  position: fixed;
-  bottom: 20px; /* 첫 번째 버튼 위로 50px 올림 */
-  left: 90px;
-  background-color: #8224e3;
-}
-
-.fixed-bottom-left-2:hover {
-  background-color: #5606a7;
-}
-
-.fixed-bottom-left-3 {
-  position: fixed;
-  bottom: 20px; /* 두 번째 버튼 위로 50px 올림 */
-  left: 180px;
-  background-color: #8224e3;
-}
-
-.fixed-bottom-left-3:hover {
-  background-color: #5606a7;
-}
-
-/*-------------------------------------------*/
 
 /* 안내버튼*/
 .fixed-bottom-left2 {
@@ -285,6 +271,48 @@ rubric2 {
 .fixed-bottom-left2:hover {
   background-color: #757a79; /* 마우스 올리면 색 변화 */
 }
+
+
+/* 송가,본기도,간구버튼*/
+.fixed-bottom-left-1 {
+  position: fixed;
+  bottom: 120px;
+  left: 0px;
+  background-color: #8224e3; /* 버튼 색 */
+}
+.fixed-bottom-left-1:hover {
+  background-color:  #5606a7; /* 마우스 올리면 색 변화 */
+}
+
+.fixed-bottom-left-2 {
+  position: fixed;
+  bottom: 70px; /* 첫 번째 버튼 위로 50px 올림 */
+  left: 0px;
+  background-color: #8224e3;
+}
+
+.fixed-bottom-left-2:hover {
+  background-color: #5606a7;
+}
+
+.fixed-bottom-left-3 {
+  position: fixed;
+  bottom: 20px; /* 두 번째 버튼 위로 50px 올림 */
+  left: 0px;
+  background-color: #8224e3;
+}
+
+.fixed-bottom-left-3:hover {
+  background-color: #5606a7;
+}
+
+
+
+
+
+/*-------------------------------------------*/
+
+
  /* 앱종료버튼*/
 .fixed-top-right {
   position: fixed;
