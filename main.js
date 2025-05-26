@@ -300,7 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
     themeColor = '#9e150e';
+  } else {themeColor = '#183b5c';
+    
   }
+
 
   // 상단바 색상 적용
   if (navbar) {
