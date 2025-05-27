@@ -115,7 +115,7 @@ function updateBookmarkButton(storageKey, buttonId, defaultText) {
 window.updateBookmarkButton = updateBookmarkButton;
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
   updateBookmarkButton('rememberedLesson', 'bookmarkLessonButton', '책갈피');
   updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피');
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // 특정 위치 저장 (파일 경로와 위치를 함께 저장)
 function rememberPosition(storageKey, elementId) {
   const targetElement = document.getElementById(elementId);
-  
+
   if (targetElement) {
     const positionData = {
       path: window.location.pathname,  // 현재 파일 경로
@@ -206,26 +206,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
- document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const morningId = params.get('morningId');
-    const eveningId = params.get('eveningId');
-    const hash = window.location.hash.substring(1);
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const morningId = params.get('morningId');
+  const eveningId = params.get('eveningId');
+  const hash = window.location.hash.substring(1);
 
-    let target = null;
+  let target = null;
 
-    if (morningId) {
-      target = document.querySelector(`[data-morning-id="${morningId}"]`);
-    } else if (eveningId) {
-      target = document.querySelector(`[data-evening-id="${eveningId}"]`);
-    } else if (hash) {
-      target = document.getElementById(hash);
-    }
-      if (target) {
-      target.scrollIntoView();
-      /* target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 */
-    } 
-  });
+  if (morningId) {
+    target = document.querySelector(`[data-morning-id="${morningId}"]`);
+  } else if (eveningId) {
+    target = document.querySelector(`[data-evening-id="${eveningId}"]`);
+  } else if (hash) {
+    target = document.getElementById(hash);
+  }
+  if (target) {
+    target.scrollIntoView();
+    /* target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 */
+  }
+});
 
 
 // 기억한 위치로 이동하는 함수 (파일 경로 포함)
@@ -243,7 +243,7 @@ function goToPosition(storageKey, elementId) {
         } else {
           // 같은 파일이라면 직접 스크롤
           const targetElement = document.getElementById(elementId);
-          
+
           if (targetElement) {
             window.scrollTo(0, targetElement.offsetTop);
           } else {
@@ -263,22 +263,6 @@ function goToPosition(storageKey, elementId) {
 }
 
 
-/*
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.navbar');
-  const path = window.location.pathname;
-
-  if (path.includes('index')) {
-    navbar.style.backgroundColor = '#2f6b1e';
-  } else if (path.includes('morning-prayer')) {
-    navbar.style.backgroundColor = '#9e150e';
-  } else if (path.includes('text-select')) {
-    navbar.style.backgroundColor = '#9e150e';
-  } else {
-    navbar.style.backgroundColor = '#183b5c'; // 기본 색
-  }
-});
-*/
 
 /* 상단색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
@@ -291,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let themeColor = '#183b5c'; // 기본 색
 
   if (path.includes('index')) {
-    themeColor = '#2f6b1e';
+    themeColor = '#228b22';
   } else if (path.includes('ucharist-form1')) {
     themeColor = '#9e150e';
   } else if (path.includes('morning-prayer')) {
@@ -299,10 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
-    themeColor = '#9e150e'; 
-  } 
+    themeColor = '#9e150e';
+  }
 
-  
+
   // 상단바 색상 적용
   if (navbar) {
     navbar.style.backgroundColor = themeColor;
