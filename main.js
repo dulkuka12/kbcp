@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const path = window.location.pathname;
 
-  let themeColor = '#183b5c'; // 기본 색
+ // let themeColor = '#183b5c'; // 기본 색
 
   if (path.includes('index')) {
     themeColor = '#228b22';
@@ -284,6 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
     themeColor = '#9e150e';
+  } else {themeColor = '#183b5c'
+    
   }
 
 
