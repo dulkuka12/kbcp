@@ -3,6 +3,8 @@
 body {
   padding-top: 86px; /* 상단바 높이 + 패딩 */
   margin: 0;
+  padding-left: 10px; /* 원하는 만큼 조절 */
+  padding-right: 10px; /* 오른쪽도 균형을 맞추려면 같이 추가 */
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #f0f6fb;
 }
