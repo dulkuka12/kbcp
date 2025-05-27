@@ -46,7 +46,7 @@ body {
   position: fixed;
   top: 70px; /* 상단바 아래로 시작 */
   left: -250px; /* 기본 상태에서 숨김 */
-  background-color: #183b5c;
+  /*background-color: #183b5c;*/
   overflow-y: auto;
   transition: left 0.3s ease;
   color: white;
