@@ -1,12 +1,16 @@
 /* style.css */
 
+
 body {
-  padding-top: 86px; /* 상단바 높이 + 패딩 */
+  padding-top: 86px; /* 상단바 높이 */
   margin: 0;
-  padding-left: 10px; /* 원하는 만큼 조절 */
-  padding-right: 10px; /* 오른쪽도 균형을 맞추려면 같이 추가 */
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #f0f6fb;
+}
+
+.content {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 
@@ -90,7 +94,7 @@ body {
   background-color: white;
   border: 2px solid #d0dce7;
   border-radius: 10px;
-  padding: 12px;  /* 18 */
+  padding: 14px;  /* 18 */
   font-size: 1.2em;
   color: #183b5c;
   font-weight: bold;
