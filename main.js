@@ -264,7 +264,7 @@ function goToPosition(storageKey, elementId) {
 
 
 
-/* 상단색을 다르게 주기 */
+/* 상단바색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
   const sideMenu = document.querySelector('.side-menu');
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const path = window.location.pathname;
 
-  let themeColor = '#228b22'; // 기본 색
+  let themeColor = '#183b5c'; // 기본 색
 
   if (path.includes('index')) {
     themeColor = '#228b22';
@@ -284,24 +284,18 @@ document.addEventListener('DOMContentLoaded', () => {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
     themeColor = '#9e150e';
-  } else {themeColor = '#183b5c'
-    
-  }
+  } 
 
-
-  // 상단바 색상 적용
   if (navbar) {
     navbar.style.backgroundColor = themeColor;
   }
 
-  // 사이드바 배경색 적용
   if (sideMenu) {
     sideMenu.style.backgroundColor = themeColor;
   }
 
-  // X버튼 색상 (글자색) 적용
   if (closeBtn) {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
-});
+}); 
 

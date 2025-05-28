@@ -5,6 +5,7 @@ const CACHE_FILES = [
   "/",
   "/index.html",
   "/style.css",
+  "/main.js",
   "/icon-192.png",
   "/icon-512.png"
 ];
