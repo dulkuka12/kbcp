@@ -264,7 +264,7 @@ function goToPosition(storageKey, elementId) {
 
 
 
-/* 상단바색을 다르게 주기 */
+/* 상단바색을 다르게 주기 
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
   const sideMenu = document.querySelector('.side-menu');
@@ -297,5 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
-}); 
+}); */
 
