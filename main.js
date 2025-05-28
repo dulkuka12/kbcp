@@ -68,6 +68,9 @@ window.goToRememberedPsalm = function () {
 window.goToRememberedLesson = function () {
   goToRememberedSection('rememberedLesson', '기억된 정과표가 없습니다.');
 };
+window.goToRememberedLesson2 = function () {
+  goToRememberedSection('rememberedLesson2', '기억된 정과표가 없습니다.');
+};
 window.goToRememberedCanticle1 = function () {
   goToRememberedSection('rememberedCanticle1', '기억된 송가가 없습니다.');
 };
@@ -118,6 +121,7 @@ window.updateBookmarkButton = updateBookmarkButton;
 document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
   updateBookmarkButton('rememberedLesson', 'bookmarkLessonButton', '책갈피');
+  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
   updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피');
   updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피');
   updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
