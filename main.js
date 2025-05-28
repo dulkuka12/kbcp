@@ -264,18 +264,18 @@ function goToPosition(storageKey, elementId) {
 
 
 
-/* 상단바색을 다르게 주기 
+/* 상단바색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
   const sideMenu = document.querySelector('.side-menu');
   const closeBtn = document.querySelector('.close-btn');
 
-  const path = window.location.pathname;
+  const path = window.location.href;
 
-  let themeColor = '#183b5c'; // 기본 색
+  let themeColor = '#183b5c'; // 기본
 
-  if (path.includes('index')) {
-    themeColor = '#228b22';
+  if (path.includes('index') || path.endsWith('/') || path.endsWith('index.html')) {
+    themeColor = '#228b22'; // 확실하게 index로 처리
   } else if (path.includes('ucharist-form1')) {
     themeColor = '#9e150e';
   } else if (path.includes('morning-prayer')) {
@@ -297,5 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
-}); */
+}); 
 
