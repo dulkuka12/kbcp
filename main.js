@@ -60,7 +60,6 @@ function goToRememberedSection(storageKey, fallbackMessage) {
   }
 }
 
-
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
@@ -88,6 +87,9 @@ window.goToRememberedPrayer1 = function () {
 };
 window.goToRememberedPrayer2 = function () {
   goToRememberedSection('rememberedPrayer2', '기억된 간구기도2이 없습니다.');
+};
+window.goToRememberedPrayer3 = function () {
+  goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
 };
 window.goToRememberedPrayer3 = function () {
   goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
