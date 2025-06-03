@@ -219,7 +219,7 @@
     <div class="body-text">◯ 전능하신 하느님,</div>
     <div class="body-text">◉ 우리들이 예수 그리스도의 이름으로 간절히 기도하나이다. 아멘</div>
     <c id="intercession-button"></c>
-  
+
     <c id="proper3"></c>
     <div class="big-title small-gap">성찬의 전례</div>
     <div class="subtitle small-gap">13. 평화의 인사</div>
@@ -272,9 +272,10 @@
     <div class="body-text"> 그러므로 우리는 하늘의 모든 천사와 성도들과 함께 주님의 거룩하고 영광스러운 이름을 소리 높여 찬양하나이다.</div>
     </br>
     <div class="subtitle small-gap">거룩하시다(Sanctus)</div>
-    <div class="body-text">◉ 거룩하시다. 거룩하시다. 거룩하시도다. 만군의 주 하느님,<br>
-      하늘과 땅에 가득한 그 영광, 높은 데에 호산나.<br>
-      주의 이름으로 오시는 이여, 찬미받으소서. 높은 데에 호산나.</div>
+  <div class="body-text">◉ 거룩하시다. 거룩하시다. 거룩하시도다.<br> 
+    만군의 주 하느님, 하늘과 땅에 가득한 그 영광,<br> 
+    높은 데에 호산나. 주의 이름으로 오시는 이여,<br>
+    찬미받으소서. 높은 데에 호산나.</div>
     </br>
     <div class="body-text">⧾ 모든 영광을 받으실 전능하신 하느님, 지극한 사랑으로 외아들 예수 그리스도를 이 세상에 보내셨으며, 그리스도께서는 우리의 구원을 위하여 십자가에 달리시고 세상의
       죄를
@@ -372,37 +373,6 @@
     <script src="main.js" defer></script>
 
     <script>
-
-      function goToProperBookmark(index) {
-        const data = localStorage.getItem(`rememberedProper${index}`);
-        if (data) {
-          const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
-          if (path && targetId) {
-            // 쿼리로 full ID 전달
-            location.href = `${path}?proper=${targetId}#${targetId}`;
-          }
-        } else {
-          alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
-        }
-      }
-
-
-      function updateProperBookmarkLabels() {
-        for (let i = 1; i <= 7; i++) {
-          const btn = document.getElementById(`bookmarkProper${i}`);
-          const data = localStorage.getItem(`rememberedProper${i}`);
-          if (btn && data) {
-            try {
-              const { label } = JSON.parse(data);
-              btn.textContent = label || `책갈피 ${String.fromCharCode(64 + i)}`;
-            } catch (e) {
-              btn.textContent = `책갈피 ${String.fromCharCode(64 + i)}`;
-            }
-          }
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 
 
 
