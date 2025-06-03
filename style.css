@@ -36,7 +36,7 @@ body {
 }
 
 .navbar h1 {
-  font-size: 1.4em;
+  font-size: 1.7em;
   margin: 0;
   flex-grow: 1;
   text-align: center;
@@ -313,7 +313,7 @@ body {
 }
 
 .fixed-bottom-right2:hover {
-  background-color:#dd4845;
+  background-color: #dd4845;
   /* 마우스 올리면 색 변화 */
 }
 
