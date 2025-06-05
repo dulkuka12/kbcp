@@ -19,10 +19,10 @@
 
     <button class="sub-button fixed-bottom-left" onclick="rememberAllProperBookmarks()">책갈피 저장</button>
     <!--<button class="sub-button fixed-bottom-right2" onclick="goToPosition('proper', 'proper0')">돌아가기</button>-->
-  
+
     <button id="goBackButton" class="sub-button fixed-bottom-right2">돌아가기</button>
 
-   
+
 
     <div class="big-title" id="section1">대림1주부터-성탄전까지</div>
     <div class="subtitle" id="section1-proper1">죄의고백 책갈피</div>
@@ -701,23 +701,23 @@
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  const properFullId = params.get('proper'); // 예: 'section1-proper1'
+      document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const properFullId = params.get('proper'); // 예: 'section1-proper1'
 
-  let targetProper = 'proper0'; // 기본값 (검색에서 들어온 경우)
+        let targetProper = 'proper0'; // 기본값 (검색에서 들어온 경우)
 
-  if (properFullId) {
-    const parts = properFullId.split('-');
-    const properPart = parts.pop(); // proper1 등
-    if (properPart.startsWith('proper')) {
-      targetProper = properPart;
-    }
-  }
+        if (properFullId) {
+          const parts = properFullId.split('-');
+          const properPart = parts.pop(); // proper1 등
+          if (properPart.startsWith('proper')) {
+            targetProper = properPart;
+          }
+        }
 
-  const btn = document.getElementById('goBackButton');
-  btn.setAttribute('onclick', `goToPosition('proper', '${targetProper}')`);
-});
+        const btn = document.getElementById('goBackButton');
+        btn.setAttribute('onclick', `goToPosition('proper', '${targetProper}')`);
+      });
 
 
     </script>
