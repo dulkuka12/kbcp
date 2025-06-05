@@ -91,6 +91,9 @@ window.goToRememberedPrayer2 = function () {
 window.goToRememberedPrayer3 = function () {
   goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
 };
+window.goToRememberedPrayer3 = function () {
+  goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
+};
 
 
 
@@ -129,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -279,15 +284,13 @@ document.addEventListener('DOMContentLoaded', () => {
     themeColor = '#228b22'; // 확실하게 index로 처리
   } else if (path.includes('ucharist-form1')) {
     themeColor = '#9e150e';
-  } else if (path.includes('ucharist-form2')) {
-    themeColor = '#9e150e';
   } else if (path.includes('morning-prayer')) {
     themeColor = '#dd4845';
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
     themeColor = '#9e150e';
-  }
+  } 
 
   if (navbar) {
     navbar.style.backgroundColor = themeColor;
@@ -300,36 +303,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
-});
-
-function goToProperBookmark(index) {
-  const data = localStorage.getItem(`rememberedProper${index}`);
-  if (data) {
-    const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
-    if (path && targetId) {
-      // 쿼리로 full ID 전달
-      location.href = `${path}?proper=${targetId}#${targetId}`;
-    }
-  } else {
-    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
-  }
-}
-
-
-function updateProperBookmarkLabels() {
-  for (let i = 1; i <= 7; i++) {
-    const btn = document.getElementById(`bookmarkProper${i}`);
-    const data = localStorage.getItem(`rememberedProper${i}`);
-    if (btn && data) {
-      try {
-        const { label } = JSON.parse(data);
-        btn.textContent = label || `책갈피 ${String.fromCharCode(64 + i)}`;
-      } catch (e) {
-        btn.textContent = `책갈피 ${String.fromCharCode(64 + i)}`;
-      }
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+}); 
 
