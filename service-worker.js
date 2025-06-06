@@ -96,3 +96,10 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/kbcp/service-worker.js')
+    .then(() => console.log('✅ Service Worker 등록 성공'))
+    .catch(err => console.error('❌ Service Worker 등록 실패:', err));
+}
