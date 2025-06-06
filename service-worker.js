@@ -50,9 +50,7 @@ self.addEventListener("fetch", (event) => {
 });
 */
 
-
-
-const CACHE_NAME = "kbcp-v1";
+const CACHE_NAME = "kbcp-v2";
 const CACHE_FILES = [
   "/kbcp/",
   "/kbcp/index.html",
@@ -63,16 +61,18 @@ const CACHE_FILES = [
   "/kbcp/manifest.json"
 ];
 
+// 설치 이벤트: 캐시 저장 + 즉시 활성화
 self.addEventListener("install", (event) => {
+  console.log("📦 Service Worker 설치 및 캐시 저장 중...");
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("📦 캐시 저장 중...");
       return cache.addAll(CACHE_FILES);
     })
   );
-  console.log("✅ Service Worker 설치 완료");
+  self.skipWaiting();  // 새 워커 바로 적용
 });
 
+// 활성화 이벤트: 이전 캐시 제거
 self.addEventListener("activate", (event) => {
   console.log("🟢 Service Worker 활성화됨");
   event.waitUntil(
@@ -89,6 +89,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// 요청 이벤트: 캐시 우선, 없으면 네트워크 요청
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
@@ -96,10 +97,3 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/kbcp/service-worker.js')
-    .then(() => console.log('✅ Service Worker 등록 성공'))
-    .catch(err => console.error('❌ Service Worker 등록 실패:', err));
-}
