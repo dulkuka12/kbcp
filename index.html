@@ -31,22 +31,29 @@
     <a href="main-prayer-select.html" class="menu-button">8. 주요기도문</a>
     <a href="outline-list.html" class="menu-button">9. 신앙의 개요</a>
 
-    <button class="sub-button fixed-top-right" onclick="closeApp()">앱 종료</button>
+    <button class="sub-button fixed-top-right" onclick="showExitMessage()">앱 종료</button>
     <script src="main.js" defer></script>
 
   </div>
 
   
 <script>
-/*
+/*     <button class="sub-button fixed-top-right" onclick="closeApp()">앱 종료</button> 
+
 function resetToHome() {
   // 현재 경로에 강제로 새로 로드하면서 히스토리 초기화
  location.replace("./index.html");}
-*/
+
 function closeApp() {
   // 창이 브라우저에서 직접 열린 게 아니라면 닫을 수 있음
   window.open('', '_self').close();
 }
+*/
+
+function showExitMessage() {
+  alert("앱을 종료하려면 휴대폰의 홈 버튼을 누르거나 앱 목록에서 스와이프해 닫아주세요.");
+}
+
 
 
 </script>
