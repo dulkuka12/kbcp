@@ -386,9 +386,10 @@ body {
 /*-------------------------------------------*/
 
 /* 앱종료버튼*/
+
 .fixed-top-right {
   position: fixed;
-  top: 10px;
+  bottom: 20px;
   right: 10px;
   z-index: 9999;
   font-size: 1em;

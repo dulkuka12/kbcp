@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (path.includes('ucharist-form2')) {
     themeColor = '#9e150e';
   } else if (path.includes('morning-prayer')) {
-    themeColor = '#dd4845';
+    themeColor = '#9e150e';
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
