@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="main.js" defer></script>
+  <title>성무일과 성서정과 목록</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="grid2" id="buttonGrid"></div>
+
+  <!-- 오른쪽 하단 고정 -->
+  <button class="sub-button fixed-bottom-right" onclick="location.href='index.html'">시작메뉴</button>
+
+  <script src="main.js" defer></script>
+
+  <script>
+
+  // 절기 이름 배열 (예시입니다. 실제 절기 순서에 맞게 수정 가능)
+    const seasonNames = [
+      "대림절", "성탄절", "사순절", "부활절",
+      "연중1-5", "연중6-10", "연중11-15", "연중16-20",
+      "연중21-25", "연중26-30", "연중31-34", "주요축일1",
+      "주요축일2","성인공통축일", "지역고유축일", "기원예배", 
+      "사계제", "기타축일들" 
+      // 필요에 따라 계속 추가...
+    ];
+
+    const grid = document.getElementById('buttonGrid');
+
+    seasonNames.forEach((name, index) => {
+      const btn = document.createElement('button');
+      btn.textContent = name;
+      btn.onclick = function() {
+        location.href = 'lesson1-text.html#section' + (index + 1);
+      };
+      grid.appendChild(btn);
+    });
+
+  </script>
+
+</body>
+
+</html>
