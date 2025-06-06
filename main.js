@@ -129,10 +129,36 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+// 전역에 선언
+function forceUpdate() {
+  if ('serviceWorker' in navigator) {
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => caches.delete(cacheName))
+      );
+    }).then(() => {
+      console.log("📦 모든 캐시 삭제 완료");
+      return navigator.serviceWorker.getRegistrations();
+    }).then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+      alert("📢 앱이 최신 버전으로 업데이트되었습니다.\n새 파일로 다시 불러옵니다.");
+      location.reload(true);
+    }).catch((err) => {
+      console.error("업데이트 중 오류 발생:", err);
+      alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
+    });
+  } else {
+    alert("⚠️ 이 브라우저는 Service Worker를 지원하지 않습니다.");
+  }
+}
+
+// DOM이 로드된 후 실행되는 부분
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
 
-  // 사이드 메뉴 및 네비게이션 바 생성
   const sideMenuHTML = `
     <div id="sideMenu" class="side-menu">
       <span class="close-btn" onclick="toggleMenu()">×</span>
@@ -150,48 +176,27 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   `;
 
-
   document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
-  // 이벤트 리스너 등록
   const menuIcon = document.querySelector(".menu-icon");
   const closeBtn = document.querySelector(".close-btn");
 
   if (menuIcon && closeBtn) {
     menuIcon.addEventListener("click", toggleMenu);
-
     closeBtn.addEventListener("click", function () {
       const sideMenu = document.getElementById("sideMenu");
       sideMenu.classList.remove("open");
     });
   }
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/kbcp/service-worker.js')
-    .then(() => console.log('✅ Service Worker 등록 성공'))
-    .catch(err => console.error('❌ Service Worker 등록 실패:', err));
-}
-
-function forceUpdate() {
   if ('serviceWorker' in navigator) {
-    caches.keys().then(function(names) {
-      for (let name of names) {
-        caches.delete(name);
-      }
-    }).then(() => {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for (let registration of registrations) {
-          registration.unregister();
-        }
-        // 캐시 삭제 후 강제 리로드
-        alert("최신 버전으로 업데이트합니다.");
-        location.reload(true);
-      });
-    });
-  } else {
-    alert("브라우저가 Service Worker를 지원하지 않습니다.");
+    navigator.serviceWorker.register('/kbcp/service-worker.js')
+      .then(() => console.log('✅ Service Worker 등록 성공'))
+      .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
-}
+});
+
+
 
 // 특정 위치 저장 (파일 경로와 위치를 함께 저장)
 function rememberPosition(storageKey, elementId) {
