@@ -7,7 +7,7 @@ function toggleMenu() {
 }
 
 
-// 본문에서 예문으로 돌아갈 때 현재 화면 기억
+// text파일에서 예문으로 돌아갈 때 현재 화면 기억
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
@@ -39,7 +39,6 @@ function rememberClosest(idPrefix, storageKey, fileName) {
 }
 
 
-
 //예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
@@ -65,10 +64,10 @@ window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
 };
 window.goToRememberedLesson = function () {
-  goToRememberedSection('rememberedLesson', '기억된 정과표가 없습니다.');
+  goToRememberedSection('rememberedLesson', '기억된 성무일과 정과표가 없습니다.');
 };
 window.goToRememberedLesson2 = function () {
-  goToRememberedSection('rememberedLesson2', '기억된 정과표가 없습니다.');
+  goToRememberedSection('rememberedLesson2', '기억된 성찬례 정과표가 없습니다.');
 };
 window.goToRememberedCanticle1 = function () {
   goToRememberedSection('rememberedCanticle1', '기억된 송가가 없습니다.');
@@ -140,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <span class="close-btn" onclick="toggleMenu()">×</span>
       <a href="#">홈 바로가기 만들기</a>
       <a href="#">버전 업데이트</a>
-      <a href="#">책갈피 초기화</a>
+      <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#">글씨크기 조정하기</a>
       <a href="#">사용안내</a>
     </div>
@@ -302,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
 function goToProperBookmark(index) {
   const data = localStorage.getItem(`rememberedProper${index}`);
   if (data) {
@@ -333,3 +333,106 @@ function updateProperBookmarkLabels() {
 
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 
+
+
+
+function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
+  const rawData = localStorage.getItem(storageKey);
+  if (rawData) {
+    try {
+      const parsed = JSON.parse(rawData);
+      if (parsed.url) {
+        const match = parsed.url.match(/#(lesson\d+)/);
+        if (match && match[1]) {
+          const lessonId = match[1];
+          window.location.href = `${fallbackFile}?lessonId=${lessonId}`;
+        } else {
+          window.location.href = parsed.url;
+        }
+      } else {
+        alert(missingMessage);
+      }
+    } catch (e) {
+      console.error("책갈피 데이터 파싱 오류:", e);
+      alert(missingMessage);
+    }
+  } else {
+    alert(missingMessage);
+  }
+}
+
+// 아침기도 정과표
+window.goToRememberedLesson = function () {
+  goToRememberedLessonGeneric('rememberedLesson', 'lesson-text.html', '기억된 성무일과 정과표가 없습니다.');
+};
+
+// 성찬례 정과표
+window.goToRememberedLesson2 = function () {
+  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
+};
+
+
+
+
+
+function clearAllBookmarks() {
+  const keysToRemove = [
+    'rememberedPsalm',
+    'rememberedLesson',
+    'rememberedLesson2',
+    'rememberedProper1',
+    'rememberedProper2',
+    'rememberedProper3',
+    'rememberedProper4',
+    'rememberedProper5',
+    'rememberedProper6',
+    'rememberedProper7',
+	'rememberedCanticle1', 
+	'rememberedCanticle2', 
+	'rememberedCollect1', 
+	'rememberedCollect2', 
+	'rememberedPrayer1', 
+    'rememberedPrayer2', 
+	'rememberedPrayer3',
+  ];   
+
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+  alert('모든 책갈피가 초기화되었습니다.');
+  toggleMenu();  // 사이드메뉴 닫기
+}
+
+
+/*
+function clearAllBookmarks() {
+  // 책갈피로 추정되는 키 이름의 접두사 목록
+  const bookmarkPrefixes = [
+    'remembered',
+
+    'properBookmark',
+    'psalmPosition',
+    'lessonPosition',
+    'properPosition' 
+  ];
+
+  // 현재 저장된 책갈피 키 목록 필터링
+  const savedKeys = Object.keys(localStorage).filter(key =>
+    bookmarkPrefixes.some(prefix => key.startsWith(prefix))
+  );
+
+  if (savedKeys.length === 0) {
+    alert('현재 저장된 책갈피가 없습니다.');
+    return;
+  }
+
+  // 어떤 책갈피가 저장되어 있는지 목록 생성
+  const bookmarkList = savedKeys.map(key => `• ${key}`).join('\n');
+
+  const confirmClear = confirm(`다음 책갈피가 저장되어 있습니다:\n\n${bookmarkList}\n\n이 모든 책갈피를 초기화하시겠습니까?`);
+  if (confirmClear) {
+    savedKeys.forEach(key => localStorage.removeItem(key));
+    alert('책갈피가 모두 초기화되었습니다.');
+    toggleMenu();
+  }
+}
+
+*/
