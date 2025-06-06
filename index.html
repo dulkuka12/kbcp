@@ -30,10 +30,17 @@
     <a href="text-select.html" class="menu-button">6. 본문 바로보기</a>
     <a href="main-prayer-select.html" class="menu-button">8. 주요기도문</a>
     <a href="outline-list.html" class="menu-button">9. 신앙의 개요</a>
+    <button class="sub-button fixed-top-right" onclick="resetToHome()">앱 종료</button>
+    <script src="main.js" defer></script>
+
   </div>
-  <script src="main.js" defer></script>
+
   
 <script>
+function resetToHome() {
+  // 현재 경로에 강제로 새로 로드하면서 히스토리 초기화
+  location.replace("index.html");
+}
 </script>
  
 </body>
