@@ -89,33 +89,38 @@
     <button class="sub-button fixed-bottom-right2" onclick="goToPosition('lesson2', 'lesson2-button')">돌아가기</button>
     <button class="sub-button fixed-bottom-left"
       onclick="rememberClosest('lesson', 'rememberedLesson2', 'lesson2-text.html')">책갈피</button>
-    <!--성찬정과나 성무일과정과나 rememberClosest('lesson'....)을 사용에 주의-->
-	
+ 	
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const params = new URLSearchParams(window.location.search);
-        const lessonId = params.get("lessonId");
+	
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const lessonId = params.get("lessonId");
 
-        if (lessonId) {
-          const all = document.querySelectorAll(".subtitle, .rubric3, br");
-          //    const all = document.querySelectorAll(".subtitle, .rubric3");
-          let show = false;
+      if (lessonId) {
+        const all = document.querySelectorAll(".subtitle, .rubric3, br, .big-title, .rubric");
+        let show = false;
 
-          all.forEach(el => {
-            if (el.classList.contains("subtitle")) {
-              show = (el.id === lessonId);
-              el.style.display = show ? "block" : "none";
-            } else {
-              el.style.display = show ? "block" : "none";
-            }
-          });
+        all.forEach(el => {
+          if (el.classList.contains("big-title") ||
+            (el.classList.contains("rubric") && !el.classList.contains("rubric3"))) {
+            // big-title 및 일반 rubric은 필터 시 항상 숨김
+            el.style.display = "none";
+            return;
+          }
 
-          // 필터 중임을 전역 변수로 기록
-          window.lessonFiltered = true;
-        } else {
-          window.lessonFiltered = false;
-        }
-      });
+          if (el.classList.contains("subtitle")) {
+            show = (el.id === lessonId);
+            el.style.display = show ? "block" : "none";
+          } else {
+            el.style.display = show ? "block" : "none";
+          }
+        });
+
+        window.lessonFiltered = true;
+      } else {
+        window.lessonFiltered = false;
+      }
+    });
 
     </script>
   </main>

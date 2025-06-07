@@ -349,7 +349,7 @@ body {
 }
 
 
-/* 송가,본기도,간구버튼*/
+/* 송가,본기도,간구버튼 수직배열*/
 .fixed-bottom-left-1 {
   position: fixed;
   bottom: 120px;
@@ -387,7 +387,19 @@ body {
 
 /* 앱종료버튼*/
 
-.fixed-top-right {
+/*시작메뉴*/
+.fixed-bottom-right-4 {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #f44336;
+}
+.fixed-bottom-right-4:hover {
+  background-color: #B43104;
+}
+
+/* 안쓰는 버튼*/
+.fixed-left-right {
   position: fixed;
   bottom: 20px;
   right: 10px;
@@ -401,7 +413,6 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
-
 .fixed-top-right:hover {
   background-color: #B43104;
   /* 마우스 올리면 색 변화 */
