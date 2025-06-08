@@ -139,7 +139,7 @@ function forceUpdate() {
       for (let registration of registrations) {
         registration.unregister();
       }
-      alert("📢 앱이 최신 버전으로 업데이트되었습니다.\n새 파일로 다시 불러옵니다.");
+      alert("📢 앱을 업데이트 합니다.\n새 파일로 다시 불러옵니다.");
       location.reload(true);
     }).catch((err) => {
       console.error("업데이트 중 오류 발생:", err);
