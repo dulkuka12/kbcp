@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#">글씨크기 조정하기</a>
       <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-      <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서를 만들며</a>
+      <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
     </div>
   `;
 
