@@ -150,6 +150,8 @@ function forceUpdate() {
   }
 }
 
+
+
 // DOM이 로드된 후 실행되는 부분
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
@@ -160,7 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
       <a href="#" onclick="forceUpdate()">버전 업데이트</a>
       <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#">글씨크기 조정하기</a>
-      <a href="user-guide.html">사용안내</a>
+      <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
+
     </div>
   `;
 
@@ -170,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <h1>${pageTitle}</h1>
     </div>
   `;
+
 
   document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
@@ -190,6 +194,21 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
 });
+
+
+function closeMenuThenNavigate(url) {
+  // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
+  const menu = document.getElementById("sideMenu");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open"); // 또는 toggleMenu();
+  }
+
+  // 약간의 지연 후 페이지 이동 (애니메이션이 있으면 부드럽게)
+  setTimeout(() => {
+    location.href = url;
+  }, 150); // 필요 시 0~300ms 사이로 조절
+}
+
 
 
 
