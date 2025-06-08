@@ -33,8 +33,9 @@
     </br>
     </br>
     </br>
-    <button class="sub-button fixed-bottom-right-4" onclick="showExitMessage()">앱 종료</button>
-    <script src="main.js" defer></script>
+<!-- <button class="sub-button fixed-bottom-right-4" onclick="showExitMessage()">앱 종료</button> -->
+   <button class="sub-button fixed-bottom-right-4" onclick="simulateAppExit()">앱 종료</button>
+   <script src="main.js" defer></script>
 
   </div>
 
@@ -51,12 +52,36 @@ function closeApp() {
   // 창이 브라우저에서 직접 열린 게 아니라면 닫을 수 있음
   window.open('', '_self').close();
 }
-*/
-
+///-----
 function showExitMessage() {
   alert("앱을 종료하려면 휴대폰의 홈 버튼(o)을 누르거나 (III) 버튼 목록에서 닫아주세요.");
 }
 
+*/
+
+/*
+function simulateAppExit() {
+  // 사용자에게 종료 안내
+  alert("앱이 종료되었습니다.\n다시 시작하시려면 홈화면에서 열어주세요.");
+
+  // 상태 초기화 (필요한 키만 선택 가능)
+  localStorage.clear(); // 또는 localStorage.removeItem('rememberedPsalm') 등
+
+  // 홈화면으로 이동 (뒤로가기 히스토리 제거)
+  location.replace('index.html');
+}
+*/
+
+function simulateAppExit() {
+  if (!localStorage.getItem('justExited')) {
+    alert("앱이 종료되었습니다.\n다시 시작하시려면 홈화면에서 열어주세요.");
+    localStorage.setItem('justExited', 'true');
+  }
+
+  // 나머지 상태 삭제
+  localStorage.clear();
+  location.replace('index.html');
+}
 
 
 </script>

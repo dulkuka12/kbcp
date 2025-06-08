@@ -63,12 +63,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
 window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
 };
-window.goToRememberedLesson1 = function () {
-  goToRememberedSection('rememberedLesson1', '기억된 성무일과 정과표가 없습니다.');
-};
-window.goToRememberedLesson2 = function () {
-  goToRememberedSection('rememberedLesson2', '기억된 성찬례 정과표가 없습니다.');
-};
+
 window.goToRememberedCanticle1 = function () {
   goToRememberedSection('rememberedCanticle1', '기억된 송가가 없습니다.');
 };
@@ -117,12 +112,12 @@ window.updateBookmarkButton = updateBookmarkButton;
 
 document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
-  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
-  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
-  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피');
-  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피');
+  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피A');
+  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피B');
+  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피1');
+  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피2');
   updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
-  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피1');
+  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
@@ -165,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <a href="#" onclick="forceUpdate()">버전 업데이트</a>
       <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#">글씨크기 조정하기</a>
-      <a href="#">사용안내</a>
+      <a href="user-guide.html">사용안내</a>
     </div>
   `;
 
@@ -389,12 +384,12 @@ function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
 
 // 아침기도 정과표
 window.goToRememberedLesson1 = function () {
-  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표가 없습니다.');
+  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표A가 없습니다.');
 };
 
 // 성찬례 정과표
 window.goToRememberedLesson2 = function () {
-  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
+  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표B가 없습니다.');
 };
 
 
@@ -426,22 +421,22 @@ function clearAllBookmarks() {
   // 버튼 텍스트 복원
   const defaultLabels = {
     'bookmarkPsalmButton': '책갈피',
-    'bookmarkLessonButton1': '책갈피',
-    'bookmarkLessonButton2': '책갈피',
-    'bookmarkProper1': '책갈피A',
-    'bookmarkProper2': '책갈피B',
-    'bookmarkProper3': '책갈피C',
-    'bookmarkProper4': '책갈피D',
-    'bookmarkProper5': '책갈피E',
-    'bookmarkProper6': '책갈피F',
-    'bookmarkProper7': '책갈피G',
-    'bookmarkCanticleButton1': '책갈피',
-    'bookmarkCanticleButton2': '책갈피',
-    'bookmarkCollectButton1': '책갈피',
-    'bookmarkCollectButton2': '책갈피',
-    'bookmarkPrayerButton1': '책갈피',
-    'bookmarkPrayerButton2': '책갈피',
-    'bookmarkPrayerButton3': '책갈피',
+    'bookmarkLessonButton1': '책갈피A',
+    'bookmarkLessonButton2': '책갈피B',
+    'bookmarkProper1': '책갈피a',
+    'bookmarkProper2': '책갈피b',
+    'bookmarkProper3': '책갈피c',
+    'bookmarkProper4': '책갈피d',
+    'bookmarkProper5': '책갈피e',
+    'bookmarkProper6': '책갈피f',
+    'bookmarkProper7': '책갈피g',
+    'bookmarkCanticleButton1': '책갈피1',
+    'bookmarkCanticleButton2': '책갈피2',
+    'bookmarkCollectButton1': '책갈피1',
+    'bookmarkCollectButton2': '책갈피1',
+    'bookmarkPrayerButton1': '책갈피1',
+    'bookmarkPrayerButton2': '책갈피2',
+    'bookmarkPrayerButton3': '책갈피3',
   };
 
   for (const [id, text] of Object.entries(defaultLabels)) {
