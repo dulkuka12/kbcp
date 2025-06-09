@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#4CAF50">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script> 
+  <script src="main.js" defer></script>
   <title>성공회 사목예식서</title>
   <link rel="manifest" href="manifest.json">
+
+
 </head>
+
 <body>
 
-  
+
   <!-- 메인 콘텐츠 -->
   <div class="menu-container">
     <a href="daily-office-select.html" class="menu-button">1. 성무일과</a>
@@ -21,10 +29,25 @@
     <a href="sacrament-select.html" class="menu-button">3. 성사예식</a>
     <a href="pastoral-select.html" class="menu-button">4. 사목예식</a>
     <a href="holyday-select.html" class="menu-button">5. 월별축일표</a>
-    <a href="text-select.html" class="menu-button">6. 본문 바로보기</a>
+    <a href="text-select.html" class="menu-button">6. 특정문 바로보기</a>
     <a href="main-prayer-select.html" class="menu-button">8. 주요기도문</a>
     <a href="outline-list.html" class="menu-button">9. 신앙의 개요</a>
+    </br>
+    </br>
+    </br>
+    <button class="sub-button fixed-bottom-right-4" onclick="showExitMessage()">앱 종료</button>
+    <script src="main.js" defer></script>
   </div>
-  <script src="main.js" defer></script>
+
+
+  <script>
+
+    function showExitMessage() {
+      alert("앱을 종료하려면 휴대폰의 홈 버튼(o)을 누르거나 (III) 버튼 목록에서 닫아주세요.");
+    }
+
+  </script>
+
 </body>
+
 </html>

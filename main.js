@@ -7,7 +7,7 @@ function toggleMenu() {
 }
 
 
-// 본문에서 예문으로 돌아갈 때 현재 화면 기억
+// text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
@@ -39,7 +39,6 @@ function rememberClosest(idPrefix, storageKey, fileName) {
 }
 
 
-
 //예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
@@ -64,12 +63,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
 window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
 };
-window.goToRememberedLesson = function () {
-  goToRememberedSection('rememberedLesson', '기억된 정과표가 없습니다.');
-};
-window.goToRememberedLesson2 = function () {
-  goToRememberedSection('rememberedLesson2', '기억된 정과표가 없습니다.');
-};
+
 window.goToRememberedCanticle1 = function () {
   goToRememberedSection('rememberedCanticle1', '기억된 송가가 없습니다.');
 };
@@ -116,33 +110,60 @@ function updateBookmarkButton(storageKey, buttonId, defaultText) {
 // 전역으로 노출해 각 HTML에서 실행 가능하게
 window.updateBookmarkButton = updateBookmarkButton;
 
-
 document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
-  updateBookmarkButton('rememberedLesson', 'bookmarkLessonButton', '책갈피');
-  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
-  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피');
-  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피');
+  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피A');
+  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피B');
+  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피1');
+  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피2');
   updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
-  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피1');
+  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
 });
 
 
+
+// 전역에 선언
+function forceUpdate() {
+  if ('serviceWorker' in navigator) {
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => caches.delete(cacheName))
+      );
+    }).then(() => {
+      console.log("📦 모든 캐시 삭제 완료");
+      return navigator.serviceWorker.getRegistrations();
+    }).then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+      alert("📢 앱을 업데이트 합니다.\n새 파일로 다시 불러옵니다.");
+      location.reload(true);
+    }).catch((err) => {
+      console.error("업데이트 중 오류 발생:", err);
+      alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
+    });
+  } else {
+    alert("⚠️ 이 브라우저는 Service Worker를 지원하지 않습니다.");
+  }
+}
+
+
+
+// DOM이 로드된 후 실행되는 부분
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
 
-  // 사이드 메뉴 및 네비게이션 바 생성
   const sideMenuHTML = `
     <div id="sideMenu" class="side-menu">
       <span class="close-btn" onclick="toggleMenu()">×</span>
-      <a href="#">홈 바로가기 만들기</a>
-      <a href="#">버전 업데이트</a>
-      <a href="#">책갈피 초기화</a>
+      <a href="#" onclick="forceUpdate()">버전 업데이트</a>
+      <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#">글씨크기 조정하기</a>
-      <a href="#">사용안내</a>
+      <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
+      <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
     </div>
   `;
 
@@ -153,29 +174,42 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   `;
 
+
   document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
-  // 이벤트 리스너 등록
   const menuIcon = document.querySelector(".menu-icon");
   const closeBtn = document.querySelector(".close-btn");
 
   if (menuIcon && closeBtn) {
     menuIcon.addEventListener("click", toggleMenu);
-
     closeBtn.addEventListener("click", function () {
       const sideMenu = document.getElementById("sideMenu");
       sideMenu.classList.remove("open");
     });
   }
 
-
-  // Service Worker 등록
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker 등록됨"))
-      .catch(err => console.error("Service Worker 등록 실패:", err));
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/kbcp/service-worker.js')
+      .then(() => console.log('✅ Service Worker 등록 성공'))
+      .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
 });
+
+
+function closeMenuThenNavigate(url) {
+  // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
+  const menu = document.getElementById("sideMenu");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open"); // 또는 toggleMenu();
+  }
+
+  // 약간의 지연 후 페이지 이동 (애니메이션이 있으면 부드럽게)
+  setTimeout(() => {
+    location.href = url;
+  }, 150); // 필요 시 0~300ms 사이로 조절
+}
+
+
 
 
 // 특정 위치 저장 (파일 경로와 위치를 함께 저장)
@@ -207,6 +241,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+//아침저녁시편필터보기
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const morningId = params.get('morningId');
@@ -224,8 +260,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (target) {
     target.scrollIntoView();
-    /* target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 */
-  }
+    //target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 
+}
 });
 
 
@@ -282,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (path.includes('ucharist-form2')) {
     themeColor = '#9e150e';
   } else if (path.includes('morning-prayer')) {
-    themeColor = '#dd4845';
+    themeColor = '#9e150e';
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
@@ -301,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
 });
+
 
 function goToProperBookmark(index) {
   const data = localStorage.getItem(`rememberedProper${index}`);
@@ -332,4 +369,104 @@ function updateProperBookmarkLabels() {
 }
 
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+
+
+
+
+
+
+
+function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
+  const rawData = localStorage.getItem(storageKey);
+  if (rawData) {
+    try {
+      const parsed = JSON.parse(rawData);
+      if (parsed.url) {
+        const match = parsed.url.match(/#(lesson\d+)/);
+        if (match && match[1]) {
+          const lessonId = match[1];
+          window.location.href = `${fallbackFile}?lessonId=${lessonId}`;
+        } else {
+          window.location.href = parsed.url;
+        }
+      } else {
+        alert(missingMessage);
+      }
+    } catch (e) {
+      console.error("책갈피 데이터 파싱 오류:", e);
+      alert(missingMessage);
+    }
+  } else {
+    alert(missingMessage);
+  }
+}
+
+// 아침기도 정과표
+window.goToRememberedLesson1 = function () {
+  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표A가 없습니다.');
+};
+
+// 성찬례 정과표
+window.goToRememberedLesson2 = function () {
+  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표B가 없습니다.');
+};
+
+
+
+function clearAllBookmarks() {
+  const keysToRemove = [
+    'rememberedPsalm',
+    'rememberedLesson1',
+    'rememberedLesson2',
+    'rememberedProper1',
+    'rememberedProper2',
+    'rememberedProper3',
+    'rememberedProper4',
+    'rememberedProper5',
+    'rememberedProper6',
+    'rememberedProper7',
+    'rememberedCanticle1', 
+    'rememberedCanticle2', 
+    'rememberedCollect1', 
+    'rememberedCollect2', 
+    'rememberedPrayer1', 
+    'rememberedPrayer2', 
+    'rememberedPrayer3',
+  ];   
+
+  // 로컬 스토리지 데이터 제거
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+
+  // 버튼 텍스트 복원
+  const defaultLabels = {
+    'bookmarkPsalmButton': '책갈피',
+    'bookmarkLessonButton1': '책갈피A',
+    'bookmarkLessonButton2': '책갈피B',
+    'bookmarkProper1': '책갈피a',
+    'bookmarkProper2': '책갈피b',
+    'bookmarkProper3': '책갈피c',
+    'bookmarkProper4': '책갈피d',
+    'bookmarkProper5': '책갈피e',
+    'bookmarkProper6': '책갈피f',
+    'bookmarkProper7': '책갈피g',
+    'bookmarkCanticleButton1': '책갈피1',
+    'bookmarkCanticleButton2': '책갈피2',
+    'bookmarkCollectButton1': '책갈피1',
+    'bookmarkCollectButton2': '책갈피1',
+    'bookmarkPrayerButton1': '책갈피1',
+    'bookmarkPrayerButton2': '책갈피2',
+    'bookmarkPrayerButton3': '책갈피3',
+  };
+
+  for (const [id, text] of Object.entries(defaultLabels)) {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.textContent = text;
+    }
+  }
+
+  alert('모든 책갈피가 초기화되었습니다.');
+  toggleMenu(); // 사이드메뉴 닫기
+}
+
 
