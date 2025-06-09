@@ -158,10 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const sideMenuHTML = `
     <div id="sideMenu" class="side-menu">
-      <span class="close-btn" onclick="toggleMenu()">×</span>
+      <span class="close-btn" onclick="toggleMenu()">X</span>
       <a href="#" onclick="forceUpdate()">버전 업데이트</a>
       <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
-      <a href="#">글씨크기 조정하기</a>
       <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
       <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
     </div>
