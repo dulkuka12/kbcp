@@ -1,5 +1,28 @@
 // main.js
 
+// main.js 안에서 이렇게 넣어주세요:
+
+// 우클릭 방지
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
+
+// 모바일 롱터치 방지 (복사/다운로드 제한)
+document.addEventListener('touchstart', function (e) {
+  const tag = e.target.tagName.toLowerCase();
+  const target = e.target;
+
+  if (tag === 'img') {
+    e.preventDefault(); // 이미지 롱터치 방지
+  }
+
+  if (tag === 'a' && target.hasAttribute('download')) {
+    e.preventDefault(); // 다운로드 링크 차단
+  }
+}, { passive: false });
+
+
+
 // 사이드 메뉴 토글 함수
 function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
