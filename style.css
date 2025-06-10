@@ -44,7 +44,7 @@ body {
 }
 
 .side-menu {
-  height: 40%;
+  height: 38%;
   width: 250px;
   position: fixed;
   top: 70px;
@@ -168,6 +168,7 @@ body {
   color: red;
   font-size: 1.1em;
   margin-top: 10px;
+  line-height: 1.6em;
 }
 
 .rubric2 {
@@ -175,13 +176,14 @@ body {
   font-size: 1.1em;
   margin-top: 10px;
   line-height: 1.6em;
-  /* ← 이 부분 추가 */
+  /* 줄간격 일정하게 만듬 */
 }
 
 .rubric3 {
   color: black;
   font-size: 1.1em;
   margin-top: 8px;
+  line-height: 1.6em;
 }
 
 .body-text {
@@ -189,7 +191,7 @@ body {
   font-size: 1.2em;
   margin-top: 4px;
   line-height: 1.6em;
-  /* ← 이 부분 추가 */
+  /* 줄간격 일정하게 만듬 */
 }
 
 .highlight {
@@ -205,27 +207,24 @@ body {
 
 .small-gap2 {
   margin-bottom: 10px;
-  /* 반줄 정도 띄우기 */
+  /* 반줄보다 적게 띄우기 */
 }
 
 .small-gap3 {
   margin-bottom: 5px;
-  /* 반줄 정도 띄우기 */
+  /* 더 적게 띄우기 */
 }
 
 /* -------------------------------------------------*/
 .common-button {
   font-size: 1em;
-  /* 버튼 글자 크기 */
   padding: 10px 16px;
   /* 버튼 안 여백 (크기) */
   /*width: 100%;   모바일에서 꽉 차게 */
   margin-left: 15px;
   /* 제목과 버튼 사이 간격 */
   background-color: #3374ff;
-  /* 버튼 색 */
   color: white;
-  /* 글자색 */
   border: none;
   border-radius: 8px;
   /* 모서리 둥글게 */
