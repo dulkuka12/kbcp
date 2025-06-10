@@ -54,6 +54,30 @@
       alert("앱을 종료하려면 휴대폰의 홈 버튼(o)을 누르거나 수직 햄버거 버튼(III) 목록에서 닫아주세요.");
     }
 
+  
+  document.addEventListener('touchstart', function (e) {
+  const tag = e.target.tagName.toLowerCase();
+  const target = e.target;
+
+  // 이미지에만 적용
+  if (tag === 'img') {
+    e.preventDefault();  // 이미지 길게 누르기 차단
+  }
+
+  // a 태그 중 다운로드 속성이 있는 경우만 차단
+  if (tag === 'a' && target.hasAttribute('download')) {
+    e.preventDefault();  // 다운로드 링크 차단
+  }
+}, { passive: false });
+
+  
+  
+  
+  
+  
+/*  
+  
+  
     // 우클릭/롱터치 방지
     document.addEventListener('contextmenu', function (e) {
       e.preventDefault();
@@ -65,6 +89,8 @@
         e.preventDefault();
       }
     }, { passive: false });
+
+  */  
   </script>
 
 </body>
