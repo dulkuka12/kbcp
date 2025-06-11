@@ -492,3 +492,23 @@ function clearAllBookmarks() {
 }
 
 
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.body.addEventListener('contextmenu', function (e) {
+    e.preventDefault(); // 길게 눌렀을 때 나오는 메뉴 방지
+  });
+
+  document.body.addEventListener('selectstart', function (e) {
+    e.preventDefault(); // 텍스트 선택 자체 차단
+  });
+
+  document.body.addEventListener('touchstart', function (e) {
+    if (e.touches.length > 1) {
+      e.preventDefault(); // 두 손가락 터치 시 동작 방지 (필요시)
+    }
+  }, { passive: false });
+});
+

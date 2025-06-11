@@ -7,6 +7,10 @@ body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #f0f6fb;
+  user-select: none;         /* 모든 텍스트 선택 방지 */
+  -webkit-user-select: none; /* iOS Safari, Chrome 등 Webkit 기반 */
+  -ms-user-select: none;     /* IE/Edge */
+  -moz-user-select: none;    /* Firefox */
 }
 
 
