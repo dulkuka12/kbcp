@@ -1,8 +1,5 @@
 /* style.css */
 
-
-/* style.css */
-
 /* body에만 적용할 스타일 */
 body {
   padding-top: 86px;
@@ -25,6 +22,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   padding-right: 10px;
 }
 
+/* -------------------------------------------------*/
 
 .navbar {
   position: fixed;
@@ -53,6 +51,8 @@ body, .body-text, .rubric, .subtitle, .big-title {
   text-align: center;
   margin-right: 24px;
 }
+
+/* -------------------------------------------------*/
 
 .side-menu {
   height: 38%;
@@ -204,8 +204,6 @@ body, .body-text, .rubric, .subtitle, .big-title {
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
-
-
 
 
 .highlight {
