@@ -9,6 +9,7 @@ body {
   background-color: #f0f6fb;
 }
 
+
 .content {
   padding-left: 10px;
   padding-right: 10px;
@@ -194,6 +195,12 @@ body {
   /* 줄간격 일정하게 만듬 */
 }
 
+.body-text {
+  user-select: none;
+}
+
+
+
 .highlight {
   color: rgb(175, 5, 5);
   line-height: inherit;
@@ -206,13 +213,8 @@ body {
 }
 
 .small-gap2 {
-  margin-bottom: 10px;
-  /* 반줄보다 적게 띄우기 */
-}
-
-.small-gap3 {
   margin-bottom: 5px;
-  /* 더 적게 띄우기 */
+  /* 반줄보다 적게 띄우기 */
 }
 
 /* -------------------------------------------------*/
