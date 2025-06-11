@@ -1,16 +1,19 @@
 /* style.css */
 
 
-body {
+/* style.css */
+
+body, .body-text, .rubric, .subtitle, .big-title {
   padding-top: 86px;
-  /* 상단바 높이 */
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #f0f6fb;
-  user-select: none;         /* 모든 텍스트 선택 방지 */
-  -webkit-user-select: none; /* iOS Safari, Chrome 등 Webkit 기반 */
-  -ms-user-select: none;     /* IE/Edge */
-  -moz-user-select: none;    /* Firefox */
+
+  /* 텍스트 선택 방지 */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 
@@ -199,9 +202,6 @@ body {
   /* 줄간격 일정하게 만듬 */
 }
 
-.body-text {
-  user-select: none;
-}
 
 
 

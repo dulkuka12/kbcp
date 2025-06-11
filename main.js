@@ -1,25 +1,47 @@
 // main.js
 
-// main.js 안에서 이렇게 넣어주세요:
 
-// 우클릭 방지
-document.addEventListener('contextmenu', function (e) {
-  e.preventDefault();
+// 공통: DOM 로드 후 실행
+document.addEventListener('DOMContentLoaded', function () {
+
+  // 텍스트 선택 방지
+  document.body.addEventListener('selectstart', function (e) {
+    e.preventDefault();
+  });
+
+  // 우클릭(롱터치 포함) 방지
+  document.body.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  // 드래그 시작 방지
+  document.body.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+  });
+
+  // 모바일 롱터치 방지
+  document.body.addEventListener('touchstart', function (e) {
+    const tag = e.target.tagName.toLowerCase();
+    const target = e.target;
+
+    // 이미지 롱터치 방지
+    if (tag === 'img') {
+      e.preventDefault();
+    }
+
+    // 다운로드 링크 롱터치 방지
+    if (tag === 'a' && target.hasAttribute('download')) {
+      e.preventDefault();
+    }
+
+    // 두 손가락 이상 터치 방지 (멀티터치 차단)
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+
+  }, { passive: false });
+
 });
-
-// 모바일 롱터치 방지 (복사/다운로드 제한)
-document.addEventListener('touchstart', function (e) {
-  const tag = e.target.tagName.toLowerCase();
-  const target = e.target;
-
-  if (tag === 'img') {
-    e.preventDefault(); // 이미지 롱터치 방지
-  }
-
-  if (tag === 'a' && target.hasAttribute('download')) {
-    e.preventDefault(); // 다운로드 링크 차단
-  }
-}, { passive: false });
 
 
 
@@ -495,20 +517,4 @@ function clearAllBookmarks() {
 
 
 
-
-document.addEventListener('DOMContentLoaded', function () {
-  document.body.addEventListener('contextmenu', function (e) {
-    e.preventDefault(); // 길게 눌렀을 때 나오는 메뉴 방지
-  });
-
-  document.body.addEventListener('selectstart', function (e) {
-    e.preventDefault(); // 텍스트 선택 자체 차단
-  });
-
-  document.body.addEventListener('touchstart', function (e) {
-    if (e.touches.length > 1) {
-      e.preventDefault(); // 두 손가락 터치 시 동작 방지 (필요시)
-    }
-  }, { passive: false });
-});
 
