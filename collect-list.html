@@ -31,15 +31,35 @@
       "사계제", "기타축일들"
       // 필요에 따라 계속 추가...
     ];
+    /*
+        const grid = document.getElementById('buttonGrid');
+    
+        seasonNames.forEach((name, index) => {
+          const btn = document.createElement('button');
+          btn.textContent = name;
+          btn.onclick = function () {
+            location.href = 'collect-text.html#section' + (index + 1);
+          };
+          grid.appendChild(btn);
+        });
+    */
 
+    const lastAvailableSection = 4; // 입력된 마지막 section 번호
     const grid = document.getElementById('buttonGrid');
 
     seasonNames.forEach((name, index) => {
+      const sectionNumber = index + 1;
       const btn = document.createElement('button');
       btn.textContent = name;
+
       btn.onclick = function () {
-        location.href = 'collect-text.html#section' + (index + 1);
+        if (sectionNumber > lastAvailableSection) {
+          alert("아직 입력이 안되었습니다.");
+          return;
+        }
+        location.href = 'collect-text.html#section' + sectionNumber;
       };
+
       grid.appendChild(btn);
     });
 
