@@ -365,6 +365,12 @@ document.addEventListener('DOMContentLoaded', () => {
     themeColor = '#9e150e';
   } else if (path.includes('evening-prayer')) {
     themeColor = '#9e150e';
+  } else if (path.includes('noonday-prayer')) {
+    themeColor = '#9e150e';
+  } else if (path.includes('compline-prayer')) {
+    themeColor = '#9e150e';
+  } else if (path.includes('brief-prayer')) {
+    themeColor = '#9e150e';
   } else if (path.includes('text-select')) {
     themeColor = '#9e150e';
   }

@@ -189,7 +189,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
-
+/*정과표 본문*/
 .rubric3 {
   color: black;
   font-size: 1.1em;
@@ -223,6 +223,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 /* -------------------------------------------------*/
+
 .common-button {
   font-size: 1em;
   padding: 10px 16px;
@@ -291,6 +292,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 /* 목록, 본문 버튼--------------------------------------------------------*/
+
 .sub-button {
   font-size: 1em;
   padding: 10px 16px;
@@ -410,7 +412,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 /* 안쓰는 버튼*/
-.fixed-left-right {
+.fixed-top-right {
   position: fixed;
   bottom: 20px;
   right: 10px;
@@ -437,7 +439,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 
-/*---목록검색-------------------------------------------------------*/
+/*---목록 검색선택-------------------------------------------------------*/
 
 .grid1,
 .grid2,
