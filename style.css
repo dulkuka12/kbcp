@@ -165,6 +165,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   /* 상단바로 가리지 않게 */
 }
 
+/* 축일표 주요축일 */
 .subtitle3 {
   color: navy;
   /* 글자색 */
@@ -173,6 +174,14 @@ body, .body-text, .rubric, .subtitle, .big-title {
   margin-top: 8px;
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
+}
+
+.body-text {
+  color: black;
+  font-size: 1.2em;
+  margin-top: 4px;
+  line-height: 1.6em;
+  /* 줄간격 일정하게 만듬 */
 }
 
 .rubric {
@@ -196,15 +205,6 @@ body, .body-text, .rubric, .subtitle, .big-title {
   margin-top: 8px;
   line-height: 1.6em;
 }
-
-.body-text {
-  color: black;
-  font-size: 1.2em;
-  margin-top: 4px;
-  line-height: 1.6em;
-  /* 줄간격 일정하게 만듬 */
-}
-
 
 .highlight {
   color: rgb(175, 5, 5);
