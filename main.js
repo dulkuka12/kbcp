@@ -116,10 +116,10 @@ window.goToRememberedCanticle2 = function () {
   goToRememberedSection('rememberedCanticle2', '기억된 송가가 없습니다.');
 };
 window.goToRememberedCollect1 = function () {
-  goToRememberedSection('rememberedCollect1', '기억된 본기도가 없습니다.');
+  goToRememberedSection('rememberedCollect1', '기억된 본기도1이 없습니다.');
 };
 window.goToRememberedCollect2 = function () {
-  goToRememberedSection('rememberedCollect2', '기억된 본기도가 없습니다.');
+  goToRememberedSection('rememberedCollect2', '기억된 본기도2가 없습니다.');
 };
 window.goToRememberedPrayer1 = function () {
   goToRememberedSection('rememberedPrayer1', '기억된 간구기도1이 없습니다.');
@@ -157,8 +157,8 @@ window.updateBookmarkButton = updateBookmarkButton;
 
 document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
-  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피A');
-  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피B');
+  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
+  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
   updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피1');
   updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피2');
   updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
@@ -453,12 +453,12 @@ function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
 
 // 아침기도 정과표
 window.goToRememberedLesson1 = function () {
-  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표A가 없습니다.');
+  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표가 없습니다.');
 };
 
 // 성찬례 정과표
 window.goToRememberedLesson2 = function () {
-  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표B가 없습니다.');
+  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
 };
 
 
@@ -490,15 +490,15 @@ function clearAllBookmarks() {
   // 버튼 텍스트 복원
   const defaultLabels = {
     'bookmarkPsalmButton': '책갈피',
-    'bookmarkLessonButton1': '책갈피A',
-    'bookmarkLessonButton2': '책갈피B',
-    'bookmarkProper1': '책갈피a',
-    'bookmarkProper2': '책갈피b',
-    'bookmarkProper3': '책갈피c',
-    'bookmarkProper4': '책갈피d',
-    'bookmarkProper5': '책갈피e',
-    'bookmarkProper6': '책갈피f',
-    'bookmarkProper7': '책갈피g',
+    'bookmarkLessonButton1': '책갈피',
+    'bookmarkLessonButton2': '책갈피',
+    'bookmarkProper1': '책갈피A',
+    'bookmarkProper2': '책갈피B',
+    'bookmarkProper3': '책갈피C',
+    'bookmarkProper4': '책갈피D',
+    'bookmarkProper5': '책갈피E',
+    'bookmarkProper6': '책갈피F',
+    'bookmarkProper7': '책갈피G',
     'bookmarkCanticleButton1': '책갈피1',
     'bookmarkCanticleButton2': '책갈피2',
     'bookmarkCollectButton1': '책갈피1',
