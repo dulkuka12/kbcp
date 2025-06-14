@@ -29,8 +29,8 @@
     const seasonNames = [
       "대림절", "성탄절", "사순절", "부활절",
       "연중1-5", "연중6-10", "연중11-15", "연중16-20",
-      "연중21-25", "연중26-30", "연중31-34", "주요축일1",
-      "주요축일2", "성인공통축일", "지역고유축일", "기원예배",
+      "연중21-25", "연중26-30", "연중31-34", "주요축일 1-6월",
+      "주요축일 7-12월", "성인공통", "지역고유축일", "기원예배",
       "사계제", "기타축일들"
       // 필요에 따라 계속 추가...
     ];
@@ -48,7 +48,7 @@
 */
 
 	
-    const lastAvailableSection = 11; // 입력된 마지막 section 번호
+    const lastAvailableSection = 13; // 입력된 마지막 section 번호
     const grid = document.getElementById('buttonGrid');
     seasonNames.forEach((name, index) => {
       const sectionNumber = index + 1;
@@ -57,7 +57,7 @@
 
       btn.onclick = function () {
         if (sectionNumber > lastAvailableSection) {
-          alert("아직 입력이 안되었습니다.");
+          alert("성무일과 정과표에는 없는 부분입니다.");
           return;
         }
         location.href = 'lesson1-text.html#section' + sectionNumber;
