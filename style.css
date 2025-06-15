@@ -154,27 +154,25 @@ body, .body-text, .rubric, .subtitle, .big-title {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
-
+/*대축일*/
 .subtitle2 {
   color: #d31717;
-  /* 글자색 */
   font-size: 1.3em;
   font-weight: bold;
-  margin-top: 8px;
   line-height: 1.6em;
+  margin-top: 0px;
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
 
-/* 축일표 주요축일 */
+/* 주요축일 */
 .subtitle3 {
   color: navy;
-  /* 글자색 */
   font-size: 1.3em;
   font-weight: bold;
-  margin-top: 8px;
-  scroll-margin-top: 86px;
   line-height: 1.6em;
+  margin-top: 0px;
+  scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
 
