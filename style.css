@@ -161,6 +161,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   font-size: 1.3em;
   font-weight: bold;
   margin-top: 8px;
+  line-height: 1.6em;
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
@@ -173,6 +174,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   font-weight: bold;
   margin-top: 8px;
   scroll-margin-top: 86px;
+  line-height: 1.6em;
   /* 상단바로 가리지 않게 */
 }
 
