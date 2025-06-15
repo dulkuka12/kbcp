@@ -187,14 +187,14 @@ body, .body-text, .rubric, .subtitle, .big-title {
 .rubric {
   color: red;
   font-size: 1.1em;
-  margin-top: 10px;
+  margin-top: 4px;
   line-height: 1.6em;
 }
 
 .rubric2 {
   color: blue;
   font-size: 1.1em;
-  margin-top: 10px;
+  margin-top: 4px;
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
