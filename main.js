@@ -508,8 +508,8 @@ function updateProperBookmarkLabels() {
 
 //document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 
-document.addEventListener('DOMContentLoaded', updateProperlBookmarkButtons);
-window.addEventListener('pageshow', updateProperBookmarkButtons);
+document.addEventListener('DOMContentLoaded', updateProperlBookmarkLabels);
+window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 
 
