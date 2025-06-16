@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
       <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
+      <a href="#" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
     </div>
   `;
 
@@ -521,6 +522,34 @@ function clearAllBookmarks() {
 
 
 
+//----------------------------------------------------
+
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // 설치 메뉴 표시
+  const installMenuItem = document.getElementById('installPwa');
+  if (installMenuItem) {
+    installMenuItem.style.display = 'block';
+  }
+});
+
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        console.log('PWA 설치됨');
+      } else {
+        console.log('설치 취소됨');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
 
 
 
