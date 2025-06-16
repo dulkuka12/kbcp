@@ -250,19 +250,8 @@ document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
   }
 });
 
-/*
-function closeMenuThenNavigate(url) {
-  const menu = document.getElementById("sideMenu");
-  if (menu && menu.classList.contains("open")) {
-    menu.classList.remove("open");
-  }
 
-  setTimeout(() => {
-    location.replace(url);  // ✅ 변경: href → replace
-  }, 150);
-}
 
-/*
 function closeMenuThenNavigate(url) {
   // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
   const menu = document.getElementById("sideMenu");
@@ -273,21 +262,6 @@ function closeMenuThenNavigate(url) {
   setTimeout(() => {
     location.href = url;
   }, 150); // 필요 시 0~300ms 사이로 조절
-}
-*/
-
-function closeMenuThenNavigate(url) {
-  const menu = document.getElementById("sideMenu");
-  if (menu) {
-    menu.style.display = "none";
-  }
-
-  ignoreNextPopstate = true;  // 🔹 popstate 이벤트 무시하도록 설정
-
-  // 약간의 지연을 주어 popstate와 충돌 방지
-  setTimeout(() => {
-    location.href = url;
-  }, 50);
 }
 
 
