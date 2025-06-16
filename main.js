@@ -152,10 +152,11 @@ function updateBookmarkButton(storageKey, buttonId, defaultText) {
   }
 }
 
-// 전역으로 노출해 각 HTML에서 실행 가능하게
+// 전역으로 노출
 window.updateBookmarkButton = updateBookmarkButton;
 
-document.addEventListener('DOMContentLoaded', function () {
+// 초기화 함수로 묶어서 재사용
+function updateAllBookmarkButtons() {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
   updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
   updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
-});
+}
 
 // DOM 로드 시 + 뒤로가기 복원 시 둘 다 대응
 document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
