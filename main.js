@@ -1,6 +1,5 @@
 // main.js
 
-
 // 공통: DOM 로드 후 실행
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -44,9 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
-
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
@@ -79,14 +75,14 @@ function rememberClosest(idPrefix, storageKey, fileName) {
 }
 
 
-//예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
     try {
-      const parsed = JSON.parse(rawData); // JSON 객체로 파싱
+      const parsed = JSON.parse(rawData);
       if (parsed.url) {
         window.location.href = parsed.url;
+//        window.location.replace(parsed.url);  // ✅ 히스토리 쌓지 않음
       } else {
         alert(fallbackMessage);
       }
@@ -98,6 +94,8 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
+
+
 
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
@@ -125,7 +123,6 @@ window.goToRememberedPrayer2 = function () {
 window.goToRememberedPrayer3 = function () {
   goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
 };
-
 
 
 // 책갈피 버튼
@@ -169,7 +166,6 @@ document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
 window.addEventListener('pageshow', updateAllBookmarkButtons);
 
 
-
 // 전역에 선언
 function forceUpdate() {
   if ('serviceWorker' in navigator) {
@@ -194,6 +190,7 @@ function forceUpdate() {
     alert("⚠️ 이 브라우저는 Service Worker를 지원하지 않습니다.");
   }
 }
+
 
 
 // 사이드 메뉴 토글 함수
@@ -234,10 +231,7 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
 });
 
 
-
-
-
-  document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
+document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
   const menuIcon = document.querySelector(".menu-icon");
   const closeBtn = document.querySelector(".close-btn");
@@ -251,13 +245,13 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
   }
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/kbcp/service-worker.js')
+    navigator.serviceWorker.register('service-worker.js')
       .then(() => console.log('✅ Service Worker 등록 성공'))
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
 });
 
-/*
+
 function closeMenuThenNavigate(url) {
   const menu = document.getElementById("sideMenu");
   if (menu && menu.classList.contains("open")) {
@@ -265,25 +259,10 @@ function closeMenuThenNavigate(url) {
   }
 
   setTimeout(() => {
-    location.replace(url);  // ✅ 변경: href → replace
+//  location.replace(url);  // ✅ 변경: href → replace
+    location.href = url;
   }, 150);
 }
-*/
-
-
-function closeMenuThenNavigate(url) {
-  // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
-  const menu = document.getElementById("sideMenu");
-  if (menu && menu.classList.contains("open")) {
-    menu.classList.remove("open"); // 또는 toggleMenu();
-  }
-
-  // 약간의 지연 후 페이지 이동 (애니메이션이 있으면 부드럽게)
-  setTimeout(() => {
-    location.href = url;
-  }, 150); // 필요 시 0~300ms 사이로 조절
-}
-
 
 
 
@@ -339,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 });
 
-
+/*
 // 기억한 위치로 이동하는 함수 (파일 경로 포함)
 function goToPosition(storageKey, elementId) {
   const savedData = localStorage.getItem(storageKey);
@@ -374,7 +353,7 @@ function goToPosition(storageKey, elementId) {
   }
 }
 
-
+*/
 
 /* 상단바색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
@@ -447,9 +426,10 @@ function updateProperBookmarkLabels() {
   }
 }
 
+//document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
-
 
 
 
@@ -532,7 +512,7 @@ function clearAllBookmarks() {
     'bookmarkCanticleButton1': '책갈피1',
     'bookmarkCanticleButton2': '책갈피2',
     'bookmarkCollectButton1': '책갈피1',
-    'bookmarkCollectButton2': '책갈피1',
+    'bookmarkCollectButton2': '책갈피2',
     'bookmarkPrayerButton1': '책갈피1',
     'bookmarkPrayerButton2': '책갈피2',
     'bookmarkPrayerButton3': '책갈피3',
