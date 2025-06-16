@@ -452,8 +452,6 @@ function updateProperBookmarkLabels() {
   }
 }
 
-//document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
-
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
