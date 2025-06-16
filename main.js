@@ -45,11 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// 사이드 메뉴 토글 함수
-function toggleMenu() {
-  const sideMenu = document.getElementById("sideMenu");
-  sideMenu.classList.toggle("open");
-}
 
 
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
@@ -201,7 +196,11 @@ function forceUpdate() {
 }
 
 
-
+// 사이드 메뉴 토글 함수
+function toggleMenu() {
+  const sideMenu = document.getElementById("sideMenu");
+  sideMenu.classList.toggle("open");
+}
 
 
 // DOM이 로드된 후 실행되는 부분
@@ -258,7 +257,7 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
   }
 });
 
-
+/*
 function closeMenuThenNavigate(url) {
   const menu = document.getElementById("sideMenu");
   if (menu && menu.classList.contains("open")) {
@@ -269,9 +268,9 @@ function closeMenuThenNavigate(url) {
     location.replace(url);  // ✅ 변경: href → replace
   }, 150);
 }
+*/
 
 
-/*
 function closeMenuThenNavigate(url) {
   // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
   const menu = document.getElementById("sideMenu");
@@ -284,7 +283,7 @@ function closeMenuThenNavigate(url) {
     location.href = url;
   }, 150); // 필요 시 0~300ms 사이로 조절
 }
-*/
+
 
 
 
