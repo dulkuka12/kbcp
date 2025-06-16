@@ -1,5 +1,6 @@
 // main.js
 
+
 // 공통: DOM 로드 후 실행
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -43,6 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+// 사이드 메뉴 토글 함수
+function toggleMenu() {
+  const sideMenu = document.getElementById("sideMenu");
+  sideMenu.classList.toggle("open");
+}
+
+
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
@@ -75,13 +84,14 @@ function rememberClosest(idPrefix, storageKey, fileName) {
 }
 
 
+//예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
     try {
-      const parsed = JSON.parse(rawData);
+      const parsed = JSON.parse(rawData); // JSON 객체로 파싱
       if (parsed.url) {
-        window.location.replace(parsed.url);  // ✅ 히스토리 쌓지 않음
+        window.location.href = parsed.url;
       } else {
         alert(fallbackMessage);
       }
@@ -93,8 +103,6 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
-
-
 
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
@@ -124,6 +132,7 @@ window.goToRememberedPrayer3 = function () {
 };
 
 
+
 // 책갈피 버튼
 function updateBookmarkButton(storageKey, buttonId, defaultText) {
   const data = localStorage.getItem(storageKey);
@@ -143,11 +152,10 @@ function updateBookmarkButton(storageKey, buttonId, defaultText) {
   }
 }
 
-// 전역으로 노출
+// 전역으로 노출해 각 HTML에서 실행 가능하게
 window.updateBookmarkButton = updateBookmarkButton;
 
-// 초기화 함수로 묶어서 재사용
-function updateAllBookmarkButtons() {
+document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
   updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
   updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
@@ -158,11 +166,8 @@ function updateAllBookmarkButtons() {
   updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
-}
+});
 
-// DOM 로드 시 + 뒤로가기 복원 시 둘 다 대응
-document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
-window.addEventListener('pageshow', updateAllBookmarkButtons);
 
 
 // 전역에 선언
@@ -192,11 +197,6 @@ function forceUpdate() {
 
 
 
-// 사이드 메뉴 토글 함수
-function toggleMenu() {
-  const sideMenu = document.getElementById("sideMenu");
-  sideMenu.classList.toggle("open");
-}
 
 
 // DOM이 로드된 후 실행되는 부분
@@ -230,7 +230,10 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
 });
 
 
-document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
+
+
+
+  document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
   const menuIcon = document.querySelector(".menu-icon");
   const closeBtn = document.querySelector(".close-btn");
@@ -251,18 +254,32 @@ document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 });
 
 
+function closeMenuThenNavigate(url) {
+  const menu = document.getElementById("sideMenu");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open");
+  }
 
+  setTimeout(() => {
+    location.replace(url);  // ✅ 변경: href → replace
+  }, 150);
+}
+
+
+/*
 function closeMenuThenNavigate(url) {
   // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
   const menu = document.getElementById("sideMenu");
   if (menu && menu.classList.contains("open")) {
     menu.classList.remove("open"); // 또는 toggleMenu();
   }
+
   // 약간의 지연 후 페이지 이동 (애니메이션이 있으면 부드럽게)
   setTimeout(() => {
     location.href = url;
   }, 150); // 필요 시 0~300ms 사이로 조절
 }
+*/
 
 
 
@@ -318,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 });
 
-/*
+
 // 기억한 위치로 이동하는 함수 (파일 경로 포함)
 function goToPosition(storageKey, elementId) {
   const savedData = localStorage.getItem(storageKey);
@@ -353,7 +370,7 @@ function goToPosition(storageKey, elementId) {
   }
 }
 
-*/
+
 
 /* 상단바색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
@@ -427,7 +444,10 @@ function updateProperBookmarkLabels() {
 }
 
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
-window.addEventListener('pageshow', updateProperBookmarkLabels);
+
+
+
+
 
 
 
@@ -507,7 +527,7 @@ function clearAllBookmarks() {
     'bookmarkCanticleButton1': '책갈피1',
     'bookmarkCanticleButton2': '책갈피2',
     'bookmarkCollectButton1': '책갈피1',
-    'bookmarkCollectButton2': '책갈피2',
+    'bookmarkCollectButton2': '책갈피1',
     'bookmarkPrayerButton1': '책갈피1',
     'bookmarkPrayerButton2': '책갈피2',
     'bookmarkPrayerButton3': '책갈피3',

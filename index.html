@@ -17,6 +17,23 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      -webkit-touch-callout: none;
+      /* iOS 롱터치 메뉴 제거*/
+    }
+
+    a,
+    img,
+    button {
+      -webkit-user-drag: none;
+      pointer-events: auto;
+      /* 버튼 동작을 위해 필요*/
+    }
   </style>
 </head>
 
@@ -74,7 +91,6 @@
   window.addEventListener('pageshow', setupSilentExit);
   window.addEventListener('DOMContentLoaded', setupSilentExit);
 </script>
-
 
 </body>
 
