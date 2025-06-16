@@ -17,23 +17,6 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
-    body {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-
-      -webkit-touch-callout: none;
-      /* iOS 롱터치 메뉴 제거*/
-    }
-
-    a,
-    img,
-    button {
-      -webkit-user-drag: none;
-      pointer-events: auto;
-      /* 버튼 동작을 위해 필요*/
-    }
   </style>
 </head>
 
@@ -67,26 +50,26 @@
 
     history.pushState(null, null, location.href);
 
-    window.addEventListener('popstate', function () {
-      if (!isHomePage()) return;
+  window.addEventListener('popstate', function () {
+  if (!isHomePage()) return;
 
-      if (backPressedOnce) {
-        // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
-        // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
-        return;
-      }
-
-      // 첫 번째 누름 → 다시 상태 push해서 종료 방지
-      backPressedOnce = true;
-      history.pushState(null, null, location.href);
-
-      // 2초 지나면 초기화
-      setTimeout(() => {
-        backPressedOnce = false;
-      }, 2000);
-    });
+  if (ignoreNextPopstate) {
+    ignoreNextPopstate = false;
+    return; // 🔹 popstate 무시
   }
 
+  if (backPressedOnce) {
+    return; // 종료
+  }
+
+  backPressedOnce = true;
+  history.pushState(null, null, location.href);
+
+  setTimeout(() => {
+    backPressedOnce = false;
+  }, 2000);
+});
+  
   window.addEventListener('load', setupSilentExit);
   window.addEventListener('pageshow', setupSilentExit);
   window.addEventListener('DOMContentLoaded', setupSilentExit);
