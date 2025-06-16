@@ -195,44 +195,6 @@ document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
 window.addEventListener('pageshow', updateAllBookmarkButtons);
 
 
-
-/*
-// 책갈피 버튼
-function updateBookmarkButton(storageKey, buttonId, defaultText) {
-  const data = localStorage.getItem(storageKey);
-  const btn = document.getElementById(buttonId);
-
-  if (btn && data) {
-    try {
-      const parsed = JSON.parse(data);
-      if (parsed.title) {
-        btn.textContent = parsed.title;
-      }
-    } catch (e) {
-      btn.textContent = defaultText;
-    }
-  } else if (btn) {
-    btn.textContent = defaultText;
-  }
-}
-
-// 전역으로 노출해 각 HTML에서 실행 가능하게
-window.updateBookmarkButton = updateBookmarkButton;
-
-document.addEventListener('DOMContentLoaded', function () {
-  updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
-  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
-  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
-  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피1');
-  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피2');
-  updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
-  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피2');
-  updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
-  updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
-  updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
-});
-*/
-
 // 전역에 선언
 function forceUpdate() {
   if ('serviceWorker' in navigator) {
@@ -327,7 +289,6 @@ function closeMenuThenNavigate(url) {
     location.replace(url);  // ✅ 변경: href → replace
   }, 150);
 }
-
 
 /*
 function closeMenuThenNavigate(url) {
@@ -508,7 +469,7 @@ function updateProperBookmarkLabels() {
 
 //document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 
-document.addEventListener('DOMContentLoaded', updateProperlBookmarkLabels);
+document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 
