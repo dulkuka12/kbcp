@@ -36,36 +36,45 @@
   </div>
 
 <script>
+  let backPressedOnce = false;
 
-let ignorePopstate = false;
-let backPressedOnce = false;
-
-window.addEventListener('popstate', function () {
-  if (ignorePopstate) {
-    // 페이지 이동 중이므로 종료 메시지 무시
-    return;
+  function isHomePage() {
+    const path = location.pathname;
+    return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
   }
 
-  if (!backPressedOnce) {
-    backPressedOnce = true;
-    alert("한 번 더 누르면 종료됩니다.");
-    setTimeout(() => backPressedOnce = false, 2000);
+  function setupSilentExit() {
+    if (!isHomePage()) return;
+    if (window.__silentExitSet) return;
+    window.__silentExitSet = true;
+
     history.pushState(null, null, location.href);
-  } else {
-    window.close(); // 또는 실제로 앱 종료 시도
+
+    window.addEventListener('popstate', function () {
+      if (!isHomePage()) return;
+
+      if (backPressedOnce) {
+        // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
+        // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
+        return;
+      }
+
+      // 첫 번째 누름 → 다시 상태 push해서 종료 방지
+      backPressedOnce = true;
+      history.pushState(null, null, location.href);
+
+      // 2초 지나면 초기화
+      setTimeout(() => {
+        backPressedOnce = false;
+      }, 2000);
+    });
   }
-});
 
-// 사이드 메뉴에서 이동할 때 호출할 함수
-function closeMenuThenNavigate(url) {
-  ignorePopstate = true; // 종료 확인 잠시 차단
-  setTimeout(() => {
-    location.href = url;
-  }, 50); // 약간의 지연으로 충돌 방지
-}
-
-
+  window.addEventListener('load', setupSilentExit);
+  window.addEventListener('pageshow', setupSilentExit);
+  window.addEventListener('DOMContentLoaded', setupSilentExit);
 </script>
+
 
 </body>
 

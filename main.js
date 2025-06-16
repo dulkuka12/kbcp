@@ -457,9 +457,6 @@ window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 
 
-
-
-
 function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
