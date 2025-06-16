@@ -83,7 +83,7 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   }
 }
 
-/*
+
 //예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
@@ -103,8 +103,8 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
-*/
 
+/*
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -123,7 +123,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
-
+*/
 
 
 // 전역 노출, 책갈피 저장이 없으면
