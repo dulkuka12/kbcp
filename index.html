@@ -52,54 +52,53 @@
     </br><br><br>
   </div>
 
+<script>
+  let backPressedOnce = false;
 
-  <script>
-    let backPressedOnce = false;
-    let suppressPopstate = false;
+  function isHomePage() {
+    const path = location.pathname;
+    return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
+  }
 
-    // 뒤로가기 감지
+  function setupBackExitHandler() {
+    if (!isHomePage()) return;
+
+    // 이미 설정되어 있으면 생략 (중복 방지)
+    if (window.__kbcpBackHandlerSet) return;
+    window.__kbcpBackHandlerSet = true;
+
+    history.pushState(null, null, location.href);
+
     window.addEventListener('popstate', function () {
-      const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
-
-      if (suppressPopstate) {
-        suppressPopstate = false;
-        return;
-      }
-
-      if (!isHome) return;
+      if (!isHomePage()) return;
 
       if (backPressedOnce) {
-        return; // 두 번째는 그냥 종료
+        // 두 번째 누름 → 종료
+        return;
       }
 
       backPressedOnce = true;
       alert("한 번 더 누르면 앱이 종료됩니다.");
 
-      history.pushState(null, null, location.href);
+      history.pushState(null, null, location.href); // 다시 밀어넣기
+
       setTimeout(() => {
         backPressedOnce = false;
       }, 2000);
     });
+  }
 
-    // index.html로 돌아올 때마다 상태 보정
-    function ensureHomeBackState() {
-      const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
-      if (isHome) {
-        suppressPopstate = true;
-        history.pushState(null, null, location.href);
-      }
-    }
+  // 여러 경우에 대비해 복수 이벤트에서 실행
+  window.addEventListener('load', setupBackExitHandler);
+  window.addEventListener('pageshow', setupBackExitHandler);
+  window.addEventListener('DOMContentLoaded', setupBackExitHandler);
 
-    window.addEventListener('load', ensureHomeBackState);             // 최초 실행
-    window.addEventListener('DOMContentLoaded', ensureHomeBackState); // HTML 파싱 완료 시
-    window.addEventListener('pageshow', ensureHomeBackState);         // 캐시에서 복귀 시
-
-    // 사이드메뉴로 이동 시
-    function safeNavigate(url) {
-      suppressPopstate = true;
-      location.href = url;
-    }
-  </script>
+  // 사이드 메뉴 등에서 사용되는 안전한 이동 함수
+  function safeNavigate(url) {
+    window.__kbcpBackHandlerSet = false; // 다음 화면에서 다시 설정될 수 있도록
+    location.href = url;
+  }
+</script>
 
 </body>
 
