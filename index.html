@@ -54,52 +54,42 @@
 
 <script>
   let backPressedOnce = false;
-  let suppressPopstate = false; // 이동 중 popstate 감지 방지용
 
   function isHomePage() {
     const path = location.pathname;
     return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
   }
 
-  function setupBackExitHandler() {
+  function setupSilentExit() {
     if (!isHomePage()) return;
-
-    if (window.__kbcpBackHandlerSet) return;
-    window.__kbcpBackHandlerSet = true;
+    if (window.__silentExitSet) return;
+    window.__silentExitSet = true;
 
     history.pushState(null, null, location.href);
 
     window.addEventListener('popstate', function () {
       if (!isHomePage()) return;
 
-      if (suppressPopstate) {
-        suppressPopstate = false; // 사용자가 아닌 이동 → 무시
+      if (backPressedOnce) {
+        // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
+        // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
         return;
       }
 
-      if (backPressedOnce) return;
-
+      // 첫 번째 누름 → 다시 상태 push해서 종료 방지
       backPressedOnce = true;
-      alert("한 번 더 누르면 앱이 종료됩니다.");
-
       history.pushState(null, null, location.href);
+
+      // 2초 지나면 초기화
       setTimeout(() => {
         backPressedOnce = false;
       }, 2000);
     });
   }
 
-  window.addEventListener('load', setupBackExitHandler);
-  window.addEventListener('pageshow', setupBackExitHandler);
-  window.addEventListener('DOMContentLoaded', setupBackExitHandler);
-
-  // ✅ 사이드 메뉴 전용 이동 함수
-  function safeNavigate(url) {
-    suppressPopstate = true; // popstate가 발생해도 무시
-    setTimeout(() => {
-      location.href = url;
-    }, 10); // 10ms 지연: popstate보다 나중에 실행
-  }
+  window.addEventListener('load', setupSilentExit);
+  window.addEventListener('pageshow', setupSilentExit);
+  window.addEventListener('DOMContentLoaded', setupSilentExit);
 </script>
 
 </body>
