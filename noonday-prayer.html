@@ -85,13 +85,10 @@
     <div class="rubric">여기에서 특별한 의향의 기도를 드릴 수 있다. </div></br>
 
     <button class="common-button small-gap2"
-      onclick="rememberPosition('prayer', 'prayer-button'); location.href='prayer-select.html';">간구 검색</button></br>
-    <button id="bookmarkPrayerButton1" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer1(); rememberPosition('prayer', 'prayer-button');">책갈피1</button></br>
-    <button id="bookmarkPrayerButton2" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer2(); rememberPosition('prayer', 'prayer-button');">책갈피2</button></br>
-    <button id="bookmarkPrayerButton3" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer3(); rememberPosition('prayer', 'prayer-button');">책갈피3</button></br>
+      onclick="location.href='prayer-select.html'">간구 검색</button></br>
+    <button id="bookmarkPrayerButton1" class="common-button2 small-gap2" onclick="goToRememberedPrayer1()">책갈피1</button></br>
+    <button id="bookmarkPrayerButton2" class="common-button2 small-gap2" onclick="goToRememberedPrayer2()">책갈피2</button></br>
+    <button id="bookmarkPrayerButton3" class="common-button2 small-gap2" onclick="goToRememberedPrayer3()">책갈피3</button></br>
 
     <div class="body-text">⧾ 주여, 우리의 기도를 들으시며</div>
     <div class="body-text small-gap">◉ 우리의 부르짖음이 주님께 사무치게 하소서.</div>
@@ -99,10 +96,8 @@
     <div class="subtitle">4. 마침기도</div>
     <div class="rubric small-gap">인도자는 다음 기도 중 하나를 하며, 필요하다면 오늘의 본기도를 할 수 있다.</div>
 
-    <button class="common-button "
-      onclick="rememberPosition('collect', 'collect-button'); location.href='collect-list.html';">본기도 검색</button>
-    <button id="bookmarkCollectButton1" class="common-button2"
-      onclick="goToRememberedCollect1(); rememberPosition('collect', 'collect-button');">책갈피1</button></br>
+    <button class="common-button " onclick="location.href='collect-list.html'">본기도 검색</button>
+    <button id="bookmarkCollectButton1" class="common-button2" onclick="goToRememberedCollect1()">책갈피1</button></br>
 
     <div class="body-text">1) 하늘에 계신 성부여, 구하오니, 주님의 성령을 우리 마음에 보내시어 주님의 뜻대로 행하게 하시며, 고난 중에 있는 우리를 위로하시고, 모든 잘못에서 건져주시며,
       진리로 인도하여 주소서. 우리 주 예수 그리스도를 통하여 기도하나이다.</div>
@@ -124,7 +119,6 @@
     </br>
     </br>
     </br>    
-    <button class="sub-button fixed-bottom-right" onclick="location.href='daily-office-select.html'">상위메뉴</button>
 
     <script src="main.js" defer></script>
 

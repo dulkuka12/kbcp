@@ -43,9 +43,8 @@
     <div class="subtitle small-gap">2. 오늘의 시편</div>
     <!-- 시편검색 버튼-->
     <button class="common-button"
-      onclick="rememberPosition('psalm', 'psalm-button'); location.href='psalm-select.html';">시편 검색</button>
-    <button id="bookmarkPsalmButton" class="common-button2"
-      onclick="goToRememberedPsalm(); rememberPosition('psalm', 'psalm-button');">책갈피</button>
+      onclick="location.href='psalm-select.html'">시편 검색</button>
+    <button id="bookmarkPsalmButton" class="common-button2" onclick="goToRememberedPsalm()">책갈피</button>
 
     <div class="rubric">성시 교송 끝에서 아래 송영을 한다.</div>
     <div class="body-text small-gap">◉ 영광이 성부와 성자와 성령께 ◯ 처음과 같이 지금도 그리고 영원히, 아멘.</div>
@@ -53,10 +52,8 @@
     <!--아래는 보조메뉴에서 돌아올 때 맨 위 화면 위치-->
     <e id="lesson-button"></e>
     <div class="subtitle small-gap">3. 성서독서</div>
-    <button class="common-button"
-      onclick="rememberPosition('lesson', 'lesson-button'); location.href='lesson-list.html';">정과표 검색</button>
-    <button id="bookmarkLessonButton" class="common-button2"
-      onclick="goToRememberedLesson(); rememberPosition('lesson', 'lesson-button');">책갈피</button>
+    <button class="common-button" onclick="location.href='lesson-list.html'">정과표 검색</button>
+    <button id="bookmarkLessonButton" class="common-button2" onclick="goToRememberedLesson()">책갈피</button>
 
     <div class="rubric">성서독서는 하나 혹은 둘을 할 수 있다.</div>
 
@@ -71,13 +68,9 @@
     <b id="canticle-button"></b>
     <div class="subtitle small-gap">4. 독서후 송가</div>
 
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('canticle', 'canticle-button'); location.href='canticle-select.html';">송가
-      검색</button></br>
-    <button id="bookmarkCanticleButton1" class="common-button2 small-gap2"
-      onclick="goToRememberedCanticle1(); rememberPosition('canticle', 'canticle-button');">책갈피1</button></br>
-    <button id="bookmarkCanticleButton2" class="common-button2 small-gap2"
-      onclick="goToRememberedCanticle2(); rememberPosition('canticle', 'canticle-button');">책갈피2</button></br>
+    <button class="common-button small-gap2" onclick="location.href='canticle-select.html'">송가 검색</button></br>
+    <button id="bookmarkCanticleButton1" class="common-button2 small-gap2" onclick="goToRememberedCanticle1()">책갈피1</button></br>
+    <button id="bookmarkCanticleButton2" class="common-button2 small-gap2" onclick="goToRememberedCanticle2()">책갈피2</button></br>
 
     <div class="rubric">독서 후 아래의 송가 중 하나를 한다. 2독서까지 있다면 1독서 후에는 성모 마리아송가를 2독서 후에는 시므온송가를 한다.
       혹은 ‘성무일과 송가들’ 중에서 선택한다.</div>
@@ -136,12 +129,9 @@
     <c id="collect-button"></c>
     <div class="subtitle small-gap">7. 오늘의 본기도</div>
 
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('collect', 'collect-button'); location.href='collect-list.html';">본기도 검색</button></br>
-    <button id="bookmarkCollectButton1" class="common-button2 small-gap2"
-      onclick="goToRememberedCollect1(); rememberPosition('collect', 'collect-button');">책갈피1</button></br>
-    <button id="bookmarkCollectButton2" class="common-button2 small-gap2"
-      onclick="goToRememberedCollect2(); rememberPosition('collect', 'collect-button');">책갈피2</button></br>
+    <button class="common-button small-gap2" onclick="location.href='collect-list.html'">본기도 검색</button></br>
+    <button id="bookmarkCollectButton1" class="common-button2 small-gap2" onclick="goToRememberedCollect1()">책갈피1</button></br>
+    <button id="bookmarkCollectButton2" class="common-button2 small-gap2" onclick="goToRememberedCollect2()">책갈피2</button></br>
 
     <div class="rubric">교회력에 따른 오늘의 본기도를 드린다.</div>
 
@@ -158,14 +148,10 @@
     <d id="prayer-button"></d>
     <div class="rubric small-gap">여기서 특별한 의향의 기도를 드릴 수 있다.</div>
 
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('prayer', 'prayer-button'); location.href='prayer-list.html';">간구 검색</button></br>
-    <button id="bookmarkPrayerButton1" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer1(); rememberPosition('prayer', 'prayer-button');">책갈피1</button></br>
-    <button id="bookmarkPrayerButton2" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer2(); rememberPosition('prayer', 'prayer-button');">책갈피2</button></br>
-    <button id="bookmarkPrayerButton3" class="common-button2 small-gap2"
-      onclick="goToRememberedPrayer3(); rememberPosition('prayer', 'prayer-button');">책갈피3</button></br>
+    <button class="common-button small-gap2" onclick="location.href='prayer-list.html'">간구 검색</button></br>
+    <button id="bookmarkPrayerButton1" class="common-button2 small-gap2" onclick="goToRememberedPrayer1()">책갈피1</button></br>
+    <button id="bookmarkPrayerButton2" class="common-button2 small-gap2" onclick="goToRememberedPrayer2()">책갈피2</button></br>
+    <button id="bookmarkPrayerButton3" class="common-button2 small-gap2" onclick="goToRememberedPrayer3()">책갈피3</button></br>
 
     <div class="rubric">성찬례로 이어진다면 여기서 평화의 인사로 계속한다.</div>
 
@@ -185,9 +171,7 @@
     </br>
     </br>
     <div class="content-end-spacer"></div>
-    <!-- 최상위로 돌아가기 버튼 -->
-    <button class="sub-button fixed-bottom-right" onclick="location.href='daily-office-select.html'">상위메뉴</button>
-
+    
     <script src="main.js" defer></script>
 
     <script>

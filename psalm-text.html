@@ -17,7 +17,6 @@
   <main class="content">
 
     <!-- 예식문으로 돌아가기 버튼 한달 시편 필터시 밑에 위치하면 안보임으로 상단에 오게 한다 -->
-    <button class="sub-button fixed-bottom-right2" onclick="goToPosition('psalm', 'psalm-button')">바로가기</button>
     <button class="sub-button fixed-bottom-left"
       onclick="rememberClosest('psalm', 'rememberedPsalm', 'psalm-text.html')">책갈피</button>
 
@@ -3290,6 +3289,7 @@
     <script src="main.js"></script>
 
     <script>
+
       /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다 */
       document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);

@@ -15,7 +15,7 @@
 
     <c id="proper0"></c>
     <button class="common-button small-gap2"
-      onclick="rememberPosition('proper', 'proper0'); location.href='proper-list.html';">성찬례 모든 특정문 책갈피
+      onclick="rememberPosition('proper', 'proper0'); location.href='proper-list.html'">성찬례 모든 특정문 책갈피
       저장해주기</button></br>
 
     <div class="big-title small-gap">개회예식</div>
@@ -36,7 +36,7 @@
     <div class="body-text">◉ 아멘</div>
     <div class="subtitle small-gap">3. 죄의 고백</div>
     <div class="rubric small-gap">집전자는 아래의 권고문이나 다른 절기에 맞는 권고문을 선택한다. 경우에 따라 십계명으로 대신할 수 있다.</div>
-    <button class="common-button2" id="bookmarkProper1" onclick="rememberPosition('proper', 'proper1'); goToProperBookmark(1);">책갈피A</button>
+    <button class="common-button2" id="bookmarkProper1" onclick="goToProperBookmark(1)">책갈피A</button>
     <button class="common-button" onclick="location.href='commandments-text.html'">십계명 보기</button>
 
     <div class="body-text">⧾ 형제자매 여러분, 우리는 이 거룩한 성찬례를 합당하게 드리기 위하여 서로 화목하 며 겸손한 마음으로 우리 죄를 고백합시다.</div>
@@ -100,12 +100,9 @@
     <div class="rubric">인사 후에 적절한 인사말을 하거나 그 날의 예배의향을 설명할 수 있다.</div>
     </br>
 
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('collect', 'collect-button'); location.href='collect-list.html';">본기도 검색</button></br>
-    <button id="bookmarkCollectButton1" class="common-button2 small-gap2"
-      onclick="goToRememberedCollect1(); rememberPosition('collect', 'collect-button');">책갈피1</button></br>
-    <button id="bookmarkCollectButton2" class="common-button2 small-gap2"
-      onclick="goToRememberedCollect2(); rememberPosition('collect', 'collect-button');">책갈피2</button></br>
+    <button class="common-button small-gap2" onclick="location.href='collect-list.html';">본기도 검색</button></br>
+    <button id="bookmarkCollectButton1" class="common-button2 small-gap2" onclick="goToRememberedCollect1()">책갈피1</button></br>
+    <button id="bookmarkCollectButton2" class="common-button2 small-gap2" onclick="goToRememberedCollect2()">책갈피2</button></br>
 
     <div class="body-text">⧾ 기도합시다.</div>
     <div class="rubric">이제 그 날의 본기도를 드린다.</div>
@@ -116,10 +113,8 @@
     <div class="body-text">3) 성자께서는 성부와 성령과 함께 영원히 사시며 다스리시나이다. 아멘</div>
 
     <div class="subtitle small-gap">6. 첫째 독서</div>
-    <button class="common-button"
-      onclick="rememberPosition('lesson2', 'lesson2-button'); location.href='lesson2-list.html';">정과표 검색</button>
-    <button id="bookmarkLessonButton2" class="common-button2"
-      onclick="goToRememberedLesson2(); rememberPosition('lesson2', 'lesson2-button');">책갈피</button>
+    <button class="common-button" onclick="location.href='lesson2-list.html';">정과표 검색</button>
+    <button id="bookmarkLessonButton2" class="common-button2" onclick="goToRememberedLesson2()">책갈피</button>
     </br>
     </br>
 
@@ -130,10 +125,8 @@
     <div class="body-text">◉ 하느님께 감사합니다.</div>
     <div class="rubric">독서 후에 성가나 시편을 할 수 있다.</div>
     </br>
-    <button class="common-button"
-      onclick="rememberPosition('psalm', 'psalm-button'); location.href='psalm-select.html';">시편 검색</button>
-    <button id="bookmarkPsalmButton" class="common-button2"
-      onclick="goToRememberedPsalm(); rememberPosition('psalm', 'psalm-button');">책갈피</button>
+    <button class="common-button" onclick="location.href='psalm-select.html';">시편 검색</button>
+    <button id="bookmarkPsalmButton" class="common-button2" onclick="goToRememberedPsalm()">책갈피</button>
 
     <div class="subtitle small-gap">7. 둘째 독서</div>
     <div class="rubric">둘째독서가 있으면 첫째독서와 같은 방법으로 읽는다.</div>
@@ -147,8 +140,7 @@
     <div class="subtitle small-gap">8. 복음환호송</div>
     <div class="rubric">복음 전에 복음환호송을 할 수 있다.</div>
     </br>
-    <button class="common-button2" id="bookmarkProper2"
-      onclick="rememberPosition('proper', 'proper2'); goToProperBookmark(2);">책갈피B</button></br></br>
+    <button class="common-button2" id="bookmarkProper2" onclick="goToProperBookmark(2)">책갈피B</button></br></br>
 
     <div class="subtitle small-gap">9. 복음서</div>
     <div class="body-text">⧾ 주님께서 여러분과 함께</div>
@@ -189,11 +181,9 @@
 
     <div class="subtitle small-gap">12. 교회와 세상을 위한 기도</div>
 
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('intercession', 'intercession-button'); location.href='intercession2.html';">2양식
+    <button class="common-button small-gap2" onclick="location.href='intercession2.html'">2양식
       기도</button>
-    <button class="common-button small-gap2"
-      onclick="rememberPosition('intercession', 'intercession-button'); location.href='intercession3.html';">3양식
+    <button class="common-button small-gap2" onclick="location.href='intercession3.html'">3양식
       기도</button>
 
     <div class="subtitle small-gap">1양식 기도</div>
@@ -222,8 +212,7 @@
     <c id="proper3"></c>
     <div class="big-title small-gap">성찬의 전례</div>
     <div class="subtitle small-gap">13. 평화의 인사</div>
-    <button class="common-button2" id="bookmarkProper3"
-      onclick="rememberPosition('proper', 'proper3'); goToProperBookmark(3);">책갈피C</button>
+    <button class="common-button2" id="bookmarkProper3" onclick="goToProperBookmark(3)">책갈피C</button>
     </br>
     <div class="rubric">집전자는 아래의 인사서문이나 절기에 맞는 다른 서문을 선택할 수 있다.</div>
     <div class="body-text">⧾ 여러분은 다함께 그리스도의 몸을 이루고 있으며 각 사람은 그 지체입니다. 그리스도께서는 자신을 희생하여 평화를 이룩하셨으니 우리는 하느님 안에서 하나가 됩시다.
@@ -236,8 +225,7 @@
     <div class="rubric">헌금하는 동안 성가를 한다. 봉헌이 준비되면 집전자는 아래의 기도나 절기에 맞는 다른 기도를 드린다.</div>
     <div class="body-text">⧾ 기도합시다.</div>
     </br>
-    <button class="common-button2" id="bookmarkProper4"
-      onclick="rememberPosition('proper', 'proper4'); goToProperBookmark(4);">책갈피D</button></br></br>
+    <button class="common-button2" id="bookmarkProper4" onclick="goToProperBookmark(4)">책갈피D</button></br></br>
 
     <div class="body-text">모든 것은 하느님께서 주신 것이기에 우리가 받은 것을 하느님께 바칩니다. 주여, 이것으로 당신의 복음을 세상에 전파하게 하소서.</div>
     <div class="body-text">◉ 아멘.</div>
@@ -265,8 +253,8 @@
     <div class="body-text">⧾ 전능하신 하느님, 우리 주 예수 그리스도를 통하여 아버지께 언제 어디서나 감사와 찬양을 드림은 참으로 옳은 일이며 우리의 기쁨입니다.</div>
     <div class="rubric">여기에서 절기에 따른 특송을 드린다.</div>
     </br>
-    <button class="common-button2" id="bookmarkProper5"
-      onclick="rememberPosition('proper', 'proper5'); goToProperBookmark(5);">책갈피E</button></br>
+    <!--선택 성찬기도 후에 바로 주기도로 오기 위해 rememberPosition() 필요-->
+    <button class="common-button2" id="bookmarkProper5" onclick="rememberPosition('proper', 'proper5'); goToProperBookmark(5);">책갈피E</button></br>
 
     <div class="body-text"> 그러므로 우리는 하늘의 모든 천사와 성도들과 함께 주님의 거룩하고 영광스러운 이름을 소리 높여 찬양하나이다.</div>
     <div class="subtitle small-gap">거룩하시다(Sanctus)</div>
@@ -323,8 +311,7 @@
     <div class="body-text">⧾ 기도합시다.</div>
     <div class="rubric">집전자는 아래의 기도나 절기에 맞는 다른 영성체 후 기도를 선택한다.</div>
     </br>
-    <button class="common-button2" id="bookmarkProper6"
-      onclick="rememberPosition('proper', 'proper6'); goToProperBookmark(6);">책갈피F</button></br></br>
+    <button class="common-button2" id="bookmarkProper6" onclick="goToProperBookmark(6)">책갈피F</button></br></br>
 
     <div class="body-text">⧾ 전능하신 하느님, 주님께서는 그리스도의 성체와 보혈을 신령한 양식으로 우리에게 먹이심으로써 그리스도의 몸과 하나 되게 하셨으니 감사하나이다. 간절히 구하오니,
       우리를
@@ -337,8 +324,7 @@
     <div class="body-text">◉ 또한 사제와 함께 하소서.</div>
     <div class="rubric">집전자는 절기에 맞는 다른 축복문을 선택할 수 있다.</div>
     </br>
-    <button class="common-button2" id="bookmarkProper7"
-      onclick="rememberPosition('proper', 'proper7'); goToProperBookmark(7);">책갈피G</button></br></br>
+    <button class="common-button2" id="bookmarkProper7" onclick="goToProperBookmark(7);">책갈피G</button></br></br>
 
     <div class="body-text">⧾ 하느님의 무한하신 평화가 교우들과 함께 하시어, 우리 주 예수 그리스도의 사랑 안에 항상 머무르게 하시고, 전능하신 하느님 ✠ 성부와 성자와 성령은 여러분에게
       강복하소서.</div>
@@ -361,7 +347,6 @@
     </br>
     </br>
 
-    <button class="sub-button fixed-bottom-right" onclick="location.href='ucharist-select.html'">상위메뉴</button>
 
     <script src="main.js" defer></script>
 
