@@ -1,5 +1,4 @@
 // main.js
-let ignoreNextPopstate = false;
 
 // 공통: DOM 로드 후 실행
 document.addEventListener('DOMContentLoaded', function () {
