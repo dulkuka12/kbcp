@@ -83,7 +83,7 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   }
 }
 
-
+/*
 //예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
@@ -103,6 +103,31 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
+*/
+
+function goToRememberedSection(storageKey, fallbackMessage) {
+  const rawData = localStorage.getItem(storageKey);
+  if (rawData) {
+    try {
+      const parsed = JSON.parse(rawData);
+      if (parsed.url) {
+        window.location.replace(parsed.url);  // ✅ 히스토리 쌓지 않음
+      } else {
+        alert(fallbackMessage);
+      }
+    } catch (e) {
+      console.error("책갈피 데이터 파싱 오류:", e);
+      alert(fallbackMessage);
+    }
+  } else {
+    alert(fallbackMessage);
+  }
+}
+
+
+
+
+
 
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
@@ -527,7 +552,7 @@ function clearAllBookmarks() {
     'bookmarkCanticleButton1': '책갈피1',
     'bookmarkCanticleButton2': '책갈피2',
     'bookmarkCollectButton1': '책갈피1',
-    'bookmarkCollectButton2': '책갈피1',
+    'bookmarkCollectButton2': '책갈피2',
     'bookmarkPrayerButton1': '책갈피1',
     'bookmarkPrayerButton2': '책갈피2',
     'bookmarkPrayerButton3': '책갈피3',
