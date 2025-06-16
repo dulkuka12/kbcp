@@ -11,6 +11,8 @@
 </head>
 
 <body>
+
+
   <a id="psalm-button"></a>
   <a id="lesson1-button"></a>
   <a id="lesson2-button"></a>
@@ -19,25 +21,45 @@
   <a id="prayer-button"></a>
   <a id="proper-button"></a>
 
-  <!-- 메인 콘텐츠 -->
   <div class="menu-container">
-    <div class="menu-button" onclick="rememberPosition('psalm', 'psalm-button'); location.href='psalm-select.html';">1) 시편</div>
+    <div class="menu-button" onclick="rememberPosition('psalm', 'psalm-button'); location.href='psalm-select.html';">1)
+      시편</div>
     <div class="menu-button"
-      onclick="rememberPosition('lesson1', 'lesson1-button'); location.href='lesson1-list.html';">2) 성무일과 정과표</div>    <div class="menu-button"
+      onclick="rememberPosition('lesson1', 'lesson1-button'); location.href='lesson1-list.html';">2) 성무일과 정과표</div>
+    <div class="menu-button"
       onclick="rememberPosition('canticle', 'canticle-button'); location.href='canticle-select.html';">3) 독서후 송가</div>
     <div class="menu-button"
       onclick="rememberPosition('collect', 'collect-button'); location.href='collect-list.html';">4) 본기도</div>
-    <div class="menu-button" onclick="rememberPosition('prayer', 'prayer-button'); location.href='prayer-select.html';">5) 간구기도</div>
-    <div class="menu-button" onclick="rememberPosition('proper', 'proper-button'); location.href='proper-list.html';">6) 성찬 특정문</div>
+    <div class="menu-button" onclick="rememberPosition('prayer', 'prayer-button'); location.href='prayer-select.html';">
+      5) 간구기도</div>
+    <div class="menu-button" onclick="rememberPosition('proper', 'proper-button'); location.href='proper-list.html';">6)
+      성찬 특정문</div>
     <div class="menu-button"
       onclick="rememberPosition('lesson2', 'lesson2-button'); location.href='lesson2-list.html';">7) 성찬례 정과표</div>
+    <div class="content-end-spacer"></div>
   </div>
-  <div class="content-end-spacer"></div>
-
   <button class="sub-button fixed-bottom-right" onclick="location.href='index.html'">시작메뉴</button>
   <script src="main.js" defer></script>
 
   <script>
+    //이동 후 맨 위 버튼 가림 방지
+    document.addEventListener('DOMContentLoaded', function () {
+      // 해시가 존재할 때 스크롤 보정
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1);
+        const target = document.getElementById(id);
+        const offset = 70; // 상단바 높이(px)
+
+        if (target) {
+          // 브라우저 기본 위치 이동 후 스크롤 보정
+          setTimeout(() => {
+            const top = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'auto' });
+          }, 50);
+        }
+      }
+    });
+
   </script>
 </body>
 
