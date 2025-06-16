@@ -17,21 +17,23 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
-
     body {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
 
-      -webkit-touch-callout: none; /* iOS 롱터치 메뉴 제거*/
+      -webkit-touch-callout: none;
+      /* iOS 롱터치 메뉴 제거*/
     }
-    
-    a, img, button {
-      -webkit-user-drag: none;
-      pointer-events: auto; /* 버튼 동작을 위해 필요*/
-    } 
 
+    a,
+    img,
+    button {
+      -webkit-user-drag: none;
+      pointer-events: auto;
+      /* 버튼 동작을 위해 필요*/
+    }
   </style>
 </head>
 
@@ -50,11 +52,32 @@
     </br><br><br>
   </div>
 
- <script>
-  function showExitMessage() {
-    alert("앱을 종료하려면 휴대폰의 홈 버튼(o)을 누르세요.");
-  }
-  
+  <script>
+    let backPressedOnce = false;
+
+    window.addEventListener('popstate', function () {
+      if (backPressedOnce) {
+        // 두 번째 뒤로가기 → 앱 종료(브라우저가 처리)
+        return;
+      }
+
+      backPressedOnce = true;
+      alert("한 번 더 누르면 앱이 종료됩니다.");
+
+      // 2초 안에 다시 뒤로가기 누르면 종료, 아니면 리셋
+      setTimeout(() => {
+        backPressedOnce = false;
+      }, 2000);
+
+      // 뒤로가기를 막기 위해 다시 현재 상태를 push
+      history.pushState(null, null, location.href);
+    });
+
+    // 초기 진입 시 상태를 하나 넣어야 popstate가 동작함
+    window.addEventListener('load', () => {
+      history.pushState(null, null, location.href);
+    });
+
   </script>
 
 </body>
