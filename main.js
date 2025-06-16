@@ -126,9 +126,6 @@ function goToRememberedSection(storageKey, fallbackMessage) {
 
 
 
-
-
-
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
