@@ -91,7 +91,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     try {
       const parsed = JSON.parse(rawData); // JSON 객체로 파싱
       if (parsed.url) {
-        window.location.href = parsed.url;
+        window.location.href = parsed.url; 
       } else {
         alert(fallbackMessage);
       }
@@ -506,8 +506,10 @@ function updateProperBookmarkLabels() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+//document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 
+document.addEventListener('DOMContentLoaded', updateProperlBookmarkButtons);
+window.addEventListener('pageshow', updateProperBookmarkButtons);
 
 
 
