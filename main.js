@@ -197,6 +197,8 @@ function forceUpdate() {
 
 
 
+
+
 // DOM이 로드된 후 실행되는 부분
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
@@ -204,11 +206,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const sideMenuHTML = `
     <div id="sideMenu" class="side-menu">
       <span class="close-btn" onclick="toggleMenu()">X</span>
-      <a href="#" onclick="forceUpdate()">버전 업데이트</a>
-      <a href="#" onclick="clearAllBookmarks()">책갈피 초기화</a>
-      <a href="#" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-      <a href="#" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
-      <a href="#" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
+      <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
+      <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
+      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
+      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
+      <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
     </div>
   `;
 
@@ -218,6 +220,17 @@ document.addEventListener('DOMContentLoaded', function () {
       <h1>${pageTitle}</h1>
     </div>
   `;
+
+
+// prevent default for all # links
+document.querySelectorAll('a[href="#"]').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault(); // 해시가 주소창에 추가되는 것을 막음
+  });
+});
+
+
+
 
 
   document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
@@ -242,6 +255,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function closeMenuThenNavigate(url) {
+  const menu = document.getElementById("sideMenu");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open");
+  }
+
+  setTimeout(() => {
+    location.replace(url);  // ✅ 변경: href → replace
+  }, 150);
+}
+
+
+/*
+function closeMenuThenNavigate(url) {
   // 사이드바 닫기 함수가 toggleMenu일 경우 조건 처리
   const menu = document.getElementById("sideMenu");
   if (menu && menu.classList.contains("open")) {
@@ -253,7 +279,7 @@ function closeMenuThenNavigate(url) {
     location.href = url;
   }, 150); // 필요 시 0~300ms 사이로 조절
 }
-
+*/
 
 
 
