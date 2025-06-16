@@ -83,7 +83,7 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   }
 }
 
-
+/*
 //예문 책갈피에서 본문으로 찾아갈 때
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
@@ -103,8 +103,8 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
+*/
 
-/*
 function goToRememberedSection(storageKey, fallbackMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -123,7 +123,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
-*/
+
 
 
 // 전역 노출, 책갈피 저장이 없으면
@@ -154,7 +154,49 @@ window.goToRememberedPrayer3 = function () {
 };
 
 
+// 책갈피 버튼
+function updateBookmarkButton(storageKey, buttonId, defaultText) {
+  const data = localStorage.getItem(storageKey);
+  const btn = document.getElementById(buttonId);
 
+  if (btn && data) {
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed.title) {
+        btn.textContent = parsed.title;
+      }
+    } catch (e) {
+      btn.textContent = defaultText;
+    }
+  } else if (btn) {
+    btn.textContent = defaultText;
+  }
+}
+
+// 전역으로 노출
+window.updateBookmarkButton = updateBookmarkButton;
+
+// 초기화 함수로 묶어서 재사용
+function updateAllBookmarkButtons() {
+  updateBookmarkButton('rememberedPsalm', 'bookmarkPsalmButton', '책갈피');
+  updateBookmarkButton('rememberedLesson1', 'bookmarkLessonButton1', '책갈피');
+  updateBookmarkButton('rememberedLesson2', 'bookmarkLessonButton2', '책갈피');
+  updateBookmarkButton('rememberedCanticle1', 'bookmarkCanticleButton1', '책갈피1');
+  updateBookmarkButton('rememberedCanticle2', 'bookmarkCanticleButton2', '책갈피2');
+  updateBookmarkButton('rememberedCollect1', 'bookmarkCollectButton1', '책갈피1');
+  updateBookmarkButton('rememberedCollect2', 'bookmarkCollectButton2', '책갈피2');
+  updateBookmarkButton('rememberedPrayer1', 'bookmarkPrayerButton1', '책갈피1');
+  updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
+  updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
+}
+
+// DOM 로드 시 + 뒤로가기 복원 시 둘 다 대응
+document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
+window.addEventListener('pageshow', updateAllBookmarkButtons);
+
+
+
+/*
 // 책갈피 버튼
 function updateBookmarkButton(storageKey, buttonId, defaultText) {
   const data = localStorage.getItem(storageKey);
@@ -189,8 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPrayer2', 'bookmarkPrayerButton2', '책갈피2');
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
 });
-
-
+*/
 
 // 전역에 선언
 function forceUpdate() {
