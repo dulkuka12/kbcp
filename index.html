@@ -52,77 +52,53 @@
     </br><br><br>
   </div>
 
-  
 
-<script>
-  let backPressedOnce = false;
-  let suppressPopstate = false; // 페이지 이동으로 인한 popstate 방지용
-
-  window.addEventListener('popstate', function () {
-    const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
-
-    if (suppressPopstate) {
-      suppressPopstate = false;
-      return; // 사용자가 누른 게 아니라 코드로 인해 발생한 popstate → 무시
-    }
-
-    if (!isHome) return;
-
-    if (backPressedOnce) {
-      return;
-    }
-
-    backPressedOnce = true;
-    alert("한 번 더 누르면 앱이 종료됩니다.");
-
-    history.pushState(null, null, location.href); // 되돌리기
-    setTimeout(() => {
-      backPressedOnce = false;
-    }, 2000);
-  });
-
-  // 처음 로딩 시 더미 상태 추가
-  window.addEventListener('load', () => {
-    const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
-    if (isHome) {
-      suppressPopstate = true;
-      history.pushState(null, null, location.href);
-    }
-  });
-
-  // 사이드 메뉴에서 페이지 이동 시 popstate가 일어나지 않도록
-  function safeNavigate(url) {
-    suppressPopstate = true;
-    location.href = url;
-  }
-  
-
-  /*
+  <script>
     let backPressedOnce = false;
+    let suppressPopstate = false;
 
+    // 뒤로가기 감지
     window.addEventListener('popstate', function () {
-      if (backPressedOnce) {
-        // 두 번째 뒤로가기 → 앱 종료(브라우저가 처리)
+      const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
+
+      if (suppressPopstate) {
+        suppressPopstate = false;
         return;
+      }
+
+      if (!isHome) return;
+
+      if (backPressedOnce) {
+        return; // 두 번째는 그냥 종료
       }
 
       backPressedOnce = true;
       alert("한 번 더 누르면 앱이 종료됩니다.");
 
-      // 2초 안에 다시 뒤로가기 누르면 종료, 아니면 리셋
+      history.pushState(null, null, location.href);
       setTimeout(() => {
         backPressedOnce = false;
       }, 2000);
-
-      // 뒤로가기를 막기 위해 다시 현재 상태를 push
-      history.pushState(null, null, location.href);
     });
 
-    // 초기 진입 시 상태를 하나 넣어야 popstate가 동작함
-    window.addEventListener('load', () => {
-      history.pushState(null, null, location.href);
-    });
-*/
+    // index.html로 돌아올 때마다 상태 보정
+    function ensureHomeBackState() {
+      const isHome = location.pathname.endsWith('index.html') || location.pathname === '/';
+      if (isHome) {
+        suppressPopstate = true;
+        history.pushState(null, null, location.href);
+      }
+    }
+
+    window.addEventListener('load', ensureHomeBackState);             // 최초 실행
+    window.addEventListener('DOMContentLoaded', ensureHomeBackState); // HTML 파싱 완료 시
+    window.addEventListener('pageshow', ensureHomeBackState);         // 캐시에서 복귀 시
+
+    // 사이드메뉴로 이동 시
+    function safeNavigate(url) {
+      suppressPopstate = true;
+      location.href = url;
+    }
   </script>
 
 </body>
