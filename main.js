@@ -168,6 +168,10 @@ document.addEventListener('DOMContentLoaded', function () {
   updateBookmarkButton('rememberedPrayer3', 'bookmarkPrayerButton3', '책갈피3');
 });
 
+// DOM 로드 시 + 뒤로가기 복원 시 둘 다 대응
+document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
+window.addEventListener('pageshow', updateAllBookmarkButtons);
+
 
 
 // 전역에 선언
@@ -444,6 +448,7 @@ function updateProperBookmarkLabels() {
 }
 
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 
 
