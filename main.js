@@ -1,4 +1,3 @@
-// main.js
 
 // 공통: DOM 로드 후 실행
 document.addEventListener('DOMContentLoaded', function () {
@@ -426,8 +425,6 @@ function updateProperBookmarkLabels() {
   }
 }
 
-//document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
-
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
@@ -531,19 +528,25 @@ function clearAllBookmarks() {
 
 
 
-//----------------------------------------------------
+/*앱다운 설치, 앱아이콘 설치*/
 
 let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('📦 beforeinstallprompt 발생');
   e.preventDefault();
   deferredPrompt = e;
 
-  // 설치 메뉴 표시
-  const installMenuItem = document.getElementById('installPwa');
-  if (installMenuItem) {
-    installMenuItem.style.display = 'block';
-  }
+  // 메뉴가 삽입된 뒤 버튼 찾기 (메뉴 생성 이후를 보장)
+  setTimeout(() => {
+    const installBtn = document.getElementById('installPwa');
+    if (installBtn) {
+      installBtn.style.display = 'block';
+      console.log('✅ 설치 버튼 표시됨');
+    } else {
+      console.warn('❗ installPwa 버튼을 찾을 수 없습니다.');
+    }
+  }, 100);  // DOM 생성 직후이므로 약간의 여유시간
 });
 
 function installPWA() {
@@ -551,14 +554,19 @@ function installPWA() {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((result) => {
       if (result.outcome === 'accepted') {
-        console.log('PWA 설치됨');
+        console.log("✅ 사용자 설치 수락");
       } else {
-        console.log('설치 취소됨');
+        console.log("❌ 사용자 설치 거부");
       }
       deferredPrompt = null;
     });
+  } else {
+    alert("이미 설치되었거나 설치 조건이 충족되지 않았습니다.");
   }
 }
-
+// 설치 완료 후 한 번만 실행되는 메시지
+window.addEventListener('appinstalled', () => {
+  alert("✅ 성공회 기도서 앱이 설치되었습니다!");
+});
 
 

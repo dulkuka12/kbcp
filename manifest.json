@@ -1,7 +1,7 @@
                                                                                              {
   "name": "성공회 기도서",
   "short_name": "기도서",
-  "start_url": "index.html",
+  "start_url": "/kbcp/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#228b22",
