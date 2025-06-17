@@ -88,19 +88,22 @@ body, .body-text, .rubric, .subtitle, .big-title {
   background-color: #2b4e70;
 }
 
-/* X 버튼 스타일 */
 .side-menu .close-btn {
   position: absolute;
   top: 10px;
-  /* 사이드 메뉴 내부 상단에 위치 */
   right: 20px;
+  width: 44px;               /* 최소 터치 권장 크기 */
+  height: 44px;
   font-size: 1.5em;
+  line-height: 44px;         /* 가운데 정렬 */
+  text-align: center;
   cursor: pointer;
   z-index: 1002;
-  /* 사이드 메뉴 내부에서 최상위 */
   color: white;
   background-color: transparent;
+  user-select: none;
 }
+
 
 /* 메뉴 버튼 스타일 */
 .menu-container {
