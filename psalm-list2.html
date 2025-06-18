@@ -34,7 +34,8 @@
       morningBtn.textContent = `${day}일 아침`;
       const morningTargetId = 'm' + day;
       morningBtn.onclick = function () {
-        location.href = 'psalm-text.html?morningId=' + morningTargetId;
+  /*    location.href = 'psalm-text.html?morningId=' + morningTargetId; */
+       location.replace('psalm-text.html?morningId=' + morningTargetId);
       };
 
       grid.appendChild(morningBtn);
@@ -44,7 +45,7 @@
       eveningBtn.textContent = `${day}일 저녁`;
       const eveningTargetId = 'e' + day;
       eveningBtn.onclick = function () {
-        location.href = 'psalm-text.html?eveningId=' + eveningTargetId;
+        location.replace('psalm-text.html?eveningId=' + eveningTargetId);
       };
 
       grid.appendChild(eveningBtn);

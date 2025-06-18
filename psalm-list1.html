@@ -35,7 +35,7 @@
         const btn = document.createElement('button');
         btn.textContent = textFormatter(btnInfo) + '편';
         btn.onclick = function () {
-          location.href = urlPrefix + btnInfo.id;
+          location.replace(urlPrefix + btnInfo.id);
         };
         grid.appendChild(btn);
       });
