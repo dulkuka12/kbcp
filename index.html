@@ -37,45 +37,45 @@
   </br>
 
   <script>
-    
-  let backPressedOnce = false;
 
-  function isHomePage() {
-    const path = location.pathname;
-    return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
-  }
+    let backPressedOnce = false;
 
-  function setupSilentExit() {
-    if (!isHomePage()) return;
-    if (window.__silentExitSet) return;
-    window.__silentExitSet = true;
+    function isHomePage() {
+      const path = location.pathname;
+      return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
+    }
 
-    history.pushState(null, null, location.href);
-
-    window.addEventListener('popstate', function () {
+    function setupSilentExit() {
       if (!isHomePage()) return;
+      if (window.__silentExitSet) return;
+      window.__silentExitSet = true;
 
-      if (backPressedOnce) {
-        // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
-        // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
-        return;
-      }
-
-      // 첫 번째 누름 → 다시 상태 push해서 종료 방지
-      backPressedOnce = true;
       history.pushState(null, null, location.href);
 
-      // 2초 지나면 초기화
-      setTimeout(() => {
-        backPressedOnce = false;
-      }, 2000);
-    });
-  }
+      window.addEventListener('popstate', function () {
+        if (!isHomePage()) return;
 
-  window.addEventListener('load', setupSilentExit);
-  window.addEventListener('pageshow', setupSilentExit);
-  window.addEventListener('DOMContentLoaded', setupSilentExit);
-</script>
+        if (backPressedOnce) {
+          // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
+          // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
+          return;
+        }
+
+        // 첫 번째 누름 → 다시 상태 push해서 종료 방지
+        backPressedOnce = true;
+        history.pushState(null, null, location.href);
+
+        // 2초 지나면 초기화
+        setTimeout(() => {
+          backPressedOnce = false;
+        }, 2000);
+      });
+    }
+
+    window.addEventListener('load', setupSilentExit);
+    window.addEventListener('pageshow', setupSilentExit);
+    window.addEventListener('DOMContentLoaded', setupSilentExit);
+  </script>
 
 </body>
 

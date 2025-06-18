@@ -81,7 +81,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
       const parsed = JSON.parse(rawData);
       if (parsed.url) {
         window.location.href = parsed.url;
-//        window.location.replace(parsed.url);  // ✅ 히스토리 쌓지 않음
+        //        window.location.replace(parsed.url);  // ✅ 히스토리 쌓지 않음
       } else {
         alert(fallbackMessage);
       }
@@ -222,15 +222,15 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
 
 
-// prevent default for all # links
-document.querySelectorAll('a[href="#"]').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault(); // 해시가 주소창에 추가되는 것을 막음
+  // prevent default for all # links
+  document.querySelectorAll('a[href="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault(); // 해시가 주소창에 추가되는 것을 막음
+    });
   });
-});
 
 
-document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
+  document.body.insertAdjacentHTML('afterbegin', sideMenuHTML + navbarHTML);
 
   const menuIcon = document.querySelector(".menu-icon");
   const closeBtn = document.querySelector(".close-btn");
@@ -258,7 +258,7 @@ function closeMenuThenNavigate(url) {
   }
 
   setTimeout(() => {
-//  location.replace(url);  // ✅ 변경: href → replace
+    //  location.replace(url);  // ✅ 변경: href → replace
     location.href = url;
   }, 150);
 }
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (target) {
     target.scrollIntoView();
     //target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 
-}
+  }
 });
 
 /*
@@ -482,14 +482,14 @@ function clearAllBookmarks() {
     'rememberedProper5',
     'rememberedProper6',
     'rememberedProper7',
-    'rememberedCanticle1', 
-    'rememberedCanticle2', 
-    'rememberedCollect1', 
-    'rememberedCollect2', 
-    'rememberedPrayer1', 
-    'rememberedPrayer2', 
+    'rememberedCanticle1',
+    'rememberedCanticle2',
+    'rememberedCollect1',
+    'rememberedCollect2',
+    'rememberedPrayer1',
+    'rememberedPrayer2',
     'rememberedPrayer3',
-  ];   
+  ];
 
   // 로컬 스토리지 데이터 제거
   keysToRemove.forEach(key => localStorage.removeItem(key));

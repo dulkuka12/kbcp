@@ -8,12 +8,14 @@
   <script src="main.js" defer></script>
   <title>기타 연도문</title>
 
-<style>
-  /* 기본적으로 모든 요소를 숨김 */
-  .subtitle, .rubric, .body-text {
-    display: none;
-  }
-</style>
+  <style>
+    /* 기본적으로 모든 요소를 숨김 */
+    .subtitle,
+    .rubric,
+    .body-text {
+      display: none;
+    }
+  </style>
 
 </head>
 
@@ -234,50 +236,50 @@
     </br>
     </br>
   </main>
-    <script src="main.js" defer></script>
+  <script src="main.js" defer></script>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const hash = window.location.hash;
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hash = window.location.hash;
 
-  // 조건: #section... 형식이 아닌 경우 전체 그대로 보이기
-  if (!hash.startsWith("#section")) return;
+      // 조건: #section... 형식이 아닌 경우 전체 그대로 보이기
+      if (!hash.startsWith("#section")) return;
 
-  const targetId = hash.substring(1); // "section2"
-  const allElements = Array.from(document.querySelectorAll('.subtitle, .rubric, .body-text, br'));
+      const targetId = hash.substring(1); // "section2"
+      const allElements = Array.from(document.querySelectorAll('.subtitle, .rubric, .body-text, br'));
 
-  let show = false;
-  let matched = false;
+      let show = false;
+      let matched = false;
 
-  allElements.forEach(el => {
-    if (el.classList.contains('subtitle') && el.id === targetId) {
-      show = true;
-      matched = true;
-      el.style.display = 'block';
-      return;
-    }
+      allElements.forEach(el => {
+        if (el.classList.contains('subtitle') && el.id === targetId) {
+          show = true;
+          matched = true;
+          el.style.display = 'block';
+          return;
+        }
 
-    if (show) {
-      if (el.classList.contains('subtitle')) {
-        show = false;
-        el.style.display = 'none';
-        return;
+        if (show) {
+          if (el.classList.contains('subtitle')) {
+            show = false;
+            el.style.display = 'none';
+            return;
+          }
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      // 일치한 section이 없으면 전체 보이기 (fallback)
+      if (!matched) {
+        allElements.forEach(el => {
+          el.style.display = 'block';
+        });
       }
-      el.style.display = 'block';
-    } else {
-      el.style.display = 'none';
-    }
-  });
-
-  // 일치한 section이 없으면 전체 보이기 (fallback)
-  if (!matched) {
-    allElements.forEach(el => {
-      el.style.display = 'block';
     });
-  }
-});
-</script>
+  </script>
 
 
 
