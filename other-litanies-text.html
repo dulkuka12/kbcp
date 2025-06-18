@@ -8,6 +8,13 @@
   <script src="main.js" defer></script>
   <title>기타 연도문</title>
 
+<style>
+  /* 기본적으로 모든 요소를 숨김 */
+  .subtitle, .rubric, .body-text {
+    display: none;
+  }
+</style>
+
 </head>
 
 <body>
@@ -159,6 +166,7 @@
     <div class="body-text">◉ 아멘</div>
     </br>
     <div class="subtitle small-gap" id="section7">7. 서품식 연도</div>
+    <div class="rubric">부제, 사제, 주교의 서품식에 사용한다.</div>
     <div class="body-text">⧾ 하늘과 땅을 지으신 성부 하느님,</div>
     <div class="body-text">◉ 자비를 베푸소서.(이하 반복)</div>
     <div class="body-text">⧾ 이 세상을 구원하신 성자 하느님,</div>
@@ -225,12 +233,54 @@
     </br>
     </br>
     </br>
+  </main>
     <script src="main.js" defer></script>
 
-    <script>
-    </script>
 
-  </main>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash;
+
+  // 조건: #section... 형식이 아닌 경우 전체 그대로 보이기
+  if (!hash.startsWith("#section")) return;
+
+  const targetId = hash.substring(1); // "section2"
+  const allElements = Array.from(document.querySelectorAll('.subtitle, .rubric, .body-text, br'));
+
+  let show = false;
+  let matched = false;
+
+  allElements.forEach(el => {
+    if (el.classList.contains('subtitle') && el.id === targetId) {
+      show = true;
+      matched = true;
+      el.style.display = 'block';
+      return;
+    }
+
+    if (show) {
+      if (el.classList.contains('subtitle')) {
+        show = false;
+        el.style.display = 'none';
+        return;
+      }
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+
+  // 일치한 section이 없으면 전체 보이기 (fallback)
+  if (!matched) {
+    allElements.forEach(el => {
+      el.style.display = 'block';
+    });
+  }
+});
+</script>
+
+
+
 </body>
 
 </html>
