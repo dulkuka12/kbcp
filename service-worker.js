@@ -1,16 +1,16 @@
 // service-worker.js
 
 
-const CACHE_NAME = "kbcp-v1";
+const CACHE_NAME = "kbcp-v3";
 
 const CACHE_FILES = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./main.js",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./manifest.json"
+  "/kbcp/",
+  "/kbcp/index.html",
+  "/kbcp/style.css",
+  "/kbcp/main.js",
+  "/kbcp/icon-192.png",
+  "/kbcp/icon-512.png",
+  "/kbcp/manifest.json"
 ];
 
 
@@ -50,3 +50,4 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
