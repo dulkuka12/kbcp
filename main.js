@@ -317,42 +317,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/*
-// 기억한 위치로 이동하는 함수 (파일 경로 포함)
-function goToPosition(storageKey, elementId) {
-  const savedData = localStorage.getItem(storageKey);
-
-  if (savedData) {
-    try {
-      const { path, position } = JSON.parse(savedData);
-
-      if (path && position !== undefined) {
-        // 현재 경로와 저장된 경로가 다르면 해당 파일로 이동
-        if (window.location.pathname !== path) {
-          window.location.href = `${path}#${elementId}`;
-        } else {
-          // 같은 파일이라면 직접 스크롤
-          const targetElement = document.getElementById(elementId);
-
-          if (targetElement) {
-            window.scrollTo(0, targetElement.offsetTop);
-          } else {
-            console.warn(`${elementId} 요소가 존재하지 않습니다. 저장된 위치로 이동합니다.`);
-            window.scrollTo(0, position);
-          }
-        }
-      } else {
-        console.warn('저장된 경로 또는 위치가 유효하지 않습니다.');
-      }
-    } catch (e) {
-      console.error('위치 데이터 파싱 오류:', e);
-    }
-  } else {
-    console.warn(`${storageKey}에 저장된 위치가 없습니다.`);
-  }
-}
-
-*/
 
 /* 상단바색을 다르게 주기 */
 document.addEventListener('DOMContentLoaded', () => {
@@ -367,20 +331,53 @@ document.addEventListener('DOMContentLoaded', () => {
   if (path.includes('index') || path.endsWith('/') || path.endsWith('index.html')) {
     themeColor = '#228b22'; // 확실하게 index로 처리
   } else if (path.includes('ucharist-form1')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('ucharist-form2')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('morning-prayer')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('evening-prayer')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('noonday-prayer')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('compline-prayer')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
   } else if (path.includes('brief-prayer')) {
-    themeColor = '#9e150e';
+    themeColor = '#a92103';
+  } else if (path.includes('baptism')) {
+    themeColor = '#a92103';
+  } else if (path.includes('anointing-sick')) {
+    themeColor = '#a92103';
+  } else if (path.includes('reconciliation')) {
+    themeColor = '#a92103';
+  } else if (path.includes('commendatory-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('prayer-for-dead')) {
+    themeColor = '#a92103';
+  } else if (path.includes('coffin-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('departure-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('cremate-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('burial-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('enshrining-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('blessing')) {
+    themeColor = '#a92103';
+  } else if (path.includes('reception')) {
+    themeColor = '#a92103';
+  } else if (path.includes('vestry')) {
+    themeColor = '#a92103';
+  } else if (path.includes('maternity')) {
+    themeColor = '#a92103';
+  } else if (path.includes('memorial-prayer')) {
+    themeColor = '#a92103';
+  } else if (path.includes('non-believer')) {
+    themeColor = '#a92103';
   }
+
 
   if (navbar) {
     navbar.style.backgroundColor = themeColor;
