@@ -440,7 +440,7 @@
     <div class="rubric">연중6에서 9주일은 그 날짜에 따라서 공현후 연중주일이나 성령강림후 연중 주일이 된다.</div>
     <div class="rubric">연중주일에 오는 삼위일체 주일이나 그리스도의 성체일은 그 날자 위치가 부활절과 연동되므로 편이상 부활절이 끝나는 성령강림절 후에 있다.</div>
     -->
-	
+
     <div class="content-end-spacer"></div>
     </br>
     </br>
@@ -457,7 +457,8 @@
 
     <script src="main.js" defer></script>
 
-    <button class="sub-button fixed-bottom-left" onclick="rememberClosest('lesson', 'rememberedLesson2', 'lesson2-text.html')">책갈피</button>
+    <button class="sub-button fixed-bottom-left"
+      onclick="rememberClosest('lesson', 'rememberedLesson2', 'lesson2-text.html')">책갈피</button>
 
     <script>
 
@@ -466,24 +467,19 @@
         const lessonId = params.get("lessonId");
 
         if (lessonId) {
-          const all = document.querySelectorAll(".subtitle, .rubric3, br, .big-title, .rubric");
+          const all = document.querySelectorAll(".subtitle, .rubric, .rubric3, .big-title, br");
           let show = false;
 
           all.forEach(el => {
-            //   if (el.classList.contains("big-title") ||  (el.classList.contains("rubric") && !el.classList.contains("rubric3"))) {
-            // 루브릭을 보기 위해 수정 단 id와 루브릭3 사이에 있는 경우민 효과   
-            if (el.classList.contains("big-title")) {
+            el.style.display = "none";
 
-              // big-title 및 일반 rubric은 필터 시 항상 숨김
-              el.style.display = "none";
-              return;
-            }
-
-            if (el.classList.contains("subtitle")) {
-              show = (el.id === lessonId);
-              el.style.display = show ? "block" : "none";
-            } else {
-              el.style.display = show ? "block" : "none";
+            if (el.classList.contains("subtitle") && el.id === lessonId) {
+              show = true;
+              el.style.display = "block";
+            } else if (show && (el.classList.contains("rubric") || el.classList.contains("rubric3"))) {
+              el.style.display = "block";
+            } else if (el.classList.contains("subtitle")) {
+              show = false;
             }
           });
 
