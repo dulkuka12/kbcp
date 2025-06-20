@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'memorial-prayer.html': '#a92103',
     'non-believer.html': '#a92103',
     'brief-prayer.html': '#a92103',
-    // 필요 시 계속 추가
+    'blessing.html': '#a92103'   // 필요 시 계속 추가
   };
 
   // 기본 색상
