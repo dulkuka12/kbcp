@@ -318,7 +318,59 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* 상단바색을 다르게 주기 */
+document.addEventListener('DOMContentLoaded', () => {
+  const navbar = document.querySelector('.navbar');
+  const sideMenu = document.querySelector('.side-menu');
+  const closeBtn = document.querySelector('.close-btn');
+
+  const path = window.location.pathname;
+  const filename = path.split('/').pop();  // ex) 'morning-prayer.html'
+
+  // 파일 이름에 따라 테마 색상을 미리 정의
+  const themeMap = {
+    'index.html': '#228b22',
+    'morning-prayer.html': '#a92103',
+    'evening-prayer.html': '#a92103',
+    'noonday-prayer.html': '#a92103',
+    'compline-prayer.html': '#a92103',
+    'ucharist-form1.html': '#a92103',
+    'ucharist-form2.html': '#a92103',
+    'baptism.html': '#a92103',
+    'reconciliation.html': '#a92103',
+    'commendatory-prayer.html': '#a92103',
+    'prayer-for-dead.html': '#a92103',
+    'coffin-prayer.html': '#a92103',
+    'departure-prayer.html': '#a92103',
+    'cremate-prayer.html': '#a92103',
+    'burial-prayer.html': '#a92103',
+    'enshrining-prayer.html': '#a92103',
+    'reception.html': '#a92103',
+    'vestry.html': '#a92103',
+    'maternity.html': '#a92103',
+    'memorial-prayer.html': '#a92103',
+    'non-believer.html': '#a92103',
+    'brief-prayer.html': '#a92103',
+    // 필요 시 계속 추가
+  };
+
+  // 기본 색상
+  let themeColor = '#183b5c';
+
+  // index 파일일 경우 or 루트(/)
+  if (!filename || filename === 'index.html') {
+    themeColor = themeMap['index.html'];
+  } else if (themeMap[filename]) {
+    themeColor = themeMap[filename];
+  }
+
+  if (navbar) navbar.style.backgroundColor = themeColor;
+  if (sideMenu) sideMenu.style.backgroundColor = themeColor;
+  if (closeBtn) closeBtn.style.color = 'white';
+});
+
+
+
+/* 상단바색을 다르게 주기 
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
   const sideMenu = document.querySelector('.side-menu');
@@ -391,6 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
   }
 });
+*/
 
 
 function goToProperBookmark(index) {
