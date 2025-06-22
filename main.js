@@ -350,7 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'memorial-prayer.html': '#a92103',
     'non-believer.html': '#a92103',
     'brief-prayer.html': '#a92103',
-    'blessing.html': '#a92103'   // 필요 시 계속 추가
+    'blessing.html': '#a92103',   // 필요 시 계속 추가
+    'collect-text.html': '#bbb215',
+    'canticle-text.html': '#bbb215',
+    'lesson1-text.html': '#bbb215',
+    'lesson2-text.html': '#bbb215',
+    'prayer-text.html': '#bbb215',
+    'psalm-text.html': '#bbb215',
+    'proper-text.html': '#bbb215'
   };
 
   // 기본 색상
@@ -368,82 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) closeBtn.style.color = 'white';
 });
 
-
-
-/* 상단바색을 다르게 주기 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.navbar');
-  const sideMenu = document.querySelector('.side-menu');
-  const closeBtn = document.querySelector('.close-btn');
-
-  const path = window.location.href;
-
-  let themeColor = '#183b5c'; // 기본
-
-  if (path.includes('index') || path.endsWith('/') || path.endsWith('index.html')) {
-    themeColor = '#228b22'; // 확실하게 index로 처리
-  } else if (path.includes('ucharist-form1')) {
-    themeColor = '#a92103';
-  } else if (path.includes('ucharist-form2')) {
-    themeColor = '#a92103';
-  } else if (path.includes('morning-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('evening-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('noonday-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('compline-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('brief-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('baptism')) {
-    themeColor = '#a92103';
-  } else if (path.includes('anointing-sick')) {
-    themeColor = '#a92103';
-  } else if (path.includes('reconciliation')) {
-    themeColor = '#a92103';
-  } else if (path.includes('commendatory-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('prayer-for-dead')) {
-    themeColor = '#a92103';
-  } else if (path.includes('coffin-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('departure-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('cremate-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('burial-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('enshrining-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('blessing')) {
-    themeColor = '#a92103';
-  } else if (path.includes('reception')) {
-    themeColor = '#a92103';
-  } else if (path.includes('vestry')) {
-    themeColor = '#a92103';
-  } else if (path.includes('maternity')) {
-    themeColor = '#a92103';
-  } else if (path.includes('memorial-prayer')) {
-    themeColor = '#a92103';
-  } else if (path.includes('non-believer')) {
-    themeColor = '#a92103';
-  }
-
-
-  if (navbar) {
-    navbar.style.backgroundColor = themeColor;
-  }
-
-  if (sideMenu) {
-    sideMenu.style.backgroundColor = themeColor;
-  }
-
-  if (closeBtn) {
-    closeBtn.style.color = 'white'; // 또는 필요에 따라 변경
-  }
-});
-*/
 
 
 function goToProperBookmark(index) {
