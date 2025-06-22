@@ -351,13 +351,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'non-believer.html': '#a92103',
     'brief-prayer.html': '#a92103',
     'blessing.html': '#a92103',   // 필요 시 계속 추가
-    'collect-text.html': '#bbb215',
-    'canticle-text.html': '#bbb215',
-    'lesson1-text.html': '#bbb215',
-    'lesson2-text.html': '#bbb215',
-    'prayer-text.html': '#bbb215',
-    'psalm-text.html': '#bbb215',
-    'proper-text.html': '#bbb215'
+    'collect-text.html': '#c49e07',
+    'canticle-text.html': '#c49e07',
+    'lesson1-text.html': '#c49e07',
+    'lesson2-text.html': '#c49e07',
+    'prayer-text.html': '#c49e07',
+    'psalm-text.html': '#c49e07',
+    'proper-text.html': '#c49e07'
   };
 
   // 기본 색상
