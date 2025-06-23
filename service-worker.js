@@ -14,6 +14,7 @@ const CACHE_FILES = [
 ];
 
 
+
 // 설치 이벤트: 캐시 저장 + 즉시 활성화
 self.addEventListener("install", (event) => {
   console.log("📦 Service Worker 설치 및 캐시 저장 중...");
