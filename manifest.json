@@ -1,4 +1,4 @@
-                                                                                             {
+ {
   "name": "성공회 기도서",
   "short_name": "기도서",
   "start_url": "/kbcp/index.html",
@@ -7,12 +7,12 @@
   "theme_color": "#228b22",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
