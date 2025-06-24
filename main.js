@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'ucharist-form2.html': '#a92103',
     'baptism.html': '#a92103',
     'reconciliation.html': '#a92103',
+    'anointing-sick.html': '#a92103',
     'commendatory-prayer.html': '#a92103',
     'prayer-for-dead.html': '#a92103',
     'coffin-prayer.html': '#a92103',
