@@ -446,7 +446,8 @@ body, .body-text, .rubric, .subtitle, .big-title {
 
 .grid1,
 .grid2,
-.grid3 {
+.grid3,
+.grid4 {
   display: grid;
   gap: 10px;
   margin: 20px;
@@ -457,7 +458,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 .grid1 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
 }
 
 .grid2 {
@@ -465,12 +466,17 @@ body, .body-text, .rubric, .subtitle, .big-title {
 }
 
 .grid3 {
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .grid1>button,
 .grid2>button,
-.grid3>button {
+.grid3>button,
+.grid4>button {
   font-size: 1em;
   padding: 5px 10px;
   min-height: 40px;
