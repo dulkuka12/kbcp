@@ -585,7 +585,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
-  if (location.pathname.includes("ucharist1")) return;
+  if (location.pathname.includes("ucharist-form1")) return;
 
   const headers = document.querySelectorAll(".accordion-header");
 
