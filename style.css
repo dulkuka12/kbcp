@@ -483,28 +483,34 @@ body, .body-text, .rubric, .subtitle, .big-title {
   line-height: 1em;
 }
 
-/*--list목록 그리드 --------------------------*/
+/*--순서접기펴기--------------------------*/
 
-/* 송가목록 그리드
-.grid.single-column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 20px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding-bottom: 100px;
-  /* 하단 여백 추가 
-}
+    .accordion-header {
+      cursor: pointer;
+      background-color: #e0e0e0;
+      padding: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+      scroll-margin-top: 80px;
+    }
 
-/* 특정문 그리드
-.grid.single-column>button {
-  font-size: 1.1em;
-  /* 글씨 약간 작게 
-  text-align: left;
-  /* center 
-  padding: 10px 10px;
-  /* 여백 축소 
-  width: 100%;
-  box-sizing: border-box;
-} */
+    .accordion-header:hover {
+      background-color: #d0d0d0;
+    }
+
+    .accordion-header.open {
+      background-color: #d4edda;
+      border-left: 5px solid #28a745;
+      color: #155724;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background-color: #f8f8f8;
+      border-left: 3px solid #888;
+      margin-bottom: 5px;
+      padding: 0 10px;
+    }
+
