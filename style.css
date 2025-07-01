@@ -11,7 +11,11 @@ body {
 }
 
 /* 텍스트 선택 방지만 별도로 적용 */
-body, .body-text, .rubric, .subtitle, .big-title {
+body,
+.body-text,
+.rubric,
+.subtitle,
+.big-title {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -94,10 +98,12 @@ body, .body-text, .rubric, .subtitle, .big-title {
   position: absolute;
   top: 10px;
   right: 20px;
-  width: 44px; /* 최소 터치 권장 크기 */
+  width: 44px;
+  /* 최소 터치 권장 크기 */
   height: 44px;
   font-size: 1.5em;
-  line-height: 44px; /* 가운데 정렬 */
+  line-height: 44px;
+  /* 가운데 정렬 */
   text-align: center;
   cursor: pointer;
   z-index: 1002;
@@ -159,6 +165,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
+
 /*대축일*/
 .subtitle2 {
   color: #d31717;
@@ -196,6 +203,10 @@ body, .body-text, .rubric, .subtitle, .big-title {
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
+.blue-text {
+  color: blue;
+}
+
 /*회중응답*/
 .body-text2 {
   color: black;
@@ -205,12 +216,14 @@ body, .body-text, .rubric, .subtitle, .big-title {
   font-weight: bold;
 }
 
+
 .rubric {
   color: red;
   font-size: 1.1em;
   margin-top: 4px;
   line-height: 1.6em;
 }
+
 .rubric2 {
   color: blue;
   font-size: 1.1em;
@@ -218,6 +231,7 @@ body, .body-text, .rubric, .subtitle, .big-title {
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
+
 /*정과표 본문*/
 .rubric3 {
   color: black;
@@ -502,32 +516,31 @@ body, .body-text, .rubric, .subtitle, .big-title {
 
 /*--순서접기펴기--------------------------*/
 
-    .accordion-header {
-      cursor: pointer;
-      background-color: #e0e0e0;
-      padding: 10px;
-      margin-top: 10px;
-      font-weight: bold;
-      scroll-margin-top: 80px;
-    }
+.accordion-header {
+  cursor: pointer;
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+  scroll-margin-top: 80px;
+}
 
-    .accordion-header:hover {
-      background-color: #d0d0d0;
-    }
+.accordion-header:hover {
+  background-color: #d0d0d0;
+}
 
-    .accordion-header.open {
-      background-color: #d4edda;
-      border-left: 5px solid #28a745;
-      color: #155724;
-    }
+.accordion-header.open {
+  background-color: #d4edda;
+  border-left: 5px solid #28a745;
+  color: #155724;
+}
 
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background-color: #f8f8f8;
-      border-left: 3px solid #888;
-      margin-bottom: 5px;
-      padding: 0 10px;
-    }
-
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: #f8f8f8;
+  border-left: 3px solid #888;
+  margin-bottom: 5px;
+  padding: 0 10px;
+}
