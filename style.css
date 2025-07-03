@@ -286,22 +286,6 @@ body,
   background-color: #5606a7;
 }
 
-/*
-.common-button3 {
-  font-size: 1em;
-  padding: 10px 16px;
-  width: 100%;
-  margin-left: 15px;
-  background-color: #8224e3;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.common-button3:hover {
-  background-color: #5606a7;
-}
-*/
 
 /* 목록, 본문 버튼--------------------------------------------------------*/
 
@@ -459,4 +443,8 @@ body,
   border-left: 3px solid #888;
   margin-bottom: 5px;
   padding: 0 10px;
+}
+
+.indent1 {
+    text-indent: 1em;
 }
