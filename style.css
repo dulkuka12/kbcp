@@ -433,34 +433,6 @@ body,
 
 /* 앱종료버튼*/
 
-/*시작메뉴*/
-.fixed-bottom-right-4 {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #f44336;
-}
-
-.fixed-bottom-right-4:hover {
-  background-color: #B43104;
-}
-
-/* 안쓰는 버튼*/
-.fixed-top-right {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
-  z-index: 9999;
-  font-size: 1em;
-  padding: 10px 16px;
-  background-color: #f44336;
-  /* 빨간색 종료 버튼 */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
 .fixed-top-right:hover {
   background-color: #B43104;
   /* 마우스 올리면 색 변화 */
@@ -473,7 +445,7 @@ body,
 }
 
 
-/*---목록 검색선택-------------------------------------------------------*/
+/*---목록 검색선택----------------------------*/
 
 .grid1,
 .grid2,

@@ -305,8 +305,8 @@ document.addEventListener('DOMContentLoaded', function () {
       <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
       <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
       <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회 기도서 앱 소개</a>
       <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
+      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회기도서 앱 소개</a>
     </div>
   `;
 
@@ -511,7 +511,6 @@ window.goToRememberedLesson1 = function () {
 window.goToRememberedLesson2 = function () {
   goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
 };
-
 
 
 
