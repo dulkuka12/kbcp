@@ -261,69 +261,47 @@ body,
 .common-button {
   font-size: 1em;
   padding: 10px 16px;
-  /* 버튼 안 여백 (크기) */
-  /*width: 100%;   모바일에서 꽉 차게 */
   margin-left: 15px;
-  /* 제목과 버튼 사이 간격 */
   background-color: #3374ff;
   color: white;
   border: none;
   border-radius: 8px;
-  /* 모서리 둥글게 */
   cursor: pointer;
 }
-
 .common-button:hover {
   background-color: #3339ff;
-  /* 마우스 올리면 색 변화 */
 }
 
 .common-button2 {
   font-size: 1em;
-  /* 버튼 글자 크기 */
   padding: 10px 16px;
-  /* 버튼 안 여백 (크기) */
-  /*width: 100%;   모바일에서 꽉 차게 */
   margin-left: 15px;
-  /* 제목과 버튼 사이 간격 */
   background-color: #8224e3;
-  /* 버튼 색 */
   color: white;
-  /* 글자색 */
   border: none;
   border-radius: 8px;
-  /* 모서리 둥글게 */
   cursor: pointer;
 }
-
 .common-button2:hover {
   background-color: #5606a7;
-  /* 마우스 올리면 색 변화 */
 }
 
+/*
 .common-button3 {
   font-size: 1em;
-  /* 버튼 글자 크기 */
   padding: 10px 16px;
-  /* 버튼 안 여백 (크기) */
   width: 100%;
-  /*모바일에서 꽉 차게*/
   margin-left: 15px;
-  /* 제목과 버튼 사이 간격 */
   background-color: #8224e3;
-  /* 버튼 색 */
   color: white;
-  /* 글자색 */
   border: none;
   border-radius: 8px;
-  /* 모서리 둥글게 */
   cursor: pointer;
 }
-
 .common-button3:hover {
   background-color: #5606a7;
-  /* 마우스 올리면 색 변화 */
 }
+*/
 
 /* 목록, 본문 버튼--------------------------------------------------------*/
 
@@ -341,31 +319,6 @@ body,
   /* 모서리 둥글게 */
   cursor: pointer;
   /* 여기에 위치 관련 속성은 넣지 않음 좌우 두개 따로 표기위해*/
-}
-
-/*시작메뉴*/
-.fixed-bottom-right {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #06a74b;
-}
-
-.fixed-bottom-right:hover {
-  background-color: #2f6b1e;
-}
-
-/* 돌아가기*/
-.fixed-bottom-right2 {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #c1620a;
-}
-
-.fixed-bottom-right2:hover {
-  background-color: #dd4845;
-  /* 마우스 올리면 색 변화 */
 }
 
 
@@ -431,12 +384,6 @@ body,
 
 /*-------------------------------------------*/
 
-/* 앱종료버튼*/
-
-.fixed-top-right:hover {
-  background-color: #B43104;
-  /* 마우스 올리면 색 변화 */
-}
 
 /* 맨 아래 버튼으로 가리지 않게 한칸 내려 스크롤 할 수 있게 여유를 준다*/
 .content-end-spacer {
@@ -447,10 +394,7 @@ body,
 
 /*---목록 검색선택----------------------------*/
 
-.grid1,
-.grid2,
-.grid3,
-.grid4 {
+.grid1, .grid2, .grid3, .grid4 {
   display: grid;
   gap: 10px;
   margin: 20px;
