@@ -203,6 +203,7 @@ body,
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
+
 .blue-text {
   color: blue;
 }
@@ -268,6 +269,7 @@ body,
   border-radius: 8px;
   cursor: pointer;
 }
+
 .common-button:hover {
   background-color: #3339ff;
 }
@@ -282,6 +284,7 @@ body,
   border-radius: 8px;
   cursor: pointer;
 }
+
 .common-button2:hover {
   background-color: #5606a7;
 }
@@ -378,7 +381,10 @@ body,
 
 /*---목록 검색선택----------------------------*/
 
-.grid1, .grid2, .grid3, .grid4 {
+.grid1,
+.grid2,
+.grid3,
+.grid4 {
   display: grid;
   gap: 10px;
   margin: 20px;
@@ -429,6 +435,16 @@ body,
   background-color: #d0d0d0;
 }
 
+/* 처음 두 개에 색을 다르게 주려는 경우 */
+.accordion-header.highlight {
+  background-color: #cacac8;
+  color: #595b56;  /* #696962;*/
+}
+
+.accordion-header.highlight:hover {
+  background-color: #b1b1ae;
+}
+
 .accordion-header.open {
   background-color: #d4edda;
   border-left: 5px solid #28a745;
@@ -446,5 +462,5 @@ body,
 }
 
 .indent1 {
-    text-indent: 1em;
+  text-indent: 1em;
 }
