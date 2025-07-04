@@ -40,6 +40,44 @@
 
   <script>
 
+let backPressedOnce = false;
+
+function isHomePage() {
+  const path = location.pathname;
+  return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
+}
+
+function setupSilentExit() {
+  if (!isHomePage()) return;
+  if (window.__silentExitSet) return;
+  window.__silentExitSet = true;
+
+  history.pushState(null, null, location.href);
+
+  window.addEventListener('popstate', function () {
+    if (!isHomePage()) return;
+
+    if (backPressedOnce) {
+      // 두 번째 뒤로가기 → 종료 허용
+      return;
+    }
+
+    // 첫 번째 뒤로가기 → 막고 메시지 띄우기
+    backPressedOnce = true;
+    alert("한 번 더 누르면 종료합니다.");
+    history.pushState(null, null, location.href);
+
+    setTimeout(() => {
+      backPressedOnce = false;
+    }, 2000);
+  });
+}
+
+window.addEventListener('load', setupSilentExit);
+window.addEventListener('pageshow', setupSilentExit);
+window.addEventListener('DOMContentLoaded', setupSilentExit);
+
+/*
     let backPressedOnce = false;
 
     function isHomePage() {
@@ -77,6 +115,8 @@
     window.addEventListener('load', setupSilentExit);
     window.addEventListener('pageshow', setupSilentExit);
     window.addEventListener('DOMContentLoaded', setupSilentExit);
+*/
+
   </script>
 
 </body>
