@@ -61,7 +61,7 @@ body,
 /* -------------------------------------------------*/
 
 .side-menu {
-  height: 50%;
+  height: 30%;
   width: 250px;
   position: fixed;
   top: 70px;
@@ -156,15 +156,36 @@ body,
   /* 상단바로 가리지 않게 */
 }
 
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .big-title {
+  font-size: 1.8em;
+}
+
+body[data-font-size="large"] .big-title {
+  font-size: 2.2em;
+}
+
+
+
 .subtitle {
   color: #5d6d7e;
-  /* 글자색 */
   font-size: 1.5em;
   font-weight: bold;
   margin-top: 15px;
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
+
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .subtitle {
+  font-size: 1.3em;
+}
+
+body[data-font-size="large"] .subtitle {
+  font-size: 1.7em;
+}
+
+
 
 /*대축일*/
 .subtitle2 {
@@ -177,6 +198,16 @@ body,
   /* 상단바로 가리지 않게 */
 }
 
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .subtitle2 {
+  font-size: 1.1em;
+}
+
+body[data-font-size="large"] .subtitle2 {
+  font-size: 1.5em;
+}
+
+
 /* 주요축일 */
 .subtitle3 {
   color: navy;
@@ -188,6 +219,16 @@ body,
   /* 상단바로 가리지 않게 */
 }
 
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .subtitle3 {
+  font-size: 1.1em;
+}
+
+body[data-font-size="large"] .subtitle3 {
+  font-size: 1.5em;
+}
+
+
 /*어코디언 제목*/
 .subtitle4 {
   color: #5d6d7e;
@@ -196,6 +237,8 @@ body,
   scroll-margin-top: 86px;
 }
 
+
+/* 본문 */
 .body-text {
   color: black;
   font-size: 1.2em;
@@ -203,7 +246,8 @@ body,
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
-/*???*/
+
+/*사용중*/
 .blue-text {
   color: blue;
 }
@@ -216,6 +260,30 @@ body,
   line-height: 1.6em;
   font-weight: bold;
 }
+
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .body-text,
+body[data-font-size="small"] .body-text2 {
+  font-size: 1em;
+}
+
+body[data-font-size="large"] .body-text,
+body[data-font-size="large"] .body-text2 {
+  font-size: 1.4em;
+}
+
+body[data-line-height="tight"] .body-text,
+body[data-line-height="tight"] .body-text2 {
+  line-height: 1.3em;
+}
+
+body[data-line-height="wide"] .body-text,
+body[data-line-height="wide"] .body-text2 {
+  line-height: 2em;
+}
+
+
+
 
 
 .rubric {
@@ -240,6 +308,21 @@ body,
   margin-top: 8px;
   line-height: 1.6em;
 }
+
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .rubric,
+body[data-font-size="small"] .rubric2,
+body[data-font-size="small"] .rubric3 {
+  font-size: 0.9em;
+}
+
+body[data-font-size="large"] .rubric,
+body[data-font-size="large"] .rubric2,
+body[data-font-size="large"] .rubric3 {
+  font-size: 1.3em;
+}
+
+
 
 .highlight {
   color: rgb(175, 5, 5);
@@ -438,7 +521,8 @@ body,
 /* 처음 두 개에 색을 다르게 주려는 경우 */
 .accordion-header.highlight {
   background-color: #cacac8;
-  color: #595b56;  /* #696962;*/
+  color: #595b56;
+  /* #696962;*/
 }
 
 .accordion-header.open {
@@ -456,6 +540,7 @@ body,
   margin-bottom: 5px;
   padding: 0 10px;
 }
+
 /* 들여쓰기
 .indent1 {
   text-indent: 1em;
@@ -464,7 +549,7 @@ body,
 
 /* 기본값 medium / normal 유지됨 */
 
-/* 📏 글자 크기 */
+/* 글자 크기 
 body[data-font-size="small"] .body-text,
 body[data-font-size="small"] .body-text2,
 body[data-font-size="small"] .rubric,
@@ -489,10 +574,10 @@ body[data-font-size="large"] .subtitle3,
 body[data-font-size="large"] .subtitle4,
 body[data-font-size="large"] .big-title {
   font-size: 1.4em;
-}
+} */
 
 
-/* 📐 줄간격 조절 */
+/* 줄간격 조절 */
 body[data-line-height="tight"] .body-text,
 body[data-line-height="tight"] .body-text2,
 body[data-line-height="tight"] .rubric,
@@ -518,4 +603,3 @@ body[data-line-height="wide"] .subtitle4,
 body[data-line-height="wide"] .big-title {
   line-height: 2em;
 }
-
