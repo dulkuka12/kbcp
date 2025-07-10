@@ -146,7 +146,7 @@ body,
   left: 0;
 }
 
-/*---------------------------------------------*/
+/*사용글씨체---------------------------------------------*/
 
 .big-title {
   font-size: 2em;
@@ -203,7 +203,7 @@ body,
   line-height: 1.6em;
   /* 줄간격 일정하게 만듬 */
 }
-
+/*???*/
 .blue-text {
   color: blue;
 }
@@ -441,11 +441,6 @@ body,
   color: #595b56;  /* #696962;*/
 }
 
-/*
-.accordion-header.highlight:hover {
-  background-color: #b1b1ae;
-}
-*/
 .accordion-header.open {
   background-color: #d4edda;
   border-left: 5px solid #28a745;
@@ -461,7 +456,66 @@ body,
   margin-bottom: 5px;
   padding: 0 10px;
 }
-
+/* 들여쓰기
 .indent1 {
   text-indent: 1em;
+} */
+
+
+/* 기본값 medium / normal 유지됨 */
+
+/* 📏 글자 크기 */
+body[data-font-size="small"] .body-text,
+body[data-font-size="small"] .body-text2,
+body[data-font-size="small"] .rubric,
+body[data-font-size="small"] .rubric2,
+body[data-font-size="small"] .rubric3,
+body[data-font-size="small"] .subtitle,
+body[data-font-size="small"] .subtitle2,
+body[data-font-size="small"] .subtitle3,
+body[data-font-size="small"] .subtitle4,
+body[data-font-size="small"] .big-title {
+  font-size: 0.9em;
 }
+
+body[data-font-size="large"] .body-text,
+body[data-font-size="large"] .body-text2,
+body[data-font-size="large"] .rubric,
+body[data-font-size="large"] .rubric2,
+body[data-font-size="large"] .rubric3,
+body[data-font-size="large"] .subtitle,
+body[data-font-size="large"] .subtitle2,
+body[data-font-size="large"] .subtitle3,
+body[data-font-size="large"] .subtitle4,
+body[data-font-size="large"] .big-title {
+  font-size: 1.4em;
+}
+
+
+/* 📐 줄간격 조절 */
+body[data-line-height="tight"] .body-text,
+body[data-line-height="tight"] .body-text2,
+body[data-line-height="tight"] .rubric,
+body[data-line-height="tight"] .rubric2,
+body[data-line-height="tight"] .rubric3,
+body[data-line-height="tight"] .subtitle,
+body[data-line-height="tight"] .subtitle2,
+body[data-line-height="tight"] .subtitle3,
+body[data-line-height="tight"] .subtitle4,
+body[data-line-height="tight"] .big-title {
+  line-height: 1.3em;
+}
+
+body[data-line-height="wide"] .body-text,
+body[data-line-height="wide"] .body-text2,
+body[data-line-height="wide"] .rubric,
+body[data-line-height="wide"] .rubric2,
+body[data-line-height="wide"] .rubric3,
+body[data-line-height="wide"] .subtitle,
+body[data-line-height="wide"] .subtitle2,
+body[data-line-height="wide"] .subtitle3,
+body[data-line-height="wide"] .subtitle4,
+body[data-line-height="wide"] .big-title {
+  line-height: 2em;
+}
+
