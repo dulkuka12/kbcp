@@ -441,6 +441,11 @@ body,
   color: #595b56;  /* #696962;*/
 }
 
+/*
+.accordion-header.highlight:hover {
+  background-color: #b1b1ae;
+}
+*/
 .accordion-header.open {
   background-color: #d4edda;
   border-left: 5px solid #28a745;
@@ -456,7 +461,7 @@ body,
   margin-bottom: 5px;
   padding: 0 10px;
 }
-/* 들여쓰기
+
 .indent1 {
   text-indent: 1em;
-} */
+}
