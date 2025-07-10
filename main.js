@@ -287,30 +287,30 @@ function forceUpdate() {
 
 
 //-------------------------------------------------------------
-  // 사이드 메뉴 토글 함수
-  function toggleMenu() {
-    const sideMenu = document.getElementById("sideMenu");
-    sideMenu.classList.toggle("open");
+// 사이드 메뉴 토글 함수
+function toggleMenu() {
+  const sideMenu = document.getElementById("sideMenu");
+  sideMenu.classList.toggle("open");
+}
+
+function closeMenuThenNavigate(url) {
+  const menu = document.getElementById("sideMenu");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open");
   }
+  setTimeout(() => {
+    location.href = url;
+  }, 150);
+}
 
-  function closeMenuThenNavigate(url) {
-    const menu = document.getElementById("sideMenu");
-    if (menu && menu.classList.contains("open")) {
-      menu.classList.remove("open");
-    }
-    setTimeout(() => {
-      location.href = url;
-    }, 150);
-  }
+document.addEventListener('DOMContentLoaded', function () {
+  const pageTitle = document.title;
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const pageTitle = document.title;
-
-    // 1️⃣ 설정 HTML
-    const settingsHTML = `
-      <div id="displaySettings" class="settings-panel" style="padding: 10px;">
+  // 1️⃣ 설정 HTML
+  const settingsHTML = `
+      <div id="displaySettings" class="settings-panel" style="padding: 13px;">
         <h3 style="margin-bottom: 6px;">화면설정</h3>
-        <label>글자 크기:
+        <label>글자크기:
           <select id="fontSizeSelector">
             <option value="small">작게</option>
             <option value="medium" selected>보통</option>
@@ -318,7 +318,7 @@ function forceUpdate() {
           </select>
         </label>
         <br><br>
-        <label>줄 간격:
+        <label>줄 간 격:
           <select id="lineHeightSelector">
             <option value="tight">좁게</option>
             <option value="normal" selected>보통</option>
@@ -328,10 +328,9 @@ function forceUpdate() {
       </div>
     `;
 
-    // 2️⃣ 사이드 메뉴 HTML
-    const sideMenuHTML = `
+  // 2️⃣ 사이드 메뉴 HTML
+  const sideMenuHTML = `
       <div id="sideMenu" class="side-menu">
-        <span class="close-btn" onclick="toggleMenu()">X</span>
         <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
         <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
         <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
@@ -342,53 +341,53 @@ function forceUpdate() {
       </div>
     `;
 
-    // 3️⃣ 상단바 HTML
-    const navbarHTML = `
+  // 3️⃣ 상단바 HTML
+  const navbarHTML = `
       <div class="navbar">
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
         <h1>${pageTitle}</h1>
       </div>
     `;
 
-    // 4️⃣ 삽입
-    document.body.insertAdjacentHTML('afterbegin', navbarHTML);
-    document.body.insertAdjacentHTML('beforeend', sideMenuHTML);
+  // 4️⃣ 삽입
+  document.body.insertAdjacentHTML('afterbegin', navbarHTML);
+  document.body.insertAdjacentHTML('beforeend', sideMenuHTML);
 
-    // 5️⃣ 설정값 불러오기
-    const fontSizeSelector = document.getElementById("fontSizeSelector");
-    const lineHeightSelector = document.getElementById("lineHeightSelector");
+  // 5️⃣ 설정값 불러오기
+  const fontSizeSelector = document.getElementById("fontSizeSelector");
+  const lineHeightSelector = document.getElementById("lineHeightSelector");
 
-    const savedFontSize = localStorage.getItem("fontSize") || "medium";
-    const savedLineHeight = localStorage.getItem("lineHeight") || "normal";
-    document.body.dataset.fontSize = savedFontSize;
-    document.body.dataset.lineHeight = savedLineHeight;
-    fontSizeSelector.value = savedFontSize;
-    lineHeightSelector.value = savedLineHeight;
+  const savedFontSize = localStorage.getItem("fontSize") || "medium";
+  const savedLineHeight = localStorage.getItem("lineHeight") || "normal";
+  document.body.dataset.fontSize = savedFontSize;
+  document.body.dataset.lineHeight = savedLineHeight;
+  fontSizeSelector.value = savedFontSize;
+  lineHeightSelector.value = savedLineHeight;
 
-    fontSizeSelector.addEventListener("change", function () {
-      document.body.dataset.fontSize = this.value;
-      localStorage.setItem("fontSize", this.value);
-    });
-
-    lineHeightSelector.addEventListener("change", function () {
-      document.body.dataset.lineHeight = this.value;
-      localStorage.setItem("lineHeight", this.value);
-    });
-
-    // 6️⃣ # 링크 방지
-    document.querySelectorAll('a[href="#"]').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-      });
-    });
-
-    // 7️⃣ Service Worker 등록
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('✅ Service Worker 등록 성공'))
-        .catch(err => console.error('❌ Service Worker 등록 실패:', err));
-    }
+  fontSizeSelector.addEventListener("change", function () {
+    document.body.dataset.fontSize = this.value;
+    localStorage.setItem("fontSize", this.value);
   });
+
+  lineHeightSelector.addEventListener("change", function () {
+    document.body.dataset.lineHeight = this.value;
+    localStorage.setItem("lineHeight", this.value);
+  });
+
+  // 6️⃣ # 링크 방지
+  document.querySelectorAll('a[href="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+    });
+  });
+
+  // 7️⃣ Service Worker 등록
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('✅ Service Worker 등록 성공'))
+      .catch(err => console.error('❌ Service Worker 등록 실패:', err));
+  }
+});
 
 
 

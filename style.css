@@ -61,8 +61,8 @@ body,
 /* -------------------------------------------------*/
 
 .side-menu {
-  height: 30%;
-  width: 250px;
+  height: 40%;
+  width: 220px;
   position: fixed;
   top: 70px;
   /* 상단바 아래로 시작 */
@@ -84,7 +84,7 @@ body,
 .side-menu a {
   padding: 12px;
   text-decoration: none;
-  font-size: 1.2em;
+  font-size: 1em;
   color: white;
   display: block;
   transition: background-color 0.2s;
@@ -92,24 +92,6 @@ body,
 
 .side-menu a:hover {
   background-color: #2b4e70;
-}
-
-.side-menu .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  width: 44px;
-  /* 최소 터치 권장 크기 */
-  height: 44px;
-  font-size: 1.5em;
-  line-height: 44px;
-  /* 가운데 정렬 */
-  text-align: center;
-  cursor: pointer;
-  z-index: 1002;
-  color: white;
-  background-color: transparent;
-  user-select: none;
 }
 
 
