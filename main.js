@@ -333,14 +333,14 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
   document.body.insertAdjacentHTML('beforeend', sideMenuHTML);
 
-  // 3️⃣ 숨겨진 셀렉터 삽입
+  // 3️⃣ 숨겨진 <select> 요소 추가 (스마트폰에서도 클릭되게)
   const hiddenSelectors = `
-    <select id="fontSizeSelector" style="display: none;">
+    <select id="fontSizeSelector" style="position: absolute; top: -9999px; left: -9999px;">
       <option value="small">작게</option>
       <option value="medium" selected>보통</option>
       <option value="large">크게</option>
     </select>
-    <select id="lineHeightSelector" style="display: none;">
+    <select id="lineHeightSelector" style="position: absolute; top: -9999px; left: -9999px;">
       <option value="tight">좁게</option>
       <option value="normal" selected>보통</option>
       <option value="wide">넓게</option>
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
   document.body.insertAdjacentHTML('beforeend', hiddenSelectors);
 
-  // 4️⃣ 저장된 설정 적용
+  // 4️⃣ 설정값 불러오기
   const fontSizeSelector = document.getElementById("fontSizeSelector");
   const lineHeightSelector = document.getElementById("lineHeightSelector");
 
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
   applyFontSize(savedFontSize);
   applyLineHeight(savedLineHeight);
 
-  // 5️⃣ 셀렉터 변경 시 저장 및 적용
+  // 5️⃣ 선택 시 반영 및 저장
   fontSizeSelector.addEventListener("change", function () {
     localStorage.setItem("fontSize", this.value);
     applyFontSize(this.value);
@@ -371,39 +371,26 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem("lineHeight", this.value);
     applyLineHeight(this.value);
   });
-});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
+  // 6️⃣ '#' 링크 방지
   document.querySelectorAll('a[href="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
     });
   });
-});
 
-
-
-document.addEventListener('DOMContentLoaded', function () {
+  // 7️⃣ Service Worker 등록
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
       .then(() => console.log('✅ Service Worker 등록 성공'))
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
 });
+
+
+
+
+
 
 
 
@@ -658,7 +645,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 function applyFontSize(size) {
   let fontSize = "1.2em";
   if (size === "small") fontSize = "1em";
@@ -672,6 +658,6 @@ function applyLineHeight(spacing) {
   if (spacing === "tight") lineHeight = "1.4em";
   else if (spacing === "wide") lineHeight = "1.8em";
 
-  const elements = document.querySelectorAll(".body-text, .body-text2, .body-text3");
+  const elements = document.querySelectorAll('.body-text, .body-text2, .body-text3');
   elements.forEach(el => el.style.lineHeight = lineHeight);
 }
