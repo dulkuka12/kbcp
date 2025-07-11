@@ -389,6 +389,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+function applyFontSize(size) {
+  let fontSize = "1.2em";
+  if (size === "small") fontSize = "1em";
+  else if (size === "large") fontSize = "1.4em";
+
+  document.body.style.fontSize = fontSize;
+}
+
+function applyLineHeight(spacing) {
+  let lineHeight = "1.6em";
+  if (spacing === "tight") lineHeight = "1.4em";
+  else if (spacing === "wide") lineHeight = "1.8em";
+
+  const elements = document.querySelectorAll('.body-text, .body-text2, .body-text3');
+  elements.forEach(el => el.style.lineHeight = lineHeight);
+}
 
 
 
@@ -643,21 +659,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-function applyFontSize(size) {
-  let fontSize = "1.2em";
-  if (size === "small") fontSize = "1em";
-  else if (size === "large") fontSize = "1.4em";
-
-  document.body.style.fontSize = fontSize;
-}
-
-function applyLineHeight(spacing) {
-  let lineHeight = "1.6em";
-  if (spacing === "tight") lineHeight = "1.4em";
-  else if (spacing === "wide") lineHeight = "1.8em";
-
-  const elements = document.querySelectorAll('.body-text, .body-text2, .body-text3');
-  elements.forEach(el => el.style.lineHeight = lineHeight);
-}
