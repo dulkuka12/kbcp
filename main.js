@@ -304,75 +304,79 @@ function closeMenuThenNavigate(url) {
   }, 150);
 }
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
 
-  // 1️⃣ 상단바 HTML
-  const navbarHTML = `
-    <div class="navbar">
-      <div class="menu-icon" onclick="toggleMenu()">☰</div>
-      <h1>${pageTitle}</h1>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('afterbegin', navbarHTML);
+ // 1️⃣ 설정 HTML
+const settingsHTML = `
+  <div id="displaySettings" class="settings-panel" style="padding: 13px; font-size: 1.2em;">
+    <label style="display: block; margin-bottom: 10px; font-size: 1em;">
+      글자크기:
+      <select id="fontSizeSelector" style="font-size: 1em; padding: 4px 6px; margin-left: 6px;">
+        <option value="small">작게</option>
+        <option value="medium" selected>보통</option>
+        <option value="large">크게</option>
+      </select>
+    </label>
+
+    <label style="display: block; font-size: 1em;">
+      줄간간격:
+      <select id="lineHeightSelector" style="font-size: 1em; padding: 4px 6px; margin-left: 6px;">
+        <option value="tight">좁게</option>
+        <option value="normal" selected>보통</option>
+        <option value="wide">넓게</option>
+      </select>
+    </label>
+  </div>
+`;
 
   // 2️⃣ 사이드 메뉴 HTML
   const sideMenuHTML = `
-    <div id="sideMenu" class="side-menu">
-      <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
-      <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
-      <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
-      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
-      <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회기도서 앱 소개</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('fontSizeSelector').click()">글자 크기 조정</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('lineHeightSelector').click()">줄 간격 조정</a>
-    </div>
-  `;
+      <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
+        <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
+        <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
+        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
+        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
+        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회기도서 앱 소개</a>
+        ${settingsHTML}
+      </div>
+    `;
+
+  // 3️⃣ 상단바 HTML
+  const navbarHTML = `
+      <div class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <h1>${pageTitle}</h1>
+      </div>
+    `;
+
+  // 4️⃣ 삽입
+  document.body.insertAdjacentHTML('afterbegin', navbarHTML);
   document.body.insertAdjacentHTML('beforeend', sideMenuHTML);
 
-  // 3️⃣ 숨겨진 <select> 요소 추가 (스마트폰에서도 클릭되게)
-  const hiddenSelectors = `
-    <select id="fontSizeSelector" style="position: absolute; top: -9999px; left: -9999px;">
-      <option value="small">작게</option>
-      <option value="medium" selected>보통</option>
-      <option value="large">크게</option>
-    </select>
-    <select id="lineHeightSelector" style="position: absolute; top: -9999px; left: -9999px;">
-      <option value="tight">좁게</option>
-      <option value="normal" selected>보통</option>
-      <option value="wide">넓게</option>
-    </select>
-  `;
-  document.body.insertAdjacentHTML('beforeend', hiddenSelectors);
-
-  // 4️⃣ 설정값 불러오기
+  // 5️⃣ 설정값 불러오기
   const fontSizeSelector = document.getElementById("fontSizeSelector");
   const lineHeightSelector = document.getElementById("lineHeightSelector");
 
   const savedFontSize = localStorage.getItem("fontSize") || "medium";
   const savedLineHeight = localStorage.getItem("lineHeight") || "normal";
-
+  document.body.dataset.fontSize = savedFontSize;
+  document.body.dataset.lineHeight = savedLineHeight;
   fontSizeSelector.value = savedFontSize;
   lineHeightSelector.value = savedLineHeight;
 
-  applyFontSize(savedFontSize);
-  applyLineHeight(savedLineHeight);
-
-  // 5️⃣ 선택 시 반영 및 저장
   fontSizeSelector.addEventListener("change", function () {
+    document.body.dataset.fontSize = this.value;
     localStorage.setItem("fontSize", this.value);
-    applyFontSize(this.value);
   });
 
   lineHeightSelector.addEventListener("change", function () {
+    document.body.dataset.lineHeight = this.value;
     localStorage.setItem("lineHeight", this.value);
-    applyLineHeight(this.value);
   });
 
-  // 6️⃣ '#' 링크 방지
+  // 6️⃣ # 링크 방지
   document.querySelectorAll('a[href="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
@@ -386,28 +390,6 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
 });
-
-
-
-function applyFontSize(size) {
-  let fontSize = "1.2em";
-  if (size === "small") fontSize = "1em";
-  else if (size === "large") fontSize = "1.4em";
-
-  document.body.style.fontSize = fontSize;
-}
-
-function applyLineHeight(spacing) {
-  let lineHeight = "1.6em";
-  if (spacing === "tight") lineHeight = "1.4em";
-  else if (spacing === "wide") lineHeight = "1.8em";
-
-  const elements = document.querySelectorAll('.body-text, .body-text2, .body-text3');
-  elements.forEach(el => el.style.lineHeight = lineHeight);
-}
-
-
-
 
 
 
@@ -656,6 +638,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-
 
