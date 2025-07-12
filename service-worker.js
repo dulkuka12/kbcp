@@ -10,7 +10,10 @@ const CACHE_FILES = [
   "/kbcp/main.js",
   "/kbcp/icon-192.png",
   "/kbcp/icon-512.png",
-  "/kbcp/manifest.json"
+  "/kbcp/manifest.json",
+  "/kbcp/user-guide.html",
+  "/kbcp/kbcp-guide.html",
+  "/kbcp/install-guide.html"
 ];
 
 
