@@ -139,11 +139,11 @@ body,
 
 /* 기본값 (medium, normal) */
 body[data-font-size="small"] .big-title {
-  font-size: 1.8em;
+  font-size: 1.7em;
 }
 
 body[data-font-size="large"] .big-title {
-  font-size: 2.2em;
+  font-size: 2.3em;
 }
 
 
@@ -156,16 +156,12 @@ body[data-font-size="large"] .big-title {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
-
-/* 기본값 (medium, normal) */
 body[data-font-size="small"] .subtitle {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
-
 body[data-font-size="large"] .subtitle {
-  font-size: 1.7em;
+  font-size: 1.8em;
 }
-
 
 
 /*대축일*/
@@ -178,14 +174,11 @@ body[data-font-size="large"] .subtitle {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
-
-/* 기본값 (medium, normal) */
 body[data-font-size="small"] .subtitle2 {
-  font-size: 1.1em;
+  font-size: 1.0em;
 }
-
 body[data-font-size="large"] .subtitle2 {
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 
@@ -199,14 +192,11 @@ body[data-font-size="large"] .subtitle2 {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
-
-/* 기본값 (medium, normal) */
 body[data-font-size="small"] .subtitle3 {
-  font-size: 1.1em;
+  font-size: 1.0em;
 }
-
 body[data-font-size="large"] .subtitle3 {
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 
@@ -216,6 +206,12 @@ body[data-font-size="large"] .subtitle3 {
   font-size: 1.2em;
   margin-top: 15px;
   scroll-margin-top: 86px;
+}
+body[data-font-size="small"] .subtitle4 {
+  font-size: 0.9em;
+}
+body[data-font-size="large"] .subtitle4 {
+  font-size: 1.5em;
 }
 
 
@@ -228,11 +224,6 @@ body[data-font-size="large"] .subtitle3 {
   /* 줄간격 일정하게 만듬 */
 }
 
-/*사용중*/
-.blue-text {
-  color: blue;
-}
-
 /*회중응답*/
 .body-text2 {
   color: black;
@@ -242,15 +233,21 @@ body[data-font-size="large"] .subtitle3 {
   font-weight: bold;
 }
 
+/*사용중*/
+.blue-text {
+  color: blue;
+}
+
+
 /* 기본값 (medium, normal) */
 body[data-font-size="small"] .body-text,
 body[data-font-size="small"] .body-text2 {
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 body[data-font-size="large"] .body-text,
 body[data-font-size="large"] .body-text2 {
-  font-size: 1.4em;
+  font-size: 1.5em;
 }
 
 body[data-line-height="tight"] .body-text,
@@ -262,9 +259,6 @@ body[data-line-height="wide"] .body-text,
 body[data-line-height="wide"] .body-text2 {
   line-height: 2em;
 }
-
-
-
 
 
 .rubric {
@@ -294,13 +288,13 @@ body[data-line-height="wide"] .body-text2 {
 body[data-font-size="small"] .rubric,
 body[data-font-size="small"] .rubric2,
 body[data-font-size="small"] .rubric3 {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 body[data-font-size="large"] .rubric,
 body[data-font-size="large"] .rubric2,
 body[data-font-size="large"] .rubric3 {
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 
@@ -529,7 +523,6 @@ body[data-font-size="large"] .rubric3 {
 
 
 /* 기본값 medium / normal 유지됨 */
-
 /* 글자 크기 
 body[data-font-size="small"] .body-text,
 body[data-font-size="small"] .body-text2,
@@ -582,5 +575,5 @@ body[data-line-height="wide"] .subtitle2,
 body[data-line-height="wide"] .subtitle3,
 body[data-line-height="wide"] .subtitle4,
 body[data-line-height="wide"] .big-title {
-  line-height: 2em;
+  line-height: 2.2em;
 }
