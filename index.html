@@ -39,45 +39,79 @@
   <script src="main.js" defer></script>
 
   <script>
+let backPressedOnce = false;
 
-    let backPressedOnce = false;
+function isHomePage() {
+  const path = location.pathname;
+  return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
+}
 
-    function isHomePage() {
-      const path = location.pathname;
-      return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
+
+
+function showToast(message) {
+  let toast = document.getElementById('back-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'back-toast';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '60px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.background = 'rgba(0, 0, 0, 0.8)';
+    toast.style.color = 'white';
+    toast.style.padding = '6px 14px'; // 높이 낮춤
+    toast.style.borderRadius = '20px';
+    toast.style.fontSize = '0.9em';
+    toast.style.lineHeight = '1.2em'; // 줄 간격 조절
+    toast.style.maxWidth = '80%'; // 화면 기준 최대폭
+    toast.style.whiteSpace = 'nowrap'; // 한 줄 고정
+    toast.style.overflow = 'hidden';
+    toast.style.textOverflow = 'ellipsis'; // 넘치면 ... 처리
+    toast.style.zIndex = '9999';
+    toast.style.transition = 'opacity 0.3s';
+    toast.style.opacity = '0';
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.style.opacity = '1';
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 1500);
+}
+
+
+function setupSilentExit() {
+  if (!isHomePage()) return;
+  if (window.__silentExitSet) return;
+  window.__silentExitSet = true;
+
+  history.pushState(null, null, location.href);
+
+  window.addEventListener('popstate', function () {
+    if (!isHomePage()) return;
+
+    if (backPressedOnce) {
+      // 두 번째 뒤로가기 → 종료 허용
+      return;
     }
 
-    function setupSilentExit() {
-      if (!isHomePage()) return;
-      if (window.__silentExitSet) return;
-      window.__silentExitSet = true;
+    // 첫 번째 뒤로가기 → 막고 토스트 메시지 표시
+    backPressedOnce = true;
+    showToast("한 번 더 누르면 종료합니다.");
+    history.pushState(null, null, location.href);
 
-      history.pushState(null, null, location.href);
+    setTimeout(() => {
+      backPressedOnce = false;
+    }, 2000);
+  });
+}
 
-      window.addEventListener('popstate', function () {
-        if (!isHomePage()) return;
-
-        if (backPressedOnce) {
-          // 사용자가 두 번째 뒤로가기 누름 → 더 이상 막지 않음 → 앱 종료
-          // 브라우저가 실제로 앱을 닫도록 history 상태를 더 이상 push하지 않음
-          return;
-        }
-
-        // 첫 번째 누름 → 다시 상태 push해서 종료 방지
-        backPressedOnce = true;
-        history.pushState(null, null, location.href);
-
-        // 2초 지나면 초기화
-        setTimeout(() => {
-          backPressedOnce = false;
-        }, 2000);
-      });
-    }
-
-    window.addEventListener('load', setupSilentExit);
-    window.addEventListener('pageshow', setupSilentExit);
-    window.addEventListener('DOMContentLoaded', setupSilentExit);
-  </script>
+window.addEventListener('load', setupSilentExit);
+window.addEventListener('pageshow', setupSilentExit);
+window.addEventListener('DOMContentLoaded', setupSilentExit);
+</script>
 
 </body>
 
