@@ -128,50 +128,6 @@ body,
 }
 
 /*사용글씨체---------------------------------------------*/
-/* 본문 */
-.body-text {
-  color: black;
-  font-size: 1.2em;
-  margin-top: 4px;
-  line-height: 1.6em;
-  /* 줄간격 일정하게 만듬 */
-}
-
-/*회중응답*/
-.body-text2 {
-  color: black;
-  font-size: 1.2em;
-  margin-top: 4px;
-  line-height: 1.6em;
-  font-weight: bold;
-}
-
-/* 기본값 (medium, normal) */
-body[data-font-size="small"] .body-text,
-body[data-font-size="small"] .body-text2 {
-  font-size: 0.9em;
-}
-
-body[data-font-size="large"] .body-text,
-body[data-font-size="large"] .body-text2 {
-  font-size: 1.5em;
-}
-
-body[data-line-height="tight"] .body-text,
-body[data-line-height="tight"] .body-text2 {
-  line-height: 1.3em;
-}
-
-body[data-line-height="wide"] .body-text,
-body[data-line-height="wide"] .body-text2 {
-  line-height: 2em;
-}
-
-/*사용중*/
-.blue-text {
-  color: blue;
-}
-
 
 .big-title {
   font-size: 2em;
@@ -259,6 +215,51 @@ body[data-font-size="large"] .subtitle4 {
 }
 
 
+/* 본문 */
+.body-text {
+  color: black;
+  font-size: 1.2em;
+  margin-top: 4px;
+  line-height: 1.6em;
+  /* 줄간격 일정하게 만듬 */
+}
+
+/*회중응답*/
+.body-text2 {
+  color: black;
+  font-size: 1.2em;
+  margin-top: 4px;
+  line-height: 1.6em;
+  font-weight: bold;
+}
+
+/* 기본값 (medium, normal) */
+body[data-font-size="small"] .body-text,
+body[data-font-size="small"] .body-text2 {
+  font-size: 0.9em;
+}
+
+body[data-font-size="large"] .body-text,
+body[data-font-size="large"] .body-text2 {
+  font-size: 1.5em;
+}
+
+body[data-line-height="tight"] .body-text,
+body[data-line-height="tight"] .body-text2 {
+  line-height: 1.3em;
+}
+
+body[data-line-height="wide"] .body-text,
+body[data-line-height="wide"] .body-text2 {
+  line-height: 2em;
+}
+
+/*사용중*/
+.blue-text {
+  color: blue;
+}
+
+
 .rubric {
   color: red;
   font-size: 1.1em;
@@ -312,6 +313,10 @@ body[data-font-size="large"] .rubric3 {
   margin-bottom: 5px;
   /* 반줄보다 적게 띄우기 */
 }
+
+
+
+
 
 /* -------------------------------------------------*/
 
