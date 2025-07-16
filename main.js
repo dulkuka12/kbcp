@@ -260,8 +260,12 @@ function clearAllBookmarks() {
 
 
 
-// 전역에 선언
 function forceUpdate() {
+  if (!navigator.onLine) {
+    alert("⚠️ 오프라인 상태에서는 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
+    return;
+  }
+
   if ('serviceWorker' in navigator) {
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -269,12 +273,14 @@ function forceUpdate() {
       );
     }).then(() => {
       console.log("📦 모든 캐시 삭제 완료");
+
       return navigator.serviceWorker.getRegistrations();
     }).then((registrations) => {
       for (let registration of registrations) {
         registration.unregister();
       }
-      alert("📢 앱을 업데이트 합니다.\n새 파일로 다시 불러옵니다.");
+
+      alert("📢 앱이 업데이트됩니다.\n잠시 후 새 파일로 다시 로드됩니다.");
       location.reload(true);
     }).catch((err) => {
       console.error("업데이트 중 오류 발생:", err);
