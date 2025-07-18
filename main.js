@@ -260,6 +260,40 @@ function clearAllBookmarks() {
 
 
 
+const CURRENT_VERSION = "v4"; // 이 값을 직접 관리
+
+// 업데이트 메뉴에서 호출되는 함수
+function checkAndForceUpdate() {
+  if (!navigator.onLine) {
+    alert("⚠️ 오프라인 상태입니다. 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
+    return;
+  }
+
+  fetch("/kbcp/version.txt")
+    .then(response => {
+      if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
+      return response.text();
+    })
+    .then(latestVersion => {
+      latestVersion = latestVersion.trim();
+
+      if (latestVersion !== CURRENT_VERSION) {
+        const confirmed = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
+        if (confirmed) {
+          forceUpdate(); // 기존 함수 호출
+        }
+      } else {
+        alert("✅ 현재 앱은 최신 버전입니다.");
+      }
+    })
+    .catch(error => {
+      console.error("버전 확인 오류:", error);
+      alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
+    });
+}
+
+
+
 function forceUpdate() {
   if (!navigator.onLine) {
     alert("⚠️ 오프라인 상태에서는 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
@@ -340,7 +374,7 @@ const settingsHTML = `
   const sideMenuHTML = `
       <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
-        <a href="javascript:void(0)" onclick="forceUpdate()">버전 업데이트</a>
+        <a href="javascript:void(0)" onclick="checkAndForceUpdate()">🔄 업데이트</a>
         <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
