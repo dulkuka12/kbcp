@@ -374,7 +374,7 @@ const settingsHTML = `
   const sideMenuHTML = `
       <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
-        <a href="javascript:void(0)" onclick="checkAndForceUpdate()">🔄 업데이트</a>
+        <a href="javascript:void(0)" onclick="checkAndForceUpdate()">버전 업데이트</a>
         <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
