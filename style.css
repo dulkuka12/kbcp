@@ -62,23 +62,19 @@ body,
 
 .side-menu {
   position: fixed;
-  top: 70px; /* 상단바 아래 */
-  left: -250px; /* 기본 상태에서 숨김 */
+  top: 70px;
+  left: -250px;
   width: 220px;
-
-  height: calc(100vh - 70px); /* 화면 전체 높이에서 상단바 제외 */
-  overflow-y: auto; /* 넘칠 경우만 스크롤 */
-
+  max-height: calc(100vh - 70px); /* 화면 아래로 내려가지 않도록 제한 */
+  overflow-y: auto; /* 내용이 넘치면 스크롤, 넘치지 않으면 그대로 */
   background-color: #183b5c;
   color: white;
   z-index: 1001;
   transition: left 0.3s ease;
-
   display: flex;
   flex-direction: column;
-  justify-content: start; /* 위쪽부터 정렬 */
+  justify-content: start;
 }
-
 
 
 .side-menu.open {
