@@ -19,7 +19,6 @@
     <button class="sub-button fixed-bottom-left"
       onclick="rememberClosest('psalm', 'rememberedPsalm', 'psalm-text.html')">책갈피</button>
 
-
     <div class="subtitle" id="psalm1" data-morning-id="m1">시편 1편</div>
     <div class="rubric">1일 아침 시편</div>
     <div class="body-text">1 복되어라. 악을 꾸미는 자리에 따라 가지 않고: 죄인들의 길을 거닐지 않으며 ◯ 조소하는 자들과 어울리지 않는 사람, </div>
@@ -1209,7 +1208,7 @@
     <div class="body-text">8 백성들아, 어떤 일을 당하든지 ◯ 너희는 하느님을 믿어라. </div>
     <div class="body-text">¶ 마음에 있는 걱정일랑 하느님께 쏟아 놓아라. ◯ 하느님은 우리의 피난처시다. </div>
     <div class="body-text">9 사람들은 숨결에 지나지 않으니, 높다는 것도 실은 거짓말, ◯ 모두 합쳐 저울에 올려 놓아야 역시 숨결보다도 가볍다. </div>
-    <div class="body-text">10 남을 억압하면서 잘 되리라고 믿지 마라: 남으 ㅣ것을 빼앗아 잘 살려는 생각도 버려라. ◯ 재물이 쌓인다고 거기에 마음 쏟지 마라. </div>
+    <div class="body-text">10 남을 억압하면서 잘 되리라고 믿지 마라: 남의 것을 빼앗아 잘 살려는 생각도 버려라. ◯ 재물이 쌓인다고 거기에 마음 쏟지 마라. </div>
     <div class="body-text">11 하느님게서 한마디 말씀하실 때, ◯ 나는 두 가지를 깨달았습니다. </div>
     <div class="body-text">12 힘은 하느님께 속한 것이며, ◯ 인자하심도 하느님께로부터 나온다는 것입니다. </div>
     <div class="body-text">¶ 주여, 당신은 각 사람에게 ◯ 그 행실대로 갚아주시옵니다. </div>
@@ -3276,69 +3275,62 @@
     <div class="body-text">5 자바라를 치며 그를 찬미하여라. ◯ 징을 치며 찬미하여라. </div>
     <div class="body-text">6 숨쉬는 모든 것들아, ◯ 주님을 찬미하여라. 알렐루야! </div>
     <div class="content-end-spacer"></div>
+  </main>
 
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </main>
+  <script src="main.js"></script>
 
-    <script src="main.js"></script>
+  <script>
 
-    <script>
+    /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다 */
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const morningId = params.get('morningId');
+      const eveningId = params.get('eveningId');
+      const psalms = document.querySelectorAll('.subtitle');
 
-      /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다 */
-      document.addEventListener("DOMContentLoaded", function () {
-        const params = new URLSearchParams(window.location.search);
-        const morningId = params.get('morningId');
-        const eveningId = params.get('eveningId');
-        const psalms = document.querySelectorAll('.subtitle');
+      psalms.forEach(psalm => {
+        const morningAttr = psalm.getAttribute('data-morning-id');
+        const eveningAttr = psalm.getAttribute('data-evening-id');
 
-        psalms.forEach(psalm => {
-          const morningAttr = psalm.getAttribute('data-morning-id');
-          const eveningAttr = psalm.getAttribute('data-evening-id');
+        let shouldHide = false;
 
-          let shouldHide = false;
+        if (morningId && morningAttr !== morningId) {
+          shouldHide = true;
+        }
 
-          if (morningId && morningAttr !== morningId) {
-            shouldHide = true;
+        if (eveningId && eveningAttr !== eveningId) {
+          shouldHide = true;
+        }
+
+        if (shouldHide) {
+          psalm.style.display = 'none';
+
+          // 본문도 같이 숨김 처리
+          let nextElement = psalm.nextElementSibling;
+          while (nextElement && !nextElement.classList.contains('subtitle')) {
+            nextElement.style.display = 'none';
+            nextElement = nextElement.nextElementSibling;
           }
-
-          if (eveningId && eveningAttr !== eveningId) {
-            shouldHide = true;
-          }
-
-          if (shouldHide) {
-            psalm.style.display = 'none';
-
-            // 본문도 같이 숨김 처리
-            let nextElement = psalm.nextElementSibling;
-            while (nextElement && !nextElement.classList.contains('subtitle')) {
-              nextElement.style.display = 'none';
-              nextElement = nextElement.nextElementSibling;
-            }
-          }
-        });
-
-        /* ✅ 필터링이 끝난 후에 visiblePsalms 확인*/
-        const visiblePsalms = Array.from(document.querySelectorAll('.subtitle')).filter(
-          psalm => psalm.style.display !== 'none'
-        );
-
-        if (visiblePsalms.length > 0) {
-          const lastPsalm = visiblePsalms[visiblePsalms.length - 1];
-
-          // 여백 div 추가
-          const spacer = document.createElement('div');
-          spacer.style.height = '120px';
-          lastPsalm.parentNode.appendChild(spacer);
         }
       });
 
+      /* ✅ 필터링이 끝난 후에 visiblePsalms 확인*/
+      const visiblePsalms = Array.from(document.querySelectorAll('.subtitle')).filter(
+        psalm => psalm.style.display !== 'none'
+      );
 
-    </script>
+      if (visiblePsalms.length > 0) {
+        const lastPsalm = visiblePsalms[visiblePsalms.length - 1];
+
+        // 여백 div 추가
+        const spacer = document.createElement('div');
+        spacer.style.height = '120px';
+        lastPsalm.parentNode.appendChild(spacer);
+      }
+    });
+
+
+  </script>
 
 </body>
 

@@ -2315,14 +2315,6 @@
 
     <div class="content-end-spacer"></div>
 
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-
     <script src="main.js" defer></script>
 
     <button class="sub-button fixed-bottom-left"
@@ -2360,43 +2352,6 @@
       }
     });
 
-
-    /* 본기도의 경우처럼 만든 코드
-    document.addEventListener("DOMContentLoaded", function () {
-      const params = new URLSearchParams(window.location.search);
-      let lessonId = params.get("lessonId");
-    
-      // 해시(#)로도 넘어올 경우 지원
-      if (!lessonId && window.location.hash) {
-        const hashValue = window.location.hash.substring(1); // # 제거
-        if (hashValue.startsWith("lesson")) {
-          lessonId = hashValue;
-        }
-      }
-    
-      if (lessonId) {
-        const all = document.querySelectorAll(".subtitle, .rubric, .rubric3, .big-title, br");
-        let show = false;
-    
-        all.forEach(el => {
-          el.style.display = "none";
-    
-          if (el.classList.contains("subtitle") && el.id === lessonId) {
-            show = true;
-            el.style.display = "block";
-          } else if (show && (el.classList.contains("rubric") || el.classList.contains("rubric3"))) {
-            el.style.display = "block";
-          } else if (el.classList.contains("subtitle")) {
-            show = false;
-          }
-        });
-    
-        window.lessonFiltered = true;
-      } else {
-        window.lessonFiltered = false;
-      }
-    });
-    */
 
   </script>
 </body>
