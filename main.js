@@ -260,7 +260,7 @@ function clearAllBookmarks() {
 
 
 
-const CURRENT_VERSION = "v4.3"; // 이 값을 직접 관리
+const CURRENT_VERSION = "v4.4"; // 이 값을 직접 관리
 
 // 업데이트 메뉴에서 호출되는 함수
 function checkAndForceUpdate() {
@@ -268,6 +268,7 @@ function checkAndForceUpdate() {
     alert("⚠️ 오프라인 상태입니다. 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
     return;
   }
+
 
   fetch("/kbcp/version.txt")
     .then(response => {
