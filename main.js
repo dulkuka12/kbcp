@@ -260,7 +260,7 @@ function clearAllBookmarks() {
 
 
 
-const CURRENT_VERSION = "v4.4"; // 이 값을 직접 관리
+const CURRENT_VERSION = "v4.5"; // 이 값을 직접 관리
 
 // 업데이트 메뉴에서 호출되는 함수
 function checkAndForceUpdate() {

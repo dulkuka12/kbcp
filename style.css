@@ -426,7 +426,7 @@ body[data-font-size="large"] .rubric3 {
   background-color: #5606a7;
 }
 
-/*-------------------------------------------*/
+/*마지막 화면 여분주기------------------------*/
 
 .content-end-spacer {
   height: min(200px, 20vh);
