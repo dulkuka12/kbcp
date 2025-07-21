@@ -260,7 +260,7 @@ function clearAllBookmarks() {
 
 
 
-const CURRENT_VERSION = "v4.5"; // 이 값을 직접 관리
+const CURRENT_VERSION = "v4.3"; // 이 값을 직접 관리
 
 // 업데이트 메뉴에서 호출되는 함수
 function checkAndForceUpdate() {
@@ -269,13 +269,11 @@ function checkAndForceUpdate() {
     return;
   }
 
-
-  fetch("/kbcp/version.txt?ts=" + Date.now())
+  fetch("/kbcp/version.txt")
     .then(response => {
       if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
       return response.text();
     })
-
     .then(latestVersion => {
       latestVersion = latestVersion.trim();
 
@@ -327,22 +325,6 @@ function forceUpdate() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("/kbcp/version.txt?ts=" + Date.now())
-    .then(res => res.text())
-    .then(version => {
-      const versionSpan = document.getElementById("currentVersion");
-      if (versionSpan) {
-        versionSpan.textContent = version.trim();
-      }
-    })
-    .catch(() => {
-      const versionSpan = document.getElementById("currentVersion");
-      if (versionSpan) {
-        versionSpan.textContent = "불명";
-      }
-    });
-});
 
 //-------------------------------------------------------------
 
@@ -365,8 +347,8 @@ function closeMenuThenNavigate(url) {
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
 
-  // 1️⃣ 설정 HTML
-  const settingsHTML = `
+ // 1️⃣ 설정 HTML
+const settingsHTML = `
   <div id="displaySettings" class="settings-panel" style="padding: 13px; font-size: 1.2em;">
     <label style="display: block; margin-bottom: 10px; font-size: 1em;">
       글자크기:
@@ -393,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function () {
       <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
         <a href="javascript:void(0)" onclick="checkAndForceUpdate()">버전 업데이트</a>
-        <div class="version-text">📌 현재 버전: <span id="currentVersion">...</span> </div>
         <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
