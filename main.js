@@ -47,7 +47,7 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
   const viewportHeight = window.innerHeight;
-  const offsetMargin = 70;  // 상단바 높이. 필요에 따라 조정하세요.
+  const offsetMargin = 60;  // 상단바 높이. 필요에 따라 조정하세요.
   let closest = null;
   let closestDistance = Infinity;
 
@@ -347,8 +347,8 @@ function closeMenuThenNavigate(url) {
 document.addEventListener('DOMContentLoaded', function () {
   const pageTitle = document.title;
 
- // 1️⃣ 설정 HTML
-const settingsHTML = `
+  // 1️⃣ 설정 HTML
+  const settingsHTML = `
   <div id="displaySettings" class="settings-panel" style="padding: 13px; font-size: 1.2em;">
     <label style="display: block; margin-bottom: 10px; font-size: 1em;">
       글자크기:
