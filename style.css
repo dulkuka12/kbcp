@@ -65,8 +65,10 @@ body,
   top: 70px;
   left: -250px;
   width: 220px;
-  max-height: calc(100vh - 70px); /* 화면 아래로 내려가지 않도록 제한 */
-  overflow-y: auto; /* 내용이 넘치면 스크롤, 넘치지 않으면 그대로 */
+  max-height: calc(100vh - 70px);
+  /* 화면 아래로 내려가지 않도록 제한 */
+  overflow-y: auto;
+  /* 내용이 넘치면 스크롤, 넘치지 않으면 그대로 */
   background-color: #183b5c;
   color: white;
   z-index: 1001;
@@ -201,9 +203,11 @@ body[data-font-size="large"] .big-title {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
+
 body[data-font-size="small"] .subtitle {
   font-size: 1.2em;
 }
+
 body[data-font-size="large"] .subtitle {
   font-size: 1.8em;
 }
@@ -219,9 +223,11 @@ body[data-font-size="large"] .subtitle {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
+
 body[data-font-size="small"] .subtitle2 {
   font-size: 1.0em;
 }
+
 body[data-font-size="large"] .subtitle2 {
   font-size: 1.6em;
 }
@@ -237,9 +243,11 @@ body[data-font-size="large"] .subtitle2 {
   scroll-margin-top: 86px;
   /* 상단바로 가리지 않게 */
 }
+
 body[data-font-size="small"] .subtitle3 {
   font-size: 1.0em;
 }
+
 body[data-font-size="large"] .subtitle3 {
   font-size: 1.6em;
 }
@@ -252,9 +260,11 @@ body[data-font-size="large"] .subtitle3 {
   margin-top: 15px;
   scroll-margin-top: 86px;
 }
+
 body[data-font-size="small"] .subtitle4 {
   font-size: 0.9em;
 }
+
 body[data-font-size="large"] .subtitle4 {
   font-size: 1.5em;
 }
@@ -426,7 +436,12 @@ body[data-font-size="large"] .rubric3 {
   background-color: #5606a7;
 }
 
-/*마지막 화면 여분주기------------------------*/
+/*-------------------------------------------*/
+
+.content-end-spacer2 {
+  height: max(250px, 25vh);
+}
+
 
 .content-end-spacer {
   height: min(200px, 20vh);
