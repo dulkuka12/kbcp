@@ -439,12 +439,12 @@ body[data-font-size="large"] .rubric3 {
 /*-------------------------------------------*/
 
 .content-end-spacer2 {
-  height: 400px;
+  height: 500px;
 }
 
 
 .content-end-spacer {
-  height: min(200px, 20vh);
+  height: max(200px, 20vh);
 }
 
 /*---목록 검색선택----------------------------*/
