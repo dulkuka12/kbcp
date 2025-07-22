@@ -1,6 +1,6 @@
 // service-worker.js
 
-const CACHE_NAME = "kbcp-v4.3";
+const CACHE_NAME = "kbcp-v4.4";
 const CACHE_FILES = [
   "/kbcp/all-proper-select.html",
   "/kbcp/anointing-sick-lesson.html",
@@ -83,7 +83,7 @@ const CACHE_FILES = [
   "/kbcp/ucharist-form2.html",
   "/kbcp/ucharist-select.html",
   "/kbcp/user-guide.html",
-  "/kbcp/version.txt",
+  /*"/kbcp/version.txt",*/
   "/kbcp/vestry.html"
 ];
 

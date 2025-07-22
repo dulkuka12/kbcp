@@ -47,7 +47,7 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
   const viewportHeight = window.innerHeight;
-  const offsetMargin = 60;  // 상단바 높이. 필요에 따라 조정하세요.
+  const offsetMargin = 60;  // 상단바 높이. 필요에 따라 조정. 책갈피저장시 보이는 소제목 기억
   let closest = null;
   let closestDistance = Infinity;
 
@@ -260,7 +260,7 @@ function clearAllBookmarks() {
 
 
 
-const CURRENT_VERSION = "v4.3"; // 이 값을 직접 관리
+const CURRENT_VERSION = "v4.4"; // 이 값을 직접 관리
 
 // 업데이트 메뉴에서 호출되는 함수
 function checkAndForceUpdate() {
@@ -269,7 +269,7 @@ function checkAndForceUpdate() {
     return;
   }
 
-  fetch("/kbcp/version.txt")
+  fetch("/kbcp/version.txt?nocache=" + Date.now())
     .then(response => {
       if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
       return response.text();
@@ -280,12 +280,32 @@ function checkAndForceUpdate() {
       if (latestVersion !== CURRENT_VERSION) {
         const confirmed = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
         if (confirmed) {
-          forceUpdate(); // 기존 함수 호출
+          forceUpdate();
         }
       } else {
         alert("✅ 현재 앱은 최신 버전입니다.");
       }
     })
+
+    /*
+      fetch("/kbcp/version.txt")
+        .then(response => {
+          if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
+          return response.text();
+        })
+        .then(latestVersion => {
+          latestVersion = latestVersion.trim();
+    
+          if (latestVersion !== CURRENT_VERSION) {
+            const confirmed = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
+            if (confirmed) {
+              forceUpdate(); // 기존 함수 호출
+            }
+          } else {
+            alert("✅ 현재 앱은 최신 버전입니다.");
+          }
+        }) */
+
     .catch(error => {
       console.error("버전 확인 오류:", error);
       alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
