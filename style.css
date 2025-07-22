@@ -439,7 +439,7 @@ body[data-font-size="large"] .rubric3 {
 /*-------------------------------------------*/
 
 .content-end-spacer2 {
-  height: max(250px, 25vh);
+  height: 400px;
 }
 
 
