@@ -83,7 +83,7 @@ const CACHE_FILES = [
   "/kbcp/ucharist-form2.html",
   "/kbcp/ucharist-select.html",
   "/kbcp/user-guide.html",
-  /*"/kbcp/version.txt",*/
+  /*"/kbcp/version.txt",버전구분을 위해 복사안함*/
   "/kbcp/vestry.html"
 ];
 
