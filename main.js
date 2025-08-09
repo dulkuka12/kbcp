@@ -287,25 +287,6 @@ function checkAndForceUpdate() {
       }
     })
 
-    /*
-      fetch("/kbcp/version.txt")
-        .then(response => {
-          if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
-          return response.text();
-        })
-        .then(latestVersion => {
-          latestVersion = latestVersion.trim();
-    
-          if (latestVersion !== CURRENT_VERSION) {
-            const confirmed = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
-            if (confirmed) {
-              forceUpdate(); // 기존 함수 호출
-            }
-          } else {
-            alert("✅ 현재 앱은 최신 버전입니다.");
-          }
-        }) */
-
     .catch(error => {
       console.error("버전 확인 오류:", error);
       alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
