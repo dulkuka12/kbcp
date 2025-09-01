@@ -287,6 +287,7 @@ function checkAndForceUpdate() {
       }
     })
 
+
     .catch(error => {
       console.error("버전 확인 오류:", error);
       alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
@@ -379,7 +380,6 @@ document.addEventListener('DOMContentLoaded', function () {
         <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
         <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
-        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회기도서 앱 소개</a>
         ${settingsHTML}
       </div>
     `;
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 7️⃣ Service Worker 등록
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/kbcp/service-worker.js', { scope: '/kbcp/' })
+    navigator.serviceWorker.register('service-worker.js')
       .then(() => console.log('✅ Service Worker 등록 성공'))
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
