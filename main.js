@@ -629,31 +629,6 @@ window.addEventListener('appinstalled', () => {
 });
 
 
-/*접기 펴기 이건 성찬기도는 id 사용으로 이 코드와 충돌 아래 것으로 교체함
-document.addEventListener("DOMContentLoaded", function () {
-  const headers = document.querySelectorAll(".accordion-header");
-
-  headers.forEach(header => {
-    header.addEventListener("click", function () {
-      const content = this.nextElementSibling;
-      const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
-
-      if (isOpen) {
-        content.style.maxHeight = "0px";
-        this.classList.remove("open");
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        this.classList.add("open");
-
-        setTimeout(() => {
-          this.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 200);
-      }
-    });
-  });
-});
-*/
-
 document.addEventListener("DOMContentLoaded", function () {
   // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
   if (location.pathname.includes("ucharist-form1")) return;
