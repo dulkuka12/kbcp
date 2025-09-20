@@ -258,11 +258,10 @@ function clearAllBookmarks() {
 }
 
 
+const CURRENT_VERSION = "v4.5";
+const APP_SCOPE = "/kbcp/";          // ← kbcp 범위만
+const CACHE_PREFIX = "kbcp-";        // ← kbcp 캐시만 정리
 
-
-const CURRENT_VERSION = "v4.5"; // 이 값을 직접 관리
-
-// 업데이트 메뉴에서 호출되는 함수
 function checkAndForceUpdate() {
   if (!navigator.onLine) {
     alert("⚠️ 오프라인 상태입니다. 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
@@ -270,30 +269,24 @@ function checkAndForceUpdate() {
   }
 
   fetch("/kbcp/version.txt?nocache=" + Date.now())
-    .then(response => {
-      if (!response.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
-      return response.text();
+    .then((res) => {
+      if (!res.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
+      return res.text();
     })
-    .then(latestVersion => {
-      latestVersion = latestVersion.trim();
-
+    .then((latest) => {
+      const latestVersion = latest.trim();
       if (latestVersion !== CURRENT_VERSION) {
-        const confirmed = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
-        if (confirmed) {
-          forceUpdate();
-        }
+        const ok = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
+        if (ok) forceUpdate();
       } else {
         alert("✅ 현재 앱은 최신 버전입니다.");
       }
     })
-
-
-    .catch(error => {
-      console.error("버전 확인 오류:", error);
+    .catch((err) => {
+      console.error("버전 확인 오류:", err);
       alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
     });
 }
-
 
 
 function forceUpdate() {
@@ -302,31 +295,51 @@ function forceUpdate() {
     return;
   }
 
-  if ('serviceWorker' in navigator) {
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => caches.delete(cacheName))
-      );
-    }).then(() => {
-      console.log("📦 모든 캐시 삭제 완료");
-
-      return navigator.serviceWorker.getRegistrations();
-    }).then((registrations) => {
-      for (let registration of registrations) {
-        registration.unregister();
-      }
-
-      alert("📢 앱이 업데이트됩니다.\n잠시 후 새 파일로 다시 로드됩니다.");
-      location.reload(true);
-    }).catch((err) => {
-      console.error("업데이트 중 오류 발생:", err);
-      alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
-    });
-  } else {
+  if (!("serviceWorker" in navigator)) {
     alert("⚠️ 이 브라우저는 Service Worker를 지원하지 않습니다.");
+    return;
   }
-}
 
+  // 1) kbcp 범위의 등록만 찾기
+  navigator.serviceWorker.getRegistrations().then(async (regs) => {
+    const reg = regs.find((r) => r.scope.endsWith(APP_SCOPE));
+    if (!reg) {
+      console.warn("[kbcp] 해당 scope의 등록을 찾지 못했습니다. 페이지를 새로고침합니다.");
+      location.reload();
+      return;
+    }
+
+    // 2) 캐시도 kbcp- 프리픽스만 정리 (다른 앱 캐시는 보존)
+    await caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k.startsWith(CACHE_PREFIX) ? caches.delete(k) : null)))
+    );
+
+    // 3) 새 SW 검사/설치 시도
+    await reg.update();
+
+    // 4) 이미 waiting이 있으면 즉시 활성화 요청
+    if (reg.waiting) {
+      reg.waiting.postMessage({ type: "SKIP_WAITING" });
+    } else if (reg.installing) {
+      // 설치 중이면 설치 완료 후 처리
+      reg.installing.addEventListener("statechange", () => {
+        if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+      });
+    }
+
+    alert("📢 kbcp 앱을 업데이트합니다. 새 파일로 다시 로드됩니다.");
+    // 5) 컨트롤러 교체 시 자동 새로고침
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      window.location.reload();
+    });
+
+    // 혹시나 즉시 반영이 안 되면 마지막으로 강제 새로고침
+    setTimeout(() => window.location.reload(), 1500);
+  }).catch((err) => {
+    console.error("[kbcp] 업데이트 중 오류:", err);
+    alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
+  });
+}
 
 //-------------------------------------------------------------
 
@@ -654,5 +667,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
