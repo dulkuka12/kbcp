@@ -1,6 +1,9 @@
 // service-worker.js
+// 1) 캐시 이름은 앱별 프리픽스로 완전히 분리
+const CACHE_PREFIX = "kbcp-v4.5";
+const CACHE_NAME = `${CACHE_PREFIX}v4.5`; // ← 필요 시 버전만 올리세요
 
-const CACHE_NAME = "kbcp-v4.4";
+// 2) kbcp 전용 파일만 절대경로로 명시
 const CACHE_FILES = [
   "/kbcp/all-proper-select.html",
   "/kbcp/anointing-sick-lesson.html",
@@ -88,57 +91,68 @@ const CACHE_FILES = [
 ];
 
 
-// 설치 이벤트: 캐시 저장 성공 시에만 완료
+// 3) 설치: kbcp 파일만 캐시
 self.addEventListener("install", (event) => {
-  console.log("📦 [Install] 캐시 저장 시작...");
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(CACHE_FILES);
-    }).then(() => {
-      console.log("✅ [Install] 캐시 저장 완료");
-      self.skipWaiting(); // 바로 적용
-    }).catch((err) => {
-      console.error("❌ [Install] 캐시 저장 실패:", err);
-      // 설치 실패 시 activate가 실행되지 않음 → 기존 캐시 유지됨
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CACHE_FILES))
+      .then(() => self.skipWaiting())
+      .catch((err) => {
+        console.error("❌ [kbcp][Install] 캐시 실패:", err);
+      })
   );
 });
 
-// 활성화 이벤트: 이전 캐시 제거 (단, 현재 캐시가 준비된 경우에만)
+// 4) 활성화: "kbcp-"로 시작하는 캐시만 정리
 self.addEventListener("activate", (event) => {
-  console.log("🟢 [Activate] Service Worker 활성화됨");
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log("🗑 [Activate] 이전 캐시 삭제:", cacheName);
-            return caches.delete(cacheName);
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((k) => {
+          // kbcp가 만든 캐시만 대상으로 하고, 최신 것만 남김
+          if (k.startsWith(CACHE_PREFIX) && k !== CACHE_NAME) {
+            return caches.delete(k);
           }
+          return null;
         })
-      );
-    })
+      )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// 요청 이벤트: 캐시 우선, 없으면 네트워크 → 실패 시 fallback 또는 에러 방지
+// 5) fetch: kbcp 캐시만 조회 (다른 앱 캐시와 교차탐색 금지)
 self.addEventListener("fetch", (event) => {
+  const { request } = event;
+
+  // GET만 처리
+  if (request.method !== "GET") return;
+
+  // 같은 오리진 & /kbcp/ 경로만 해당 서비스워커가 응답
+  const url = new URL(request.url);
+  const isSameOrigin = url.origin === location.origin;
+  const isKbcpPath = url.pathname.startsWith("/kbcp/");
+  if (!isSameOrigin || !isKbcpPath) return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response; // 캐시 우선 응답
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const cached = await cache.match(request);
+      if (cached) return cached; // 캐시 우선
+
+      // 네트워크 시도 (설치 시점에 미리 캐시된 파일 외 요청은 통과만)
+      try {
+        const resp = await fetch(request);
+        // 필요 시 동적 캐시를 원하면 아래 주석 해제:
+        // cache.put(request, resp.clone());
+        return resp;
+      } catch (err) {
+        // 오프라인 + 캐시 없음 → 간단 폴백
+        return new Response(
+          "⚠️ 오프라인 상태이며 요청한 파일이 kbcp 캐시에 없습니다.",
+          { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+        );
       }
-      return fetch(event.request).catch((err) => {
-        console.warn("⚠️ [Fetch] 네트워크 실패, 캐시도 없음:", event.request.url);
-        // fallback.html이 있다면 여기에 넣을 수 있습니다.
-        return new Response("⚠️ 오프라인 상태이며 요청한 파일이 캐시에 없습니다.", {
-          status: 503,
-          statusText: "Offline fallback",
-          headers: { "Content-Type": "text/plain" }
-        });
-      });
     })
   );
 });
+
 
