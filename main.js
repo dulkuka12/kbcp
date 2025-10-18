@@ -258,86 +258,76 @@ function clearAllBookmarks() {
 }
 
 
-// kbcp/main.js 버전관리 버전업시 세군데 수정한다. service-worker.js, version.txt, main.js의 이 부분
-const CURRENT_VERSION = "v2025-10-18-02";
-const APP_SCOPE = "/kbcp/";          // ← kbcp 범위만
-const CACHE_PREFIX = "kbcp-";        // ← kbcp 캐시만 정리
 
-function checkAndForceUpdate() {
-  if (!navigator.onLine) {
-    alert("⚠️ 오프라인 상태입니다. 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
-    return;
+//--------------------------------------------------------------
+
+
+// ✅ 현재 앱 버전 (main.js 내 직접 관리)
+const CURRENT_VERSION = "v2025-10-18-03";  // ← 현재 버전 표시
+const APP_SCOPE = "/kbcp/";
+const CACHE_PREFIX = "kbcp-";
+
+// ✅ 실행 시 Service Worker 버전 자동 확인
+document.addEventListener("DOMContentLoaded", () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/kbcp/service-worker.js", { scope: "/kbcp/" })
+      .then(async (reg) => {
+        console.log("✅ Service Worker 등록 성공");
+
+        // 서비스워커 스크립트의 버전 문자열을 읽어서 비교
+        try {
+          const swResponse = await fetch("/kbcp/service-worker.js?ts=" + Date.now());
+          const swText = await swResponse.text();
+          const match = swText.match(/v\d{4}-\d{2}-\d{2}-\d{2}/);
+          if (match) {
+            const swVersion = match[0];
+            if (swVersion !== CURRENT_VERSION) {
+              const ok = confirm(`📢 새 버전(${swVersion})이 있습니다.\n지금 업데이트할까요?`);
+              if (ok) forceUpdate();
+            }
+          }
+        } catch (e) {
+          console.warn("서비스워커 버전 확인 실패:", e);
+        }
+      })
+      .catch((err) => console.error("❌ Service Worker 등록 실패:", err));
   }
+});
 
-  fetch("/kbcp/version.txt?nocache=" + Date.now())
-    .then((res) => {
-      if (!res.ok) throw new Error("버전 정보를 불러오지 못했습니다.");
-      return res.text();
-    })
-    .then((latest) => {
-      const latestVersion = latest.trim();
-      if (latestVersion !== CURRENT_VERSION) {
-        const ok = confirm(`📢 새 버전(${latestVersion})이 있습니다.\n지금 업데이트하시겠습니까?`);
-        if (ok) forceUpdate();
-      } else {
-        alert("✅ 현재 앱은 최신 버전입니다.");
-      }
-    })
-    .catch((err) => {
-      console.error("버전 확인 오류:", err);
-      alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
-    });
-}
 
+// ✅ 강제 업데이트 함수 (기존 그대로 유지)
 function forceUpdate() {
   if (!navigator.onLine) {
     alert("⚠️ 오프라인 상태에서는 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
     return;
   }
 
-  if (!("serviceWorker" in navigator)) {
-    alert("⚠️ 이 브라우저는 Service Worker를 지원하지 않습니다.");
-    return;
-  }
-
-  // 1) kbcp 범위의 등록만 찾기
   navigator.serviceWorker.getRegistrations().then(async (regs) => {
     const reg = regs.find((r) => r.scope.endsWith(APP_SCOPE));
     if (!reg) {
-      console.warn("[kbcp] 해당 scope의 등록을 찾지 못했습니다. 페이지를 새로고침합니다.");
+      console.warn("[kbcp] 등록된 서비스워커 없음. 페이지 새로고침");
       location.reload();
       return;
     }
 
-    // 2) 캐시도 kbcp- 프리픽스만 정리 (다른 앱 캐시는 보존)
     await caches.keys().then((keys) =>
       Promise.all(keys.map((k) => (k.startsWith(CACHE_PREFIX) ? caches.delete(k) : null)))
     );
 
-    // 3) 새 SW 검사/설치 시도
     await reg.update();
 
-    // 4) 이미 waiting이 있으면 즉시 활성화 요청
     if (reg.waiting) {
       reg.waiting.postMessage({ type: "SKIP_WAITING" });
     } else if (reg.installing) {
-      // 설치 중이면 설치 완료 후 처리
       reg.installing.addEventListener("statechange", () => {
         if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       });
     }
 
     alert("📢 kbcp 앱을 업데이트합니다. 새 파일로 다시 로드됩니다.");
-    // 5) 컨트롤러 교체 시 자동 새로고침
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      window.location.reload();
-    });
-
-    // 혹시나 즉시 반영이 안 되면 마지막으로 강제 새로고침
+    navigator.serviceWorker.addEventListener("controllerchange", () => window.location.reload());
     setTimeout(() => window.location.reload(), 1500);
-  }).catch((err) => {
-    console.error("[kbcp] 업데이트 중 오류:", err);
-    alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
   });
 }
 
@@ -386,17 +376,21 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 `;
 
-  // 2️⃣ 사이드 메뉴 HTML
-  const sideMenuHTML = `
-      <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
-        <a href="javascript:void(0)" onclick="checkAndForceUpdate()">버전 업데이트</a>
-        <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
-        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-        <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
-        ${settingsHTML}
-      </div>
-    `;
+
+// ✅ 사이드 메뉴 HTML (버전 업데이트 제거됨)
+const sideMenuHTML = `
+  <div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
+    <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
+    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
+    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
+    ${settingsHTML}
+  </div>
+`;
+
+
+
+
 
   // 3️⃣ 상단바 HTML
   const navbarHTML = `
@@ -446,6 +440,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+
+//-----------------------------------------------------------
 
 
 // 특정 위치 저장 (파일 경로와 위치를 함께 저장)
@@ -560,6 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -597,7 +594,9 @@ window.goToRememberedLesson2 = function () {
 
 
 
+
 /*앱다운 설치, 앱아이콘 설치*/
+
 let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -616,7 +615,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
   }, 100);  // DOM 생성 직후이므로 약간의 여유시간
 });
-
 
 function installPWA() {
   if (deferredPrompt) {
