@@ -258,9 +258,8 @@ function clearAllBookmarks() {
 }
 
 
-// kbcp/main.js
-
-const CURRENT_VERSION = "v4.6";
+// kbcp/main.js 버전관리 버전업시 세군데 수정한다. service-worker.js, version.txt, main.js의 이 부분
+const CURRENT_VERSION = "v2025-10-18-02";
 const APP_SCOPE = "/kbcp/";          // ← kbcp 범위만
 const CACHE_PREFIX = "kbcp-";        // ← kbcp 캐시만 정리
 
@@ -561,9 +560,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-
-
 function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -601,9 +597,7 @@ window.goToRememberedLesson2 = function () {
 
 
 
-
 /*앱다운 설치, 앱아이콘 설치*/
-
 let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -622,6 +616,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
   }, 100);  // DOM 생성 직후이므로 약간의 여유시간
 });
+
 
 function installPWA() {
   if (deferredPrompt) {
@@ -643,31 +638,6 @@ window.addEventListener('appinstalled', () => {
   alert("✅ 성공회 기도서 앱이 설치되었습니다!");
 });
 
-
-/*접기 펴기 이건 성찬기도는 id 사용으로 이 코드와 충돌 아래 것으로 교체함
-document.addEventListener("DOMContentLoaded", function () {
-  const headers = document.querySelectorAll(".accordion-header");
-
-  headers.forEach(header => {
-    header.addEventListener("click", function () {
-      const content = this.nextElementSibling;
-      const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
-
-      if (isOpen) {
-        content.style.maxHeight = "0px";
-        this.classList.remove("open");
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        this.classList.add("open");
-
-        setTimeout(() => {
-          this.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 200);
-      }
-    });
-  });
-});
-*/
 
 document.addEventListener("DOMContentLoaded", function () {
   // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
