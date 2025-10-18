@@ -1,7 +1,8 @@
 // service-worker.js
 // 1) 캐시 이름은 앱별 프리픽스로 완전히 분리
-const CACHE_PREFIX = "kbcp-v4.5";
-const CACHE_NAME = `${CACHE_PREFIX}v4.5`; // ← 필요 시 버전만 올리세요
+const CACHE_PREFIX = "kbcp-";
+const CACHE_VERSION = "v4.5";
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 // 2) kbcp 전용 파일만 절대경로로 명시
 const CACHE_FILES = [
@@ -13,7 +14,7 @@ const CACHE_FILES = [
   "/kbcp/bcp-guide.html",
   "/kbcp/blessing-artifacts-text.html",
   "/kbcp/blessing.html",
-  "/kbcp/brief-prayer.html",
+//  "/kbcp/brief-prayer.html",
   "/kbcp/burial-prayer.html",
   "/kbcp/coffin-prayer.html",
   "/kbcp/collect-list-p.html",
@@ -23,7 +24,7 @@ const CACHE_FILES = [
   "/kbcp/commendatory-prayer.html",
   "/kbcp/compline-prayer.html",
   "/kbcp/creeds-text.html",
-  "/kbcp/cremate-prayer.html",
+//  "/kbcp/cremate-prayer.html",
   "/kbcp/daily-office-select.html",
   "/kbcp/departure-prayer.html",
   "/kbcp/enshrining-prayer.html",
@@ -53,8 +54,8 @@ const CACHE_FILES = [
   "/kbcp/memorial-prayer-lesson.html",
   "/kbcp/memorial-prayer.html",
   "/kbcp/morning-prayer.html",
-  "/kbcp/non-believer-lesson.html",
-  "/kbcp/non-believer.html",
+//  "/kbcp/non-believer-lesson.html",
+//  "/kbcp/non-believer.html",
   "/kbcp/noonday-prayer.html",
   "/kbcp/outline-list.html",
   "/kbcp/outline-text.html",
@@ -120,6 +121,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+/*
 // 5) fetch: kbcp 캐시만 조회 (다른 앱 캐시와 교차탐색 금지)
 self.addEventListener("fetch", (event) => {
   const { request } = event;
@@ -154,5 +156,32 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+*/
 
+// 5) fetch: kbcp 캐시만 조회
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
 
+  const url = new URL(request.url);
+
+  // kbcp 외의 요청은 완전히 무시
+  if (!url.pathname.startsWith("/kbcp/")) return;
+
+  event.respondWith(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const cached = await cache.match(request);
+      if (cached) return cached;
+
+      try {
+        const resp = await fetch(request);
+        return resp;
+      } catch {
+        return new Response(
+          "⚠️ 오프라인 상태이며 kbcp 캐시에 없습니다.",
+          { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+        );
+      }
+    })
+  );
+});
