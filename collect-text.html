@@ -333,6 +333,7 @@
     <div class="subtitle" id="collect377">성령강림주일 (다해)</div>
     <div class="body-text">주 하느님, 주께서는 시나이 산에서 연기와 불 가운데 모세에게 율법을 주셨고, 성령의 불 가운데 제자들에게 새 언약을 주셨나이다. 비오니, 제자들에게 내리셨던
       성령의 불을 우리에게도 주시어 서로 사랑하라 명하신 주님의 계명을 기쁨으로 지키게 하소서.</div>
+
     <div class="subtitle" id="collect378">삼위일체주일 (가해)</div>
     <div class="rubric">삼위일체주일은 연중시기에 오는 주일 대축일이므로 삼위일체주일 후 주간은 연중시기 주일 날짜에 따라 지정된 본기도를 사용한다.</div>
     <div class="body-text">거룩하신 하느님, 교회로 하여금 삼위일체의 영광과 신비를 깨닫게 하시고 이 신앙으로 하느님을 예배하게 하셨나이다. 비오니, 우리가 이 신비를 굳게 믿어 진리로 하나
@@ -343,6 +344,7 @@
     <div class="subtitle" id="collect380">삼위일체주일 (다해)</div>
     <div class="body-text">찬양받으실 하느님, 성부께서는 온 세상을 지으시고, 성자 예수 그리스도를 통하여 세상을 구원하시며, 성령으로 사랑과 생명을 우리에게 주시나이다. 비오니, 우리가 이
       놀라우신 삼위일체의 신비를 깨닫고 영원히 하느님을 경배하며 찬양하게 하소서.</div>
+
     <div class="subtitle" id="collect381">그리스도의 성체일(Corpus Christi)</div>
     <div class="rubric">삼위일체 주일 후에 오는 목요일은 그리스도의 성체 축일로 지킨다.</div>
     <div class="body-text">주 예수 그리스도여, 신비한 성사 안에서 주님의 수난을 기념하게 하셨나이다. 구하오니, 우리로 하여금 거룩하고 신비한 성체보혈을 올바로 공경하게 하시어 우리 삶
@@ -1222,7 +1224,7 @@
     onclick="rememberClosest('collect', 'rememberedCollect1', 'collect-text.html')">책갈피1</button>
   <button class="sub-button fixed-bottom-left-3"
     onclick="rememberClosest('collect', 'rememberedCollect2', 'collect-text.html')">책갈피2</button>
-
+<!-- 
   <script>
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -1261,6 +1263,97 @@
     });
 
   </script>
+
+ -->
+
+<!--  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+  let collectId = params.get("collectId");
+
+  // 해시(#collect...)가 있을 경우 사용
+  if (!collectId && window.location.hash) {
+    const hashValue = window.location.hash.substring(1);
+    if (hashValue.startsWith("collect")) {
+      collectId = hashValue;
+    }
+  }
+
+  // 📌 big-title은 항상 숨김
+  document.querySelectorAll(".big-title").forEach(el => {
+    el.style.display = "none";
+  });
+
+  if (collectId) {
+    const all = document.querySelectorAll(".subtitle, .body-text, .rubric, .rubric2");
+    let show = false;
+
+    all.forEach(el => {
+      if (el.classList.contains("subtitle")) {
+        show = (el.id === collectId);
+        el.style.display = show ? "block" : "none";
+      } else {
+        el.style.display = show ? "block" : "none";
+      }
+    });
+
+    window.CollectFiltered = true;
+  } else {
+    window.CollectFiltered = false;
+  }
+});
+</script>
+
+-->
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+  let collectId = params.get("collectId");
+
+  // 해시(#collect...)가 있을 경우도 사용
+  if (!collectId && window.location.hash) {
+    const hashValue = window.location.hash.substring(1);
+    if (hashValue.startsWith("collect")) {
+      collectId = hashValue;
+    } else {
+      collectId = null; // 섹션 id(#section..)는 필터 대상 아님
+    }
+  }
+
+  // ✅ collect로 시작하지 않으면 필터 작동 안 함
+  if (collectId && collectId.startsWith("collect")) {
+    // big-title은 숨김
+    document.querySelectorAll(".big-title").forEach(el => {
+      el.style.display = "none";
+    });
+
+    const all = document.querySelectorAll(".subtitle, .body-text, .rubric, .rubric2");
+    let show = false;
+
+    all.forEach(el => {
+      if (el.classList.contains("subtitle")) {
+        show = (el.id === collectId);
+        el.style.display = show ? "block" : "none";
+      } else {
+        el.style.display = show ? "block" : "none";
+      }
+    });
+
+    window.CollectFiltered = true;
+  } else {
+    // collect가 아닌 경우에는 필터 동작 안 함 (전체 표시)
+    window.CollectFiltered = false;
+  }
+});
+</script>
+
+
+
+
 
 </body>
 
