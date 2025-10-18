@@ -258,7 +258,9 @@ function clearAllBookmarks() {
 }
 
 
-const CURRENT_VERSION = "v4.5";
+// kbcp/main.js
+
+const CURRENT_VERSION = "v4.6";
 const APP_SCOPE = "/kbcp/";          // ← kbcp 범위만
 const CACHE_PREFIX = "kbcp-";        // ← kbcp 캐시만 정리
 
@@ -287,7 +289,6 @@ function checkAndForceUpdate() {
       alert("⚠️ 버전 정보를 확인할 수 없습니다. 나중에 다시 시도해주세요.");
     });
 }
-
 
 function forceUpdate() {
   if (!navigator.onLine) {
@@ -340,6 +341,7 @@ function forceUpdate() {
     alert("⚠️ 업데이트 중 문제가 발생했습니다. 다시 시도해주세요.");
   });
 }
+
 
 //-------------------------------------------------------------
 
@@ -439,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 7️⃣ Service Worker 등록
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
+    navigator.serviceWorker.register('/kbcp/service-worker.js', { scope: '/kbcp/' })
       .then(() => console.log('✅ Service Worker 등록 성공'))
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
@@ -642,6 +644,31 @@ window.addEventListener('appinstalled', () => {
 });
 
 
+/*접기 펴기 이건 성찬기도는 id 사용으로 이 코드와 충돌 아래 것으로 교체함
+document.addEventListener("DOMContentLoaded", function () {
+  const headers = document.querySelectorAll(".accordion-header");
+
+  headers.forEach(header => {
+    header.addEventListener("click", function () {
+      const content = this.nextElementSibling;
+      const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+
+      if (isOpen) {
+        content.style.maxHeight = "0px";
+        this.classList.remove("open");
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        this.classList.add("open");
+
+        setTimeout(() => {
+          this.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 200);
+      }
+    });
+  });
+});
+*/
+
 document.addEventListener("DOMContentLoaded", function () {
   // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
   if (location.pathname.includes("ucharist-form1")) return;
@@ -667,6 +694,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-
 
