@@ -94,7 +94,6 @@ function goToRememberedSection(storageKey, fallbackMessage) {
   }
 }
 
-
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
   goToRememberedSection('rememberedPsalm', '기억된 시편이 없습니다.');
@@ -197,7 +196,6 @@ function updateProperBookmarkLabels() {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
@@ -205,28 +203,16 @@ window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 function clearAllBookmarks() {
   const keysToRemove = [
-    'rememberedPsalm',
-    'rememberedLesson1',
-    'rememberedLesson2',
-    'rememberedProper1',
-    'rememberedProper2',
-    'rememberedProper3',
-    'rememberedProper4',
-    'rememberedProper5',
-    'rememberedProper6',
-    'rememberedProper7',
-    'rememberedCanticle1',
-    'rememberedCanticle2',
-    'rememberedCollect1',
-    'rememberedCollect2',
-    'rememberedPrayer1',
-    'rememberedPrayer2',
-    'rememberedPrayer3',
+    'rememberedPsalm', 'rememberedLesson1', 'rememberedLesson2',
+    'rememberedProper1', 'rememberedProper2', 'rememberedProper3',
+    'rememberedProper4', 'rememberedProper5', 'rememberedProper6',
+    'rememberedProper7', 'rememberedCanticle1', 'rememberedCanticle2',
+    'rememberedCollect1', 'rememberedCollect2', 'rememberedPrayer1',
+    'rememberedPrayer2', 'rememberedPrayer3',
   ];
 
   // 로컬 스토리지 데이터 제거
   keysToRemove.forEach(key => localStorage.removeItem(key));
-
   // 버튼 텍스트 복원
   const defaultLabels = {
     'bookmarkPsalmButton': '책갈피',
@@ -258,12 +244,11 @@ function clearAllBookmarks() {
 }
 
 
-
 //--------------------------------------------------------------
 
 
 // ✅ 현재 앱 버전
-const CURRENT_VERSION = "v2025-10-19-01";  // ← 현재 버전 표시
+const CURRENT_VERSION = "v2025-10-18-05";  // ← 현재 버전 표시
 const APP_SCOPE = "/kbcp/";
 const CACHE_PREFIX = "kbcp-";
 
@@ -376,21 +361,15 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 `;
 
-
-// ✅ 사이드 메뉴 HTML (버전 업데이트 제거됨)
 const sideMenuHTML = `
   <div id="sideMenu" class="side-menu">
     <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
     <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
+    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">앱설치 방법</a>
     ${settingsHTML}
   </div>
 `;
-
-
-
-
 
   // 3️⃣ 상단바 HTML
   const navbarHTML = `
@@ -443,7 +422,7 @@ const sideMenuHTML = `
 
 //-----------------------------------------------------------
 
-
+/* 현재 이 부분은 삭제해도 문제가 보이지 않음, 더 지켜볼것
 // 특정 위치 저장 (파일 경로와 위치를 함께 저장)
 function rememberPosition(storageKey, elementId) {
   const targetElement = document.getElementById(elementId);
@@ -472,8 +451,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+*/
+//-----------------------------------------------------
 
 
+/* 현재 이 부분은 삭제해도 문제가 보이지 않음, 더 지켜볼것
 //아침저녁시편필터보기
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
@@ -495,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 
   }
 });
-
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
@@ -505,51 +487,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname;
   const filename = path.split('/').pop();  // ex) 'morning-prayer.html'
 
-  // 파일 이름에 따라 테마 색상을 미리 정의
-  const themeMap = {
-    'index.html': '#228b22',
-    'morning-prayer.html': '#a92103',
-    'evening-prayer.html': '#a92103',
-    'noonday-prayer.html': '#a92103',
-    'compline-prayer.html': '#a92103',
-    'ucharist-form1.html': '#a92103',
-    'ucharist-form2.html': '#a92103',
-    'baptism.html': '#a92103',
-    'reconciliation.html': '#a92103',
-    'anointing-sick.html': '#a92103',
-    'commendatory-prayer.html': '#a92103',
-    'prayer-for-dead.html': '#a92103',
-    'coffin-prayer.html': '#a92103',
-    'departure-prayer.html': '#a92103',
-    'cremate-prayer.html': '#a92103',
-    'burial-prayer.html': '#a92103',
-    'enshrining-prayer.html': '#a92103',
-    'reception.html': '#a92103',
-    'vestry.html': '#a92103',
-    'maternity.html': '#a92103',
-    'memorial-prayer.html': '#a92103',
-    'non-believer.html': '#a92103',
-    'brief-prayer.html': '#a92103',
-    'blessing.html': '#a92103',   // 필요 시 계속 추가
-    'collect-text.html': '#650a9e',
-    'canticle-text.html': '#650a9e',
-    'lesson1-text.html': '#650a9e',
-    'lesson2-text.html': '#650a9e',
-    'prayer-text.html': '#650a9e',
-    'psalm-text.html': '#650a9e',
-    'proper-text.html': '#650a9e'
+  // ✅ 기본 색상 - 검색과정 부분
+  let themeColor = '#183b5c'; 
+
+  // ✅ 색상 그룹 정의
+  const colorRules = {
+    //시작화면
+    green: ['index.html'], 
+    //기도서 예식부분
+    red: [
+      'morning-prayer.html', 'evening-prayer.html', 'noonday-prayer.html', 'compline-prayer.html',
+      'ucharist-form1.html', 'ucharist-form2.html', 'baptism.html', 'reconciliation.html',
+      'anointing-sick.html', 'commendatory-prayer.html', 'prayer-for-dead.html', 'coffin-prayer.html',
+      'departure-prayer.html', /*'cremate-prayer.html', 'burial-prayer.html',*/ 'enshrining-prayer.html',
+      'reception.html', 'vestry.html', 'maternity.html', 'memorial-prayer.html',
+      /*'non-believer.html',*/ 'brief-prayer.html', 'blessing.html'
+    ],
+    //특정문 부분
+    purple: [
+      'collect-text.html', 'canticle-text.html', 'lesson1-text.html',
+      'lesson2-text.html', 'prayer-text.html', 'psalm-text.html', 'proper-text.html'
+    ]
   };
 
-  // 기본 색상
-  let themeColor = '#183b5c';
-
-  // index 파일일 경우 or 루트(/)
-  if (!filename || filename === 'index.html') {
-    themeColor = themeMap['index.html'];
-  } else if (themeMap[filename]) {
-    themeColor = themeMap[filename];
+  // ✅ 색상 결정
+  if (!filename || colorRules.green.includes(filename)) {
+    themeColor = '#228b22'; // green
+  } else if (colorRules.red.includes(filename)) {
+    themeColor = '#a92103'; // red
+  } else if (colorRules.purple.includes(filename)) {
+    themeColor = '#650a9e'; // purple
   }
 
+  // ✅ 색상 적용
   if (navbar) navbar.style.backgroundColor = themeColor;
   if (sideMenu) sideMenu.style.backgroundColor = themeColor;
   if (closeBtn) closeBtn.style.color = 'white';
@@ -593,12 +563,8 @@ window.goToRememberedLesson2 = function () {
 };
 
 
-
-
 /*앱다운 설치, 앱아이콘 설치*/
-
 let deferredPrompt = null;
-
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('📦 beforeinstallprompt 발생');
   e.preventDefault();
@@ -637,8 +603,9 @@ window.addEventListener('appinstalled', () => {
 });
 
 
+
+/* 이 부분은 성찬기도1 예식문 외에서 아코디언 기능을 쓸 때 필요함*/
 document.addEventListener("DOMContentLoaded", function () {
-  // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
   if (location.pathname.includes("ucharist-form1")) return;
 
   const headers = document.querySelectorAll(".accordion-header");
