@@ -263,7 +263,7 @@ function clearAllBookmarks() {
 
 
 // ✅ 현재 앱 버전
-const CURRENT_VERSION = "v2025-10-18-05";  // ← 현재 버전 표시
+const CURRENT_VERSION = "v2025-10-19-01";  // ← 현재 버전 표시
 const APP_SCOPE = "/kbcp/";
 const CACHE_PREFIX = "kbcp-";
 
