@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
+/*
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
@@ -72,6 +73,46 @@ function rememberClosest(idPrefix, storageKey, fileName) {
     alert(`${title} 위치를 기억했습니다!`);
   }
 }
+*/
+
+
+function rememberClosest(idPrefix, storageKey, fileName) {
+  const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
+  const scrollY = window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const offsetMargin = 60; // 상단바 높이
+  let closest = null;
+  let closestDistance = Infinity;
+
+  headings.forEach(heading => {
+    const headingTop = heading.getBoundingClientRect().top;
+    const isVisible = headingTop >= offsetMargin && headingTop <= viewportHeight - offsetMargin;
+
+    if (isVisible) {
+      const distance = Math.abs(headingTop - offsetMargin);
+      if (distance < closestDistance) {
+        closest = heading;
+        closestDistance = distance;
+      }
+    }
+  });
+
+  if (closest) {
+    // ✅ 제목이 보이는 경우 정상 저장
+    const url = `${fileName}#${closest.id}`;
+    const title = closest.innerText.trim() || "(제목 없음)";
+    const data = { url, title };
+    localStorage.setItem(storageKey, JSON.stringify(data));
+    alert(`📌 '${title}' 위치를 기억했습니다!`);
+  } else {
+    // ⚠️ 제목이 보이지 않을 경우 안내 메시지 표시
+    alert("⚠️ 현재 화면에 저장할 수 있는 소제목이 보이지 않습니다.\n조금 위나 아래로 스크롤한 후 다시 시도하세요.");
+  }
+}
+
+
+
+
 
 
 function goToRememberedSection(storageKey, fallbackMessage) {
@@ -246,7 +287,7 @@ function clearAllBookmarks() {
 
 //--------------------------------------------------------------
 
-
+/*
 // ✅ 현재 앱 버전
 const CURRENT_VERSION = "v2025-10-18-05";  // ← 현재 버전 표시
 const APP_SCOPE = "/kbcp/";
@@ -314,6 +355,46 @@ function forceUpdate() {
     navigator.serviceWorker.addEventListener("controllerchange", () => window.location.reload());
     setTimeout(() => window.location.reload(), 1500);
   });
+}
+*/
+
+
+/**** 1️⃣ Service Worker 등록 ****/
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/kbcp/service-worker.js", { scope: "/kbcp/" })
+      .then((reg) => {
+        console.log("✅ Service Worker 등록 성공");
+
+        // 기존 SW가 대기 중이면 업데이트 알림
+        if (reg.waiting) promptUpdate(reg);
+
+        // 새 SW가 설치 중이면 상태 감시
+        reg.addEventListener("updatefound", () => {
+          const newSW = reg.installing;
+          if (!newSW) return;
+          newSW.addEventListener("statechange", () => {
+            if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+              promptUpdate(reg);
+            }
+          });
+        });
+
+        // SW 교체 완료되면 자동 새로고침
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          window.location.reload();
+        });
+      })
+      .catch((err) => console.error("❌ Service Worker 등록 실패:", err));
+  });
+
+  /**** 2️⃣ 새 버전 발견 시 사용자에게 안내 ****/
+  function promptUpdate(reg) {
+    if (confirm("📢 새 버전이 있습니다. 지금 업데이트할까요?")) {
+      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+    }
+  }
 }
 
 
