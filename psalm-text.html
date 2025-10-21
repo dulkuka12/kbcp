@@ -15,7 +15,6 @@
 
   <main class="content">
 
-    <!-- 예식문으로 돌아가기 버튼 한달 시편 필터시 밑에 위치하면 안보임으로 상단에 오게 한다 -->
     <button class="sub-button fixed-bottom-left"
       onclick="rememberClosest('psalm', 'rememberedPsalm', 'psalm-text.html')">책갈피</button>
 
@@ -3282,98 +3281,102 @@
   <script>
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  const morningId = params.get('morningId');
-  const eveningId = params.get('eveningId');
-  const psalms = document.querySelectorAll('.subtitle');
 
-  // 🔹 필터링 동작
-  psalms.forEach(psalm => {
-    const morningAttr = psalm.getAttribute('data-morning-id');
-    const eveningAttr = psalm.getAttribute('data-evening-id');
-    let shouldHide = false;
+    /*
+        document.addEventListener("DOMContentLoaded", function () {
+          const params = new URLSearchParams(window.location.search);
+          const morningId = params.get('morningId');
+          const eveningId = params.get('eveningId');
+          const psalms = document.querySelectorAll('.subtitle');
+    
+          // 🔹 필터링 동작
+          psalms.forEach(psalm => {
+            const morningAttr = psalm.getAttribute('data-morning-id');
+            const eveningAttr = psalm.getAttribute('data-evening-id');
+            let shouldHide = false;
+    
+            if (morningId && morningAttr !== morningId) shouldHide = true;
+            if (eveningId && eveningAttr !== eveningId) shouldHide = true;
+    
+            if (shouldHide) {
+              psalm.style.display = 'none';
+              let nextElement = psalm.nextElementSibling;
+              while (nextElement && !nextElement.classList.contains('subtitle')) {
+                nextElement.style.display = 'none';
+                nextElement = nextElement.nextElementSibling;
+              }
+            }
+          });
+    
+          // 🔹 필터링 후 여백 추가
+          const visiblePsalms = Array.from(document.querySelectorAll('.subtitle'))
+            .filter(psalm => psalm.style.display !== 'none');
+          if (visiblePsalms.length > 0) {
+            const spacer = document.createElement('div');
+            spacer.style.height = '120px';
+            visiblePsalms[visiblePsalms.length - 1].parentNode.appendChild(spacer);
+          }
+    
+          // 🔹 ✅ 필터링 모드일 때 '책갈피' 지정버튼 숨김
+          if (morningId || eveningId) {
+            const bookmarkBtn = document.querySelector('.sub-button.fixed-bottom-left');
+            if (bookmarkBtn) bookmarkBtn.style.display = 'none';
+          }
+        });
+    */
 
-    if (morningId && morningAttr !== morningId) shouldHide = true;
-    if (eveningId && eveningAttr !== eveningId) shouldHide = true;
-
-    if (shouldHide) {
-      psalm.style.display = 'none';
-      let nextElement = psalm.nextElementSibling;
-      while (nextElement && !nextElement.classList.contains('subtitle')) {
-        nextElement.style.display = 'none';
-        nextElement = nextElement.nextElementSibling;
-      }
-    }
-  });
-
-  // 🔹 필터링 후 여백 추가
-  const visiblePsalms = Array.from(document.querySelectorAll('.subtitle'))
-    .filter(psalm => psalm.style.display !== 'none');
-  if (visiblePsalms.length > 0) {
-    const spacer = document.createElement('div');
-    spacer.style.height = '120px';
-    visiblePsalms[visiblePsalms.length - 1].parentNode.appendChild(spacer);
-  }
-
-  // 🔹 ✅ 필터링 모드일 때 '책갈피' 버튼 숨김
-  if (morningId || eveningId) {
-    const bookmarkBtn = document.querySelector('.sub-button.fixed-bottom-left');
-    if (bookmarkBtn) bookmarkBtn.style.display = 'none';
-  }
-});
-
-
-
-
-    /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다
     document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams(window.location.search);
       const morningId = params.get('morningId');
       const eveningId = params.get('eveningId');
+      const fromGrid = params.get('from') === 'grid4'; // ✅ grid4에서 들어온 경우 인식
       const psalms = document.querySelectorAll('.subtitle');
 
+      // 🔹 (1) 필터링 동작
       psalms.forEach(psalm => {
         const morningAttr = psalm.getAttribute('data-morning-id');
         const eveningAttr = psalm.getAttribute('data-evening-id');
-
         let shouldHide = false;
 
-        if (morningId && morningAttr !== morningId) {
-          shouldHide = true;
-        }
-
-        if (eveningId && eveningAttr !== eveningId) {
-          shouldHide = true;
-        }
+        if (morningId && morningAttr !== morningId) shouldHide = true;
+        if (eveningId && eveningAttr !== eveningId) shouldHide = true;
 
         if (shouldHide) {
           psalm.style.display = 'none';
-
-          // 본문도 같이 숨김 처리
           let nextElement = psalm.nextElementSibling;
           while (nextElement && !nextElement.classList.contains('subtitle')) {
             nextElement.style.display = 'none';
             nextElement = nextElement.nextElementSibling;
           }
         }
-      }); 
+      });
 
-       ✅ 필터링이 끝난 후에 visiblePsalms 확인
-      const visiblePsalms = Array.from(document.querySelectorAll('.subtitle')).filter(
-        psalm => psalm.style.display !== 'none'
-      );
-
+      // 🔹 (2) 필터링 후 여백 추가
+      const visiblePsalms = Array.from(document.querySelectorAll('.subtitle'))
+        .filter(psalm => psalm.style.display !== 'none');
       if (visiblePsalms.length > 0) {
-        const lastPsalm = visiblePsalms[visiblePsalms.length - 1];
-
-        // 여백 div 추가
         const spacer = document.createElement('div');
         spacer.style.height = '120px';
-        lastPsalm.parentNode.appendChild(spacer);
+        visiblePsalms[visiblePsalms.length - 1].parentNode.appendChild(spacer);
+      }
+
+      // 🔹 (3) 버튼 표시/숨김 제어
+      const bookmarkBtn = document.querySelector('.sub-button.fixed-bottom-left');
+      const hasPsalmHash = window.location.hash && window.location.hash.startsWith("#psalm");
+
+      /*
+        ✅ 숨김 조건:
+          1) morningId 또는 eveningId 필터가 있는 경우
+          2) psalm 해시로 들어온 경우 (예식문 책갈피)
+          단, from=grid4 로 들어온 경우는 예외로 버튼 표시
+      */
+      if (!fromGrid && (morningId || eveningId || hasPsalmHash)) {
+        if (bookmarkBtn) bookmarkBtn.style.display = 'none';
       }
     });
-*/
+
+
+
 
   </script>
 

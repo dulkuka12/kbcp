@@ -24,7 +24,7 @@
   <script src="main.js"></script>
 
   <script>
-
+/*
     const grid = document.getElementById('buttonGrid');
     function createButtonGrid({ containerId, buttons, textFormatter, urlPrefix }) {
       const grid = document.getElementById(containerId);
@@ -81,6 +81,73 @@
       textFormatter: (item) => item.label,
       urlPrefix: 'psalm-text.html#psalm'
     });
+*/
+
+
+
+const grid = document.getElementById('buttonGrid');
+
+function createButtonGrid({ containerId, buttons, textFormatter, urlPrefix }) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+
+  buttons.forEach((btnInfo) => {
+    const btn = document.createElement('button');
+    btn.textContent = textFormatter(btnInfo) + '편';
+
+    // ✅ grid4에서 들어왔음을 표시
+    btn.onclick = function () {
+      location.replace(`${urlPrefix}?from=grid4#psalm${btnInfo.id}`);
+    };
+
+    grid.appendChild(btn);
+  });
+}
+
+// 🔹 시편 분절 정보
+const splitPsalms = {
+  18: 2,
+  37: 2,
+  89: 2,
+  105: 2,
+  106: 2,
+  107: 2,
+  119: 22
+};
+
+const psalmButtons = [];
+
+// 🔹 1편부터 150편까지 순회
+for (let i = 1; i <= 150; i++) {
+  if (splitPsalms[i]) {
+    for (let j = 1; j <= splitPsalms[i]; j++) {
+      psalmButtons.push({
+        id: `${i}-${j}`,
+        label: `${i} (${j})`,
+        sortKey: i + j / 10 // 정렬용
+      });
+    }
+  } else {
+    psalmButtons.push({
+      id: i.toString(),
+      label: `${i}`,
+      sortKey: i
+    });
+  }
+}
+
+// 🔹 정렬 후 버튼 생성
+psalmButtons.sort((a, b) => a.sortKey - b.sortKey);
+
+createButtonGrid({
+  containerId: 'buttonGrid',
+  buttons: psalmButtons,
+  textFormatter: (item) => item.label,
+  urlPrefix: 'psalm-text.html'
+});
+
+
+
 
   </script>
 
