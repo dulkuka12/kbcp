@@ -42,40 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
-/*
-function rememberClosest(idPrefix, storageKey, fileName) {
-  const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
-  const scrollY = window.scrollY;
-  const viewportHeight = window.innerHeight;
-  const offsetMargin = 60;  // 상단바 높이. 필요에 따라 조정. 책갈피저장시 보이는 소제목 기억
-  let closest = null;
-  let closestDistance = Infinity;
-
-  headings.forEach(heading => {
-    const headingTop = heading.getBoundingClientRect().top;
-    const isVisible = headingTop >= offsetMargin && headingTop <= viewportHeight - offsetMargin;
-
-    if (isVisible) {
-      const distance = Math.abs(headingTop - offsetMargin);
-      if (distance < closestDistance) {
-        closest = heading;
-        closestDistance = distance;
-      }
-    }
-  });
-
-  if (closest) {
-    const url = `${fileName}#${closest.id}`;
-    const title = closest.innerText;
-    const data = { url, title };
-    localStorage.setItem(storageKey, JSON.stringify(data)); // <-- 꼭 JSON.stringify 로 저장
-    alert(`${title} 위치를 기억했습니다!`);
-  }
-}
-*/
-
-
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
@@ -109,9 +77,6 @@ function rememberClosest(idPrefix, storageKey, fileName) {
     alert("⚠️ 현재 화면에 저장할 수 있는 소제목이 보이지 않습니다.\n조금 위나 아래로 스크롤한 후 다시 시도하세요.");
   }
 }
-
-
-
 
 
 
@@ -160,6 +125,7 @@ window.goToRememberedPrayer2 = function () {
 window.goToRememberedPrayer3 = function () {
   goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
 };
+
 
 
 // 책갈피 버튼
@@ -286,77 +252,6 @@ function clearAllBookmarks() {
 
 
 //--------------------------------------------------------------
-
-/*
-// ✅ 현재 앱 버전
-const CURRENT_VERSION = "v2025-10-18-05";  // ← 현재 버전 표시
-const APP_SCOPE = "/kbcp/";
-const CACHE_PREFIX = "kbcp-";
-
-// ✅ 실행 시 Service Worker 버전 자동 확인
-document.addEventListener("DOMContentLoaded", () => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .register("/kbcp/service-worker.js", { scope: "/kbcp/" })
-      .then(async (reg) => {
-        console.log("✅ Service Worker 등록 성공");
-
-        // 서비스워커 스크립트의 버전 문자열을 읽어서 비교
-        try {
-          const swResponse = await fetch("/kbcp/service-worker.js?ts=" + Date.now());
-          const swText = await swResponse.text();
-          const match = swText.match(/v\d{4}-\d{2}-\d{2}-\d{2}/);
-          if (match) {
-            const swVersion = match[0];
-            if (swVersion !== CURRENT_VERSION) {
-              const ok = confirm(`📢 새 버전(${swVersion})이 있습니다.\n지금 업데이트할까요?`);
-              if (ok) forceUpdate();
-            }
-          }
-        } catch (e) {
-          console.warn("서비스워커 버전 확인 실패:", e);
-        }
-      })
-      .catch((err) => console.error("❌ Service Worker 등록 실패:", err));
-  }
-});
-
-
-// ✅ 강제 업데이트 함수 (기존 그대로 유지)
-function forceUpdate() {
-  if (!navigator.onLine) {
-    alert("⚠️ 오프라인 상태에서는 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
-    return;
-  }
-
-  navigator.serviceWorker.getRegistrations().then(async (regs) => {
-    const reg = regs.find((r) => r.scope.endsWith(APP_SCOPE));
-    if (!reg) {
-      console.warn("[kbcp] 등록된 서비스워커 없음. 페이지 새로고침");
-      location.reload();
-      return;
-    }
-
-    await caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k.startsWith(CACHE_PREFIX) ? caches.delete(k) : null)))
-    );
-
-    await reg.update();
-
-    if (reg.waiting) {
-      reg.waiting.postMessage({ type: "SKIP_WAITING" });
-    } else if (reg.installing) {
-      reg.installing.addEventListener("statechange", () => {
-        if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      });
-    }
-
-    alert("📢 kbcp 앱을 업데이트합니다. 새 파일로 다시 로드됩니다.");
-    navigator.serviceWorker.addEventListener("controllerchange", () => window.location.reload());
-    setTimeout(() => window.location.reload(), 1500);
-  });
-}
-*/
 
 
 /**** 1️⃣ Service Worker 등록 ****/
@@ -502,63 +397,6 @@ const sideMenuHTML = `
 
 
 //-----------------------------------------------------------
-
-/* 현재 이 부분은 삭제해도 문제가 보이지 않음, 더 지켜볼것
-// 특정 위치 저장 (파일 경로와 위치를 함께 저장)
-function rememberPosition(storageKey, elementId) {
-  const targetElement = document.getElementById(elementId);
-
-  if (targetElement) {
-    const positionData = {
-      path: window.location.pathname,  // 현재 파일 경로
-      position: targetElement.offsetTop
-    };
-
-    localStorage.setItem(storageKey, JSON.stringify(positionData));
-    console.log(`위치 저장됨: ${JSON.stringify(positionData)}`);
-  } else {
-    console.warn(`${elementId}가 존재하지 않습니다.`);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const hash = window.location.hash;
-
-  if (hash.startsWith('#scrollTo=')) {
-    const position = parseInt(hash.replace('#scrollTo=', ''), 10);
-    if (!isNaN(position)) {
-      window.scrollTo(0, position);
-    }
-  }
-});
-
-*/
-//-----------------------------------------------------
-
-
-/* 현재 이 부분은 삭제해도 문제가 보이지 않음, 더 지켜볼것
-//아침저녁시편필터보기
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const morningId = params.get('morningId');
-  const eveningId = params.get('eveningId');
-  const hash = window.location.hash.substring(1);
-
-  let target = null;
-
-  if (morningId) {
-    target = document.querySelector(`[data-morning-id="${morningId}"]`);
-  } else if (eveningId) {
-    target = document.querySelector(`[data-evening-id="${eveningId}"]`);
-  } else if (hash) {
-    target = document.getElementById(hash);
-  }
-  if (target) {
-    target.scrollIntoView();
-    //target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 
-  }
-});
-*/
 
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');

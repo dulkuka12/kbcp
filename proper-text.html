@@ -621,129 +621,136 @@
 
   <script src="main.js" defer></script>
 
-  <script>
 
-    function rememberAllProperBookmarks() {
-      const scrollY = window.scrollY;
-      let currentSection = null;
+<script>
 
-      // 현재 가장 가까운 section 찾기
-      const sections = document.querySelectorAll('div.big-title[id^="section"]');
-      sections.forEach(section => {
-        const distance = Math.abs(section.offsetTop - scrollY);
-        if (!currentSection || distance < Math.abs(currentSection.offsetTop - scrollY)) {
-          currentSection = section;
-        }
-      });
+  /* 🔹 성찬례 특정문 전체 책갈피 저장 */
+  function rememberAllProperBookmarks() {
+    const scrollY = window.scrollY;
+    let currentSection = null;
 
-      if (!currentSection) return;
-
-      // 섹션이 숨겨져 있다면 필터링 중으로 간주
-      if (currentSection.style.display === 'none') {
-        alert("필터링 중에는를 저장할 수 없습니다.\n특정문 검색에서를 저장할 수 있습니다.");
-        return;
+    // 현재 가장 가까운 section 찾기
+    const sections = document.querySelectorAll('div.big-title[id^="section"]');
+    sections.forEach(section => {
+      const distance = Math.abs(section.offsetTop - scrollY);
+      if (!currentSection || distance < Math.abs(currentSection.offsetTop - scrollY)) {
+        currentSection = section;
       }
-
-      const sectionId = currentSection.id;
-      const sectionTitle = currentSection.textContent.trim(); // 실제 제목
-
-      const properBookmarks = [];
-
-      // 해당 섹션 아래 proper1~7 찾기
-      for (let i = 1; i <= 7; i++) {
-        const properId = `${sectionId}-proper${i}`;
-        const element = document.getElementById(properId);
-        if (element) {
-          properBookmarks.push({
-            path: 'proper-text.html',
-            targetId: properId,
-            label: element.textContent.trim()
-          });
-        }
-      }
-
-      // localStorage에 저장
-      properBookmarks.forEach((data, index) => {
-        localStorage.setItem(`rememberedProper${index + 1}`, JSON.stringify(data));
-      });
-
-      alert(`'${sectionTitle}'의 특정문들이 성찬례에 저장되었습니다.`);
-    }
-
-
-    // DOMContentLoaded 내부에 추가; 마지막 버튼에 본문 가리지 않게 여백추가
-    const visiblePropers = Array.from(document.querySelectorAll('.subtitle')).filter(Proper => Proper.style.display !== 'none');
-
-    if (visiblePropers.length > 0) {
-      const lastProper = visiblePropers[visiblePropers.length - 1];
-
-      // 여백 div 추가
-      const spacer = document.createElement('div');
-      spacer.style.height = '120px';
-      lastProper.parentNode.appendChild(spacer);
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const targetId = params.get('proper'); // 예: "section11-proper3"
-
-      if (!targetId) return;
-
-      const sectionId = targetId.split('-')[0];
-
-      // 모든 big-title 처리
-      const allSections = document.querySelectorAll('div.big-title');
-      allSections.forEach(section => {
-        const isTargetSection = (section.id === sectionId);
-        section.style.display = isTargetSection ? '' : 'none';
-
-        // big-title 바로 다음에 오는 rubric은 연관된 것으로 보고 함께 처리
-        let next = section.nextElementSibling;
-        while (next && next.classList.contains('rubric')) {
-          next.style.display = isTargetSection ? '' : 'none';
-          next = next.nextElementSibling;
-        }
-      });
-
-      // 모든 proper subtitle 처리
-      const allSubtitles = document.querySelectorAll('div.subtitle[id*="proper"]');
-      allSubtitles.forEach((subtitle) => {
-        const isTargetProper = (subtitle.id === targetId);
-        subtitle.style.display = isTargetProper ? '' : 'none';
-
-        // 관련된 다음 요소들 (rubric 포함)을 처리
-        let next = subtitle.nextElementSibling;
-        while (next && (next.classList.contains('body-text') || next.classList.contains('rubric'))) {
-          next.style.display = isTargetProper ? '' : 'none';
-          next = next.nextElementSibling;
-        }
-      });
     });
 
+    if (!currentSection) return;
 
+    // 섹션이 숨겨져 있다면 필터링 중으로 간주
+    if (currentSection.style.display === 'none') {
+      alert("⚠️ 필터링 중에는 저장할 수 없습니다.\n특정문 전체 보기에서만 저장할 수 있습니다.");
+      return;
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const properFullId = params.get('proper'); // 예: 'section1-proper1'
+    const sectionId = currentSection.id;
+    const sectionTitle = currentSection.textContent.trim();
 
-      let targetProper = 'proper0'; // 기본값 (검색에서 들어온 경우)
+    const properBookmarks = [];
 
-      if (properFullId) {
-        const parts = properFullId.split('-');
-        const properPart = parts.pop(); // proper1 등
-        if (properPart.startsWith('proper')) {
-          targetProper = properPart;
-        }
+    // 해당 섹션 아래 proper1~7 찾기
+    for (let i = 1; i <= 7; i++) {
+      const properId = `${sectionId}-proper${i}`;
+      const element = document.getElementById(properId);
+      if (element) {
+        properBookmarks.push({
+          path: 'proper-text.html',
+          targetId: properId,
+          label: element.textContent.trim()
+        });
       }
+    }
 
-      const btn = document.getElementById('goBackButton');
+    // localStorage에 저장
+    properBookmarks.forEach((data, index) => {
+      localStorage.setItem(`rememberedProper${index + 1}`, JSON.stringify(data));
+    });
+
+    alert(`✅ '${sectionTitle}'의 특정문들이 성찬례에 저장되었습니다.`);
+  }
+
+  /* 🔹 마지막 본문 하단 여백 추가 */
+  const visiblePropers = Array.from(document.querySelectorAll('.subtitle'))
+    .filter(Proper => Proper.style.display !== 'none');
+
+  if (visiblePropers.length > 0) {
+    const lastProper = visiblePropers[visiblePropers.length - 1];
+    const spacer = document.createElement('div');
+    spacer.style.height = '120px';
+    lastProper.parentNode.appendChild(spacer);
+  }
+
+  /* 🔹 필터링 모드에서 해당 section/proper만 표시 + 책갈피 버튼 숨김 */
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get('proper'); // 예: "section11-proper3"
+
+    // ✅ 필터링 중일 때만 책갈피 버튼 숨김
+    if (targetId) {
+      const bookmarkBtn = document.querySelector('.sub-button.fixed-bottom-left');
+      if (bookmarkBtn) bookmarkBtn.style.display = 'none';
+    }
+
+    // 전체 보기라면 나머지 필터 처리 생략
+    if (!targetId) return;
+
+    const sectionId = targetId.split('-')[0];
+
+    // big-title 처리
+    const allSections = document.querySelectorAll('div.big-title');
+    allSections.forEach(section => {
+      const isTargetSection = (section.id === sectionId);
+      section.style.display = isTargetSection ? '' : 'none';
+
+      // big-title 바로 다음 rubric 함께 처리
+      let next = section.nextElementSibling;
+      while (next && next.classList.contains('rubric')) {
+        next.style.display = isTargetSection ? '' : 'none';
+        next = next.nextElementSibling;
+      }
+    });
+
+    // proper subtitle 처리
+    const allSubtitles = document.querySelectorAll('div.subtitle[id*="proper"]');
+    allSubtitles.forEach(subtitle => {
+      const isTargetProper = (subtitle.id === targetId);
+      subtitle.style.display = isTargetProper ? '' : 'none';
+
+      let next = subtitle.nextElementSibling;
+      while (next && (next.classList.contains('body-text') || next.classList.contains('rubric'))) {
+        next.style.display = isTargetProper ? '' : 'none';
+        next = next.nextElementSibling;
+      }
+    });
+  });
+
+  /* 🔹 돌아가기 버튼 처리 */
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const properFullId = params.get('proper'); // 예: 'section1-proper1'
+
+    let targetProper = 'proper0'; // 기본값 (검색에서 들어온 경우)
+
+    if (properFullId) {
+      const parts = properFullId.split('-');
+      const properPart = parts.pop();
+      if (properPart.startsWith('proper')) {
+        targetProper = properPart;
+      }
+    }
+
+    const btn = document.getElementById('goBackButton');
+    if (btn) {
       btn.setAttribute('onclick', `goToPosition('proper', '${targetProper}')`);
-    });
+    }
+  });
+
+</script>
 
 
-  </script>
 </body>
 
 </html>

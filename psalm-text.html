@@ -3281,7 +3281,52 @@
 
   <script>
 
-    /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다 */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+  const morningId = params.get('morningId');
+  const eveningId = params.get('eveningId');
+  const psalms = document.querySelectorAll('.subtitle');
+
+  // 🔹 필터링 동작
+  psalms.forEach(psalm => {
+    const morningAttr = psalm.getAttribute('data-morning-id');
+    const eveningAttr = psalm.getAttribute('data-evening-id');
+    let shouldHide = false;
+
+    if (morningId && morningAttr !== morningId) shouldHide = true;
+    if (eveningId && eveningAttr !== eveningId) shouldHide = true;
+
+    if (shouldHide) {
+      psalm.style.display = 'none';
+      let nextElement = psalm.nextElementSibling;
+      while (nextElement && !nextElement.classList.contains('subtitle')) {
+        nextElement.style.display = 'none';
+        nextElement = nextElement.nextElementSibling;
+      }
+    }
+  });
+
+  // 🔹 필터링 후 여백 추가
+  const visiblePsalms = Array.from(document.querySelectorAll('.subtitle'))
+    .filter(psalm => psalm.style.display !== 'none');
+  if (visiblePsalms.length > 0) {
+    const spacer = document.createElement('div');
+    spacer.style.height = '120px';
+    visiblePsalms[visiblePsalms.length - 1].parentNode.appendChild(spacer);
+  }
+
+  // 🔹 ✅ 필터링 모드일 때 '책갈피' 버튼 숨김
+  if (morningId || eveningId) {
+    const bookmarkBtn = document.querySelector('.sub-button.fixed-bottom-left');
+    if (bookmarkBtn) bookmarkBtn.style.display = 'none';
+  }
+});
+
+
+
+
+    /* 아래 코드는 필터링, 위치로만 칮아도 되면 삭제하면 위치로 찾아간다
     document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams(window.location.search);
       const morningId = params.get('morningId');
@@ -3312,9 +3357,9 @@
             nextElement = nextElement.nextElementSibling;
           }
         }
-      });
+      }); 
 
-      /* ✅ 필터링이 끝난 후에 visiblePsalms 확인*/
+       ✅ 필터링이 끝난 후에 visiblePsalms 확인
       const visiblePsalms = Array.from(document.querySelectorAll('.subtitle')).filter(
         psalm => psalm.style.display !== 'none'
       );
@@ -3328,7 +3373,7 @@
         lastPsalm.parentNode.appendChild(spacer);
       }
     });
-
+*/
 
   </script>
 

@@ -353,10 +353,12 @@
 
   <script>
 
+
     document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams(window.location.search);
       let prayerId = params.get("prayerId");
 
+      // 해시(#prayer...)가 있을 경우도 처리
       if (!prayerId && window.location.hash) {
         const hashValue = window.location.hash.substring(1);
         if (hashValue.startsWith("prayer")) {
@@ -365,6 +367,14 @@
       }
 
       if (prayerId) {
+        // ✅ 필터링 중에는 책갈피 버튼 3개 모두 숨김
+        const bookmarkBtn1 = document.querySelector(".sub-button.fixed-bottom-left-1");
+        const bookmarkBtn2 = document.querySelector(".sub-button.fixed-bottom-left-2");
+        const bookmarkBtn3 = document.querySelector(".sub-button.fixed-bottom-left-3");
+        if (bookmarkBtn1) bookmarkBtn1.style.display = "none";
+        if (bookmarkBtn2) bookmarkBtn2.style.display = "none";
+        if (bookmarkBtn3) bookmarkBtn3.style.display = "none";
+
         // 모든 요소를 먼저 숨김
         const all = document.querySelectorAll(".big-title, .subtitle, .body-text");
         all.forEach(el => el.style.display = "none");
@@ -387,6 +397,43 @@
       }
     });
 
+
+
+    /*
+        document.addEventListener("DOMContentLoaded", function () {
+          const params = new URLSearchParams(window.location.search);
+          let prayerId = params.get("prayerId");
+    
+          if (!prayerId && window.location.hash) {
+            const hashValue = window.location.hash.substring(1);
+            if (hashValue.startsWith("prayer")) {
+              prayerId = hashValue;
+            }
+          }
+    
+          if (prayerId) {
+            // 모든 요소를 먼저 숨김
+            const all = document.querySelectorAll(".big-title, .subtitle, .body-text");
+            all.forEach(el => el.style.display = "none");
+    
+            // 해당 id의 subtitle과 이후 body-text만 보이게
+            const target = document.getElementById(prayerId);
+            if (target && target.classList.contains("subtitle")) {
+              target.style.display = "block";
+    
+              let next = target.nextElementSibling;
+              while (next && next.classList.contains("body-text")) {
+                next.style.display = "block";
+                next = next.nextElementSibling;
+              }
+            }
+    
+            window.PrayerFiltered = true;
+          } else {
+            window.PrayerFiltered = false;
+          }
+        });
+    */
   </script>
 
 </body>
