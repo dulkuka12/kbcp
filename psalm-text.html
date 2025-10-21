@@ -3366,12 +3366,13 @@
 
       /*
         ✅ 숨김 조건:
-          1) morningId 또는 eveningId 필터가 있는 경우
-          2) psalm 해시로 들어온 경우 (예식문 책갈피)
-          단, from=grid4 로 들어온 경우는 예외로 버튼 표시
-      */
+//          1) morningId 또는 eveningId 필터가 있는 경우
+          1) psalm 해시로 들어온 경우 (예식문 책갈피)
+          2) from=grid4 로 들어온 경우는 예외로 버튼 표시
       if (!fromGrid && (morningId || eveningId || hasPsalmHash)) {
-        if (bookmarkBtn) bookmarkBtn.style.display = 'none';
+      */
+      if (!fromGrid && (hasPsalmHash) ) {
+      if (bookmarkBtn) bookmarkBtn.style.display = 'none';
       }
     });
 
