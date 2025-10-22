@@ -1228,58 +1228,8 @@
     onclick="rememberClosest('collect', 'rememberedCollect2', 'collect-text.html')">책갈피2</button>
 
 
-  
+  <script>
 
-<script>
-
-  document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  let collectId = params.get("collectId");
-
-  // 해시(#collect...)가 있을 경우도 사용
-  if (!collectId && window.location.hash) {
-    const hashValue = window.location.hash.substring(1);
-    if (hashValue.startsWith("collect")) {
-      collectId = hashValue;
-    } else {
-      collectId = null; // 섹션 id(#section..)는 필터 대상 아님
-    }
-  }
-
-  // ✅ collect로 시작하지 않으면 필터 작동 안 함
-  if (collectId && collectId.startsWith("collect")) {
-    // big-title은 숨김
-    document.querySelectorAll(".big-title").forEach(el => {
-      el.style.display = "none";
-    });
-
-    const all = document.querySelectorAll(".subtitle, .body-text, .rubric, .rubric2");
-    let show = false;
-
-    all.forEach(el => {
-      if (el.classList.contains("subtitle")) {
-        show = (el.id === collectId);
-        el.style.display = show ? "block" : "none";
-      } else {
-        el.style.display = show ? "block" : "none";
-      }
-    });
-
-    // ✅ 필터링 중에는 책갈피 버튼 두 개 모두 숨김
-    const bookmarkBtn2 = document.querySelector(".sub-button.fixed-bottom-left-2");
-    if (bookmarkBtn2) bookmarkBtn2.style.display = "none";
-
-    const bookmarkBtn3 = document.querySelector(".sub-button.fixed-bottom-left-3");
-    if (bookmarkBtn3) bookmarkBtn3.style.display = "none";
-
-    window.CollectFiltered = true;
-  } else {
-    // collect가 아닌 경우에는 필터 동작 안 함 (전체 표시)
-    window.CollectFiltered = false;
-  }
-});
-
-/*
     document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams(window.location.search);
       let collectId = params.get("collectId");
@@ -1313,14 +1263,19 @@
           }
         });
 
+        // ✅ 필터링 중에는 책갈피 버튼 두 개 모두 숨김
+        const bookmarkBtn2 = document.querySelector(".sub-button.fixed-bottom-left-2");
+        if (bookmarkBtn2) bookmarkBtn2.style.display = "none";
+
+        const bookmarkBtn3 = document.querySelector(".sub-button.fixed-bottom-left-3");
+        if (bookmarkBtn3) bookmarkBtn3.style.display = "none";
+
         window.CollectFiltered = true;
       } else {
         // collect가 아닌 경우에는 필터 동작 안 함 (전체 표시)
         window.CollectFiltered = false;
       }
     });
-
-*/
 
   </script>
 

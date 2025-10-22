@@ -3366,9 +3366,7 @@
 
       /*
         ✅ 숨김 조건:
-//          1) morningId 또는 eveningId 필터가 있는 경우
-          1) psalm 해시로 들어온 경우 (예식문 책갈피)
-          2) from=grid4 로 들어온 경우는 예외로 버튼 표시
+      (from=grid4 로 들어온 경우가 아니고) (morningId 또는 eveningId 필터가 있는 경우와 psalm 해시(예식문 책갈피)로 들어온 경우 )
       if (!fromGrid && (morningId || eveningId || hasPsalmHash)) {
       */
       if (!fromGrid && (hasPsalmHash) ) {
