@@ -51,6 +51,8 @@ const CACHE_FILES = [
   "/kbcp/main.js",
   "/kbcp/manifest.json",
   "/kbcp/maternity.html",
+  "/kbcp/matrimony.html",
+  "/kbcp/matrimony-lesson.html",
   "/kbcp/memorial-prayer-lesson.html",
   "/kbcp/memorial-prayer.html",
   "/kbcp/morning-prayer.html",
