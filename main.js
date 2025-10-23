@@ -253,7 +253,6 @@ function clearAllBookmarks() {
 
 //--------------------------------------------------------------
 
-
 /**** 1️⃣ Service Worker 등록 ****/
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -387,12 +386,14 @@ const sideMenuHTML = `
     });
   });
 
+/*  
   // 7️⃣ Service Worker 등록
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/kbcp/service-worker.js', { scope: '/kbcp/' })
       .then(() => console.log('✅ Service Worker 등록 성공'))
       .catch(err => console.error('❌ Service Worker 등록 실패:', err));
   }
+*/      
 });
 
 
