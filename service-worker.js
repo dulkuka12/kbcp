@@ -1,7 +1,7 @@
 // service-worker.js
 // 1) 캐시 이름은 앱별 프리픽스로 완전히 분리
 const CACHE_PREFIX = "kbcp-";
-const CACHE_VERSION = "v2025-10-23-01"; // main.js의 CURRENT_VERSION과 반드시 일치
+const CACHE_VERSION = "v2025-10-23-02";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 // 2) kbcp 전용 파일만 절대경로로 명시
@@ -89,7 +89,6 @@ const CACHE_FILES = [
   "/kbcp/ucharist-form2.html",
   "/kbcp/ucharist-select.html",
   "/kbcp/user-guide.html",
-  /*"/kbcp/version.txt",버전구분을 위해 복사안함*/
   "/kbcp/vestry.html"
 ];
 
