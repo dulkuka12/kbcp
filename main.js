@@ -412,13 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
       'ucharist-form1.html', 'ucharist-form2.html', 'baptism.html', 'reconciliation.html',
       'anointing-sick.html', 'commendatory-prayer.html', 'prayer-for-dead.html', 'coffin-prayer.html',
       'departure-prayer.html', /*'cremate-prayer.html', 'burial-prayer.html',*/ 'enshrining-prayer.html',
-      'reception.html', 'vestry.html', 'maternity.html', 'memorial-prayer.html',
+      'reception.html', 'vestry.html', 'maternity.html','matrimony.html', 'memorial-prayer.html',
       /*'non-believer.html',*/ 'brief-prayer.html', 'blessing.html'
     ],
     //특정문 부분
     purple: [
-      'collect-text.html', 'canticle-text.html', 'lesson1-text.html',
-      'lesson2-text.html', 'prayer-text.html', 'psalm-text.html', 'proper-text.html'
+      'collect-text.html', 'canticle-text.html', 'lesson1-text.html', /*non-believer-lesson.html,*/
+      'lesson2-text.html',  'prayer-text.html', 'psalm-text.html', 'proper-text.html',
+      'anointing-sick-lesson', 'baptism-lesson', 'matrimony-lesson', 'memorial-prayer-lesson', 'prayer-for-dead-lesson'
     ]
   };
 
