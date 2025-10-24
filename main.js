@@ -386,14 +386,6 @@ const sideMenuHTML = `
     });
   });
 
-/*  
-  // 7️⃣ Service Worker 등록
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/kbcp/service-worker.js', { scope: '/kbcp/' })
-      .then(() => console.log('✅ Service Worker 등록 성공'))
-      .catch(err => console.error('❌ Service Worker 등록 실패:', err));
-  }
-*/      
 });
 
 
@@ -484,6 +476,7 @@ window.goToRememberedLesson2 = function () {
 
 
 /*앱다운 설치, 앱아이콘 설치*/
+/*
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('📦 beforeinstallprompt 발생');
@@ -521,6 +514,65 @@ function installPWA() {
 window.addEventListener('appinstalled', () => {
   alert("✅ 성공회 기도서 앱이 설치되었습니다!");
 });
+*/
+
+
+/* ================================
+   ✅ 성공회 기도서 PWA 설치 스크립트
+   ================================ */
+
+let deferredPrompt = null;
+
+// --- 1️⃣ 설치 안내 이벤트 (beforeinstallprompt) ---
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('📦 beforeinstallprompt 발생');
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // 메뉴 생성 후 버튼 표시
+  setTimeout(() => {
+    const installBtn = document.getElementById('installPwa');
+    if (installBtn) {
+      installBtn.style.display = 'block';
+      console.log('✅ 설치 버튼 표시됨');
+    } else {
+      console.warn('❗ installPwa 버튼을 찾을 수 없습니다.');
+    }
+  }, 100);
+});
+
+// --- 2️⃣ 설치 버튼 클릭 시 동작 ---
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        console.log("✅ 사용자 설치 수락");
+      } else {
+        console.log("❌ 사용자 설치 거부");
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    alert("이미 설치되었거나 설치 조건이 충족되지 않았습니다.");
+  }
+}
+
+// --- 3️⃣ 설치 완료 이벤트 (한 번만 표시되게) ---
+if (!window._kbcpAppInstalledListener) {
+  window.addEventListener('appinstalled', () => {
+    console.log("📱 appinstalled 이벤트 발생");
+
+    // 중복 알림 방지 (localStorage 기반)
+    if (!localStorage.getItem('kbcpInstalled')) {
+      alert("✅ 성공회 기도서 앱이 설치되었습니다!");
+      localStorage.setItem('kbcpInstalled', 'true');
+    }
+  });
+
+  // 리스너 중복 등록 방지
+  window._kbcpAppInstalledListener = true;
+}
 
 
 
