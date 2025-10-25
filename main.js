@@ -524,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'reception.html': '#a92103',
     'vestry.html': '#a92103',
     'maternity.html': '#a92103',
+    'matrimony.html': '#a92103',
     'memorial-prayer.html': '#a92103',
     'non-believer.html': '#a92103',
     'brief-prayer.html': '#a92103',
