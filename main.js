@@ -42,13 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 // text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
   const viewportHeight = window.innerHeight;
-  const offsetMargin = 60; // 상단바 높이
+  const offsetMargin = 60;  // 상단바 높이. 필요에 따라 조정. 책갈피저장시 보이는 소제목 기억
   let closest = null;
   let closestDistance = Infinity;
 
@@ -66,18 +65,13 @@ function rememberClosest(idPrefix, storageKey, fileName) {
   });
 
   if (closest) {
-    // ✅ 제목이 보이는 경우 정상 저장
     const url = `${fileName}#${closest.id}`;
-    const title = closest.innerText.trim() || "(제목 없음)";
+    const title = closest.innerText;
     const data = { url, title };
-    localStorage.setItem(storageKey, JSON.stringify(data));
-    alert(`📌 '${title}' 위치를 기억했습니다!`);
-  } else {
-    // ⚠️ 제목이 보이지 않을 경우 안내 메시지 표시
-    alert("⚠️ 현재 화면에 저장할 수 있는 소제목이 보이지 않습니다.\n조금 위나 아래로 스크롤한 후 다시 시도하세요.");
+    localStorage.setItem(storageKey, JSON.stringify(data)); // <-- 꼭 JSON.stringify 로 저장
+    alert(`${title} 위치를 기억했습니다!`);
   }
 }
-
 
 
 function goToRememberedSection(storageKey, fallbackMessage) {
@@ -99,6 +93,7 @@ function goToRememberedSection(storageKey, fallbackMessage) {
     alert(fallbackMessage);
   }
 }
+
 
 // 전역 노출, 책갈피 저장이 없으면
 window.goToRememberedPsalm = function () {
@@ -125,7 +120,6 @@ window.goToRememberedPrayer2 = function () {
 window.goToRememberedPrayer3 = function () {
   goToRememberedSection('rememberedPrayer3', '기억된 간구기도3이 없습니다.');
 };
-
 
 
 // 책갈피 버튼
@@ -203,6 +197,7 @@ function updateProperBookmarkLabels() {
   }
 }
 
+
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
@@ -210,16 +205,28 @@ window.addEventListener('pageshow', updateProperBookmarkLabels);
 
 function clearAllBookmarks() {
   const keysToRemove = [
-    'rememberedPsalm', 'rememberedLesson1', 'rememberedLesson2',
-    'rememberedProper1', 'rememberedProper2', 'rememberedProper3',
-    'rememberedProper4', 'rememberedProper5', 'rememberedProper6',
-    'rememberedProper7', 'rememberedCanticle1', 'rememberedCanticle2',
-    'rememberedCollect1', 'rememberedCollect2', 'rememberedPrayer1',
-    'rememberedPrayer2', 'rememberedPrayer3',
+    'rememberedPsalm',
+    'rememberedLesson1',
+    'rememberedLesson2',
+    'rememberedProper1',
+    'rememberedProper2',
+    'rememberedProper3',
+    'rememberedProper4',
+    'rememberedProper5',
+    'rememberedProper6',
+    'rememberedProper7',
+    'rememberedCanticle1',
+    'rememberedCanticle2',
+    'rememberedCollect1',
+    'rememberedCollect2',
+    'rememberedPrayer1',
+    'rememberedPrayer2',
+    'rememberedPrayer3',
   ];
 
   // 로컬 스토리지 데이터 제거
   keysToRemove.forEach(key => localStorage.removeItem(key));
+
   // 버튼 텍스트 복원
   const defaultLabels = {
     'bookmarkPsalmButton': '책갈피',
@@ -251,44 +258,77 @@ function clearAllBookmarks() {
 }
 
 
+
 //--------------------------------------------------------------
 
-/**** 1️⃣ Service Worker 등록 ****/
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
+
+// ✅ 현재 앱 버전
+const CURRENT_VERSION = "v2025-10-19-01";  // ← 현재 버전 표시
+const APP_SCOPE = "/kbcp/";
+const CACHE_PREFIX = "kbcp-";
+
+// ✅ 실행 시 Service Worker 버전 자동 확인
+document.addEventListener("DOMContentLoaded", () => {
+  if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/kbcp/service-worker.js", { scope: "/kbcp/" })
-      .then((reg) => {
+      .then(async (reg) => {
         console.log("✅ Service Worker 등록 성공");
 
-        // 기존 SW가 대기 중이면 업데이트 알림
-        if (reg.waiting) promptUpdate(reg);
-
-        // 새 SW가 설치 중이면 상태 감시
-        reg.addEventListener("updatefound", () => {
-          const newSW = reg.installing;
-          if (!newSW) return;
-          newSW.addEventListener("statechange", () => {
-            if (newSW.state === "installed" && navigator.serviceWorker.controller) {
-              promptUpdate(reg);
+        // 서비스워커 스크립트의 버전 문자열을 읽어서 비교
+        try {
+          const swResponse = await fetch("/kbcp/service-worker.js?ts=" + Date.now());
+          const swText = await swResponse.text();
+          const match = swText.match(/v\d{4}-\d{2}-\d{2}-\d{2}/);
+          if (match) {
+            const swVersion = match[0];
+            if (swVersion !== CURRENT_VERSION) {
+              const ok = confirm(`📢 새 버전(${swVersion})이 있습니다.\n지금 업데이트할까요?`);
+              if (ok) forceUpdate();
             }
-          });
-        });
-
-        // SW 교체 완료되면 자동 새로고침
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          window.location.reload();
-        });
+          }
+        } catch (e) {
+          console.warn("서비스워커 버전 확인 실패:", e);
+        }
       })
       .catch((err) => console.error("❌ Service Worker 등록 실패:", err));
-  });
-
-  /**** 2️⃣ 새 버전 발견 시 사용자에게 안내 ****/
-  function promptUpdate(reg) {
-    if (confirm("📢 새 버전이 있습니다. 지금 업데이트할까요?")) {
-      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
-    }
   }
+});
+
+
+// ✅ 강제 업데이트 함수 (기존 그대로 유지)
+function forceUpdate() {
+  if (!navigator.onLine) {
+    alert("⚠️ 오프라인 상태에서는 업데이트할 수 없습니다.\n와이파이나 인터넷 연결을 확인해주세요.");
+    return;
+  }
+
+  navigator.serviceWorker.getRegistrations().then(async (regs) => {
+    const reg = regs.find((r) => r.scope.endsWith(APP_SCOPE));
+    if (!reg) {
+      console.warn("[kbcp] 등록된 서비스워커 없음. 페이지 새로고침");
+      location.reload();
+      return;
+    }
+
+    await caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k.startsWith(CACHE_PREFIX) ? caches.delete(k) : null)))
+    );
+
+    await reg.update();
+
+    if (reg.waiting) {
+      reg.waiting.postMessage({ type: "SKIP_WAITING" });
+    } else if (reg.installing) {
+      reg.installing.addEventListener("statechange", () => {
+        if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+      });
+    }
+
+    alert("📢 kbcp 앱을 업데이트합니다. 새 파일로 다시 로드됩니다.");
+    navigator.serviceWorker.addEventListener("controllerchange", () => window.location.reload());
+    setTimeout(() => window.location.reload(), 1500);
+  });
 }
 
 
@@ -336,15 +376,18 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 `;
 
+
+// ✅ 사이드 메뉴 HTML (버전 업데이트 제거됨)
 const sideMenuHTML = `
   <div id="sideMenu" class="side-menu">
     <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
     <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
-    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">앱설치 방법</a>
+    <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">설치안내</a>
     ${settingsHTML}
   </div>
 `;
+
 
   // 3️⃣ 상단바 HTML
   const navbarHTML = `
@@ -386,10 +429,70 @@ const sideMenuHTML = `
     });
   });
 
+  // 7️⃣ Service Worker 등록
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/kbcp/service-worker.js', { scope: '/kbcp/' })
+      .then(() => console.log('✅ Service Worker 등록 성공'))
+      .catch(err => console.error('❌ Service Worker 등록 실패:', err));
+  }
 });
 
 
 //-----------------------------------------------------------
+
+
+// 특정 위치 저장 (파일 경로와 위치를 함께 저장)
+function rememberPosition(storageKey, elementId) {
+  const targetElement = document.getElementById(elementId);
+
+  if (targetElement) {
+    const positionData = {
+      path: window.location.pathname,  // 현재 파일 경로
+      position: targetElement.offsetTop
+    };
+
+    localStorage.setItem(storageKey, JSON.stringify(positionData));
+    console.log(`위치 저장됨: ${JSON.stringify(positionData)}`);
+  } else {
+    console.warn(`${elementId}가 존재하지 않습니다.`);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const hash = window.location.hash;
+
+  if (hash.startsWith('#scrollTo=')) {
+    const position = parseInt(hash.replace('#scrollTo=', ''), 10);
+    if (!isNaN(position)) {
+      window.scrollTo(0, position);
+    }
+  }
+});
+
+
+
+//아침저녁시편필터보기
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const morningId = params.get('morningId');
+  const eveningId = params.get('eveningId');
+  const hash = window.location.hash.substring(1);
+
+  let target = null;
+
+  if (morningId) {
+    target = document.querySelector(`[data-morning-id="${morningId}"]`);
+  } else if (eveningId) {
+    target = document.querySelector(`[data-evening-id="${eveningId}"]`);
+  } else if (hash) {
+    target = document.getElementById(hash);
+  }
+  if (target) {
+    target.scrollIntoView();
+    //target.scrollIntoView({ behavior: "smooth" });   이 부분을 위처럼 바꾸거나 "smooth" 대신 "auto" 로 바꾼다 
+  }
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.querySelector('.navbar');
@@ -399,40 +502,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname;
   const filename = path.split('/').pop();  // ex) 'morning-prayer.html'
 
-  // ✅ 기본 색상 - 검색과정 부분
-  let themeColor = '#183b5c'; 
-
-  // ✅ 색상 그룹 정의
-  const colorRules = {
-    //시작화면
-    green: ['index.html'], 
-    //기도서 예식부분
-    red: [
-      'morning-prayer.html', 'evening-prayer.html', 'noonday-prayer.html', 'compline-prayer.html',
-      'ucharist-form1.html', 'ucharist-form2.html', 'baptism.html', 'reconciliation.html',
-      'anointing-sick.html', 'commendatory-prayer.html', 'prayer-for-dead.html', 'coffin-prayer.html',
-      'departure-prayer.html', /*'cremate-prayer.html', 'burial-prayer.html',*/ 'enshrining-prayer.html',
-      'reception.html', 'vestry.html', 'maternity.html','matrimony.html', 'memorial-prayer.html',
-      /*'non-believer.html',*/ 'brief-prayer.html', 'blessing.html'
-    ],
-    //특정문 부분
-    purple: [
-      'collect-text.html', 'canticle-text.html', 'lesson1-text.html', /*non-believer-lesson.html,*/
-      'lesson2-text.html',  'prayer-text.html', 'psalm-text.html', 'proper-text.html',
-      'anointing-sick-lesson', 'baptism-lesson', 'matrimony-lesson', 'memorial-prayer-lesson', 'prayer-for-dead-lesson'
-    ]
+  // 파일 이름에 따라 테마 색상을 미리 정의
+  const themeMap = {
+    'index.html': '#228b22',
+    'morning-prayer.html': '#a92103',
+    'evening-prayer.html': '#a92103',
+    'noonday-prayer.html': '#a92103',
+    'compline-prayer.html': '#a92103',
+    'ucharist-form1.html': '#a92103',
+    'ucharist-form2.html': '#a92103',
+    'baptism.html': '#a92103',
+    'reconciliation.html': '#a92103',
+    'anointing-sick.html': '#a92103',
+    'commendatory-prayer.html': '#a92103',
+    'prayer-for-dead.html': '#a92103',
+    'coffin-prayer.html': '#a92103',
+    'departure-prayer.html': '#a92103',
+    'cremate-prayer.html': '#a92103',
+    'burial-prayer.html': '#a92103',
+    'enshrining-prayer.html': '#a92103',
+    'reception.html': '#a92103',
+    'vestry.html': '#a92103',
+    'maternity.html': '#a92103',
+    'memorial-prayer.html': '#a92103',
+    'non-believer.html': '#a92103',
+    'brief-prayer.html': '#a92103',
+    'blessing.html': '#a92103',   // 필요 시 계속 추가
+    'collect-text.html': '#650a9e',
+    'canticle-text.html': '#650a9e',
+    'lesson1-text.html': '#650a9e',
+    'lesson2-text.html': '#650a9e',
+    'prayer-text.html': '#650a9e',
+    'psalm-text.html': '#650a9e',
+    'proper-text.html': '#650a9e'
   };
 
-  // ✅ 색상 결정
-  if (!filename || colorRules.green.includes(filename)) {
-    themeColor = '#228b22'; // green
-  } else if (colorRules.red.includes(filename)) {
-    themeColor = '#a92103'; // red
-  } else if (colorRules.purple.includes(filename)) {
-    themeColor = '#650a9e'; // purple
+  // 기본 색상
+  let themeColor = '#183b5c';
+
+  // index 파일일 경우 or 루트(/)
+  if (!filename || filename === 'index.html') {
+    themeColor = themeMap['index.html'];
+  } else if (themeMap[filename]) {
+    themeColor = themeMap[filename];
   }
 
-  // ✅ 색상 적용
   if (navbar) navbar.style.backgroundColor = themeColor;
   if (sideMenu) sideMenu.style.backgroundColor = themeColor;
   if (closeBtn) closeBtn.style.color = 'white';
@@ -476,9 +590,11 @@ window.goToRememberedLesson2 = function () {
 };
 
 
+
 /*앱다운 설치, 앱아이콘 설치*/
-/*
+
 let deferredPrompt = null;
+
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('📦 beforeinstallprompt 발생');
   e.preventDefault();
@@ -515,70 +631,10 @@ function installPWA() {
 window.addEventListener('appinstalled', () => {
   alert("✅ 성공회 기도서 앱이 설치되었습니다!");
 });
-*/
 
 
-/* ================================
-   ✅ 성공회 기도서 PWA 설치 스크립트
-   ================================ */
-
-let deferredPrompt = null;
-
-// --- 1️⃣ 설치 안내 이벤트 (beforeinstallprompt) ---
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('📦 beforeinstallprompt 발생');
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // 메뉴 생성 후 버튼 표시
-  setTimeout(() => {
-    const installBtn = document.getElementById('installPwa');
-    if (installBtn) {
-      installBtn.style.display = 'block';
-      console.log('✅ 설치 버튼 표시됨');
-    } else {
-      console.warn('❗ installPwa 버튼을 찾을 수 없습니다.');
-    }
-  }, 100);
-});
-
-// --- 2️⃣ 설치 버튼 클릭 시 동작 ---
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((result) => {
-      if (result.outcome === 'accepted') {
-        console.log("✅ 사용자 설치 수락");
-      } else {
-        console.log("❌ 사용자 설치 거부");
-      }
-      deferredPrompt = null;
-    });
-  } else {
-    alert("이미 설치되었거나 설치 조건이 충족되지 않았습니다.");
-  }
-}
-
-// --- 3️⃣ 설치 완료 이벤트 (한 번만 표시되게) ---
-if (!window._kbcpAppInstalledListener) {
-  window.addEventListener('appinstalled', () => {
-    console.log("📱 appinstalled 이벤트 발생");
-
-    // 중복 알림 방지 (localStorage 기반)
-    if (!localStorage.getItem('kbcpInstalled')) {
-      alert("✅ 성공회 기도서 앱이 설치되었습니다!");
-      localStorage.setItem('kbcpInstalled', 'true');
-    }
-  });
-
-  // 리스너 중복 등록 방지
-  window._kbcpAppInstalledListener = true;
-}
-
-
-
-/* 이 부분은 성찬기도1 예식문 외에서 아코디언 기능을 쓸 때 필요함*/
 document.addEventListener("DOMContentLoaded", function () {
+  // 1️⃣ 성찬기도 페이지에서는 공통 아코디언 로직 실행 안 함
   if (location.pathname.includes("ucharist-form1")) return;
 
   const headers = document.querySelectorAll(".accordion-header");
