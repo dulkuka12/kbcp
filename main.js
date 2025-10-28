@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// text파일에서 예문으로 돌아갈 때 현재 화면 기억, lesson1-text와 lesson2-text가 같은 idPrefix에 'lesson'을 쓰는 것 주의.
 function rememberClosest(idPrefix, storageKey, fileName) {
   const headings = document.querySelectorAll(`div.subtitle[id^="${idPrefix}"]`);
   const scrollY = window.scrollY;
@@ -439,6 +438,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
+/*
 function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -473,6 +476,54 @@ window.goToRememberedLesson1 = function () {
 window.goToRememberedLesson2 = function () {
   goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
 };
+
+*/
+
+
+
+function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
+  const rawData = localStorage.getItem(storageKey);
+  if (rawData) {
+    try {
+      const parsed = JSON.parse(rawData);
+      if (parsed.url) {
+        const match = parsed.url.match(/#(lesson\d+)/);
+        if (match && match[1]) {
+          const lessonId = match[1];
+          // ✅ 항상 절대경로로 이동 (SW 스코프 안)
+          window.location.href = `/kbcp/${fallbackFile}?lessonId=${lessonId}`;
+        } else {
+          // ✅ 기존 저장된 URL도 절대경로로 보정
+          const absoluteUrl = parsed.url.startsWith("/kbcp/")
+            ? parsed.url
+            : `/kbcp/${parsed.url.replace(/^\//, "")}`;
+          window.location.href = absoluteUrl;
+        }
+      } else {
+        alert(missingMessage);
+      }
+    } catch (e) {
+      console.error("책갈피 데이터 파싱 오류:", e);
+      alert(missingMessage);
+    }
+  } else {
+    alert(missingMessage);
+  }
+}
+
+
+// 아침기도 정과표
+window.goToRememberedLesson1 = function () {
+  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표가 없습니다.');
+};
+
+// 성찬례 정과표
+window.goToRememberedLesson2 = function () {
+  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
+};
+
+
+
 
 
 /*앱다운 설치, 앱아이콘 설치*/
