@@ -152,5 +152,3 @@ self.addEventListener("message", (event) => {
   }
 });
 
-
-
