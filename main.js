@@ -410,9 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
       'morning-prayer.html', 'evening-prayer.html', 'noonday-prayer.html', 'compline-prayer.html',
       'ucharist-form1.html', 'ucharist-form2.html', 'baptism.html', 'reconciliation.html',
       'anointing-sick.html', 'commendatory-prayer.html', 'prayer-for-dead.html', 'coffin-prayer.html',
-      'departure-prayer.html', /*'cremate-prayer.html', 'burial-prayer.html',*/ 'enshrining-prayer.html',
+      'departure-prayer.html', 'cremate-prayer.html', 'burial-prayer.html', 'enshrining-prayer.html',
       'reception.html', 'vestry.html', 'maternity.html','matrimony.html', 'memorial-prayer.html',
-      /*'non-believer.html',*/ 'brief-prayer.html', 'blessing.html'
+      'brief-prayer.html', 'blessing.html'
     ],
     //특정문 부분
     purple: [
@@ -435,9 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sideMenu) sideMenu.style.backgroundColor = themeColor;
   if (closeBtn) closeBtn.style.color = 'white';
 });
-
-
-
 
 
 
