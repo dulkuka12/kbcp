@@ -1,7 +1,7 @@
 // service-worker.js
 // 1) 캐시 이름은 앱별 프리픽스로 완전히 분리
 const CACHE_PREFIX = "kbcp-";
-const CACHE_VERSION = "v2025-10-30-01";
+const CACHE_VERSION = "v2025-12-13-01";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 // 2) kbcp 전용 파일만 절대경로로 명시
@@ -151,4 +151,5 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+
 
