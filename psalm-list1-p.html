@@ -33,7 +33,7 @@
 
       buttons.forEach((btnInfo) => {
         const btn = document.createElement('button');
-        btn.textContent = textFormatter(btnInfo) + '편';
+        btn.textContent = textFormatter(btnInfo);
 
         // ✅ grid4에서 들어왔음을 표시
         btn.onclick = function () {
