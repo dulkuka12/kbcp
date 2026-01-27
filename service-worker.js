@@ -1,7 +1,7 @@
 // service-worker.js
 // 1) 캐시 이름은 앱별 프리픽스로 완전히 분리
 const CACHE_PREFIX = "kbcp-";
-const CACHE_VERSION = "v2026-01-16-10";
+const CACHE_VERSION = "v2026-01-27-10";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 // 2) kbcp 전용 파일만 절대경로로 명시
@@ -15,7 +15,7 @@ const CACHE_FILES = [
   "/kbcp/blessing-artifacts-text.html",
   "/kbcp/blessing.html",
   "/kbcp/brief-prayer.html",
-//  "/kbcp/burial-prayer.html",
+  "/kbcp/burial-prayer.html",
   "/kbcp/coffin-prayer.html",
   "/kbcp/collect-list-p.html",
   "/kbcp/collect-list.html",
@@ -24,7 +24,7 @@ const CACHE_FILES = [
   "/kbcp/commendatory-prayer.html",
   "/kbcp/compline-prayer.html",
   "/kbcp/creeds-text.html",
-//  "/kbcp/cremate-prayer.html",
+  "/kbcp/cremate-prayer.html",
   "/kbcp/daily-office-select.html",
   "/kbcp/departure-prayer.html",
   "/kbcp/enshrining-prayer.html",
@@ -56,8 +56,8 @@ const CACHE_FILES = [
   "/kbcp/memorial-prayer-lesson.html",
   "/kbcp/memorial-prayer.html",
   "/kbcp/morning-prayer.html",
-//  "/kbcp/non-believer-lesson.html",
-//  "/kbcp/non-believer.html",
+  "/kbcp/non-believer-lesson.html",
+  "/kbcp/non-believer.html",
   "/kbcp/noonday-prayer.html",
   "/kbcp/outline-list.html",
   "/kbcp/outline-text.html",
@@ -151,5 +151,6 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+
 
 
