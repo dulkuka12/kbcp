@@ -16,7 +16,7 @@
 <body>
   <main class="content">
 
-    <button class="sub-button fixed-bottom-left" onclick="rememberAllProperBookmarks()">책갈피 저장</button>
+    <button class="sub-button fixed-bottom-left" onclick="rememberAllProperBookmarks()">책갈피</button>
 
     <div class="big-title" id="section1">대림1주부터-성탄전까지</div>
     <div class="subtitle" id="section1-proper1">죄의고백</div>
@@ -624,7 +624,7 @@
 
 <script>
 
-  /* 🔹 성찬례 특정문 전체 책갈피 저장 */
+  /* 🔹 성찬례 특정문 절기 선택하기*/
   function rememberAllProperBookmarks() {
     const scrollY = window.scrollY;
     let currentSection = null;
@@ -639,13 +639,13 @@
     });
 
     if (!currentSection) return;
-
+/*
     // 섹션이 숨겨져 있다면 필터링 중으로 간주
     if (currentSection.style.display === 'none') {
       alert("⚠️ 필터링 중에는 저장할 수 없습니다.\n특정문 전체 보기에서만 저장할 수 있습니다.");
       return;
     }
-
+*/
     const sectionId = currentSection.id;
     const sectionTitle = currentSection.textContent.trim();
 
@@ -751,5 +751,6 @@
 </script>
 
 </body>
+
 
 </html>
