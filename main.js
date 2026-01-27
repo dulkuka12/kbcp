@@ -205,44 +205,6 @@ function updateProperBookmarkLabels() {
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 
-/*
-function goToProperBookmark(index) {
-  const data = localStorage.getItem(`rememberedProper${index}`);
-  if (data) {
-    const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
-    if (path && targetId) {
-      // 쿼리로 full ID 전달
-      location.href = `${path}?proper=${targetId}#${targetId}`;
-    }
-  } else {
-    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
-  }
-}
-
-
-function updateProperBookmarkLabels() {
-  for (let i = 1; i <= 7; i++) {
-    const buttons = document.querySelectorAll(`#bookmarkProper${i}`);
-    const data = localStorage.getItem(`rememberedProper${i}`);
-    const label = data ? (() => {
-      try {
-        return JSON.parse(data).label || `책갈피 ${String.fromCharCode(64 + i)}`;
-      } catch {
-        return `책갈피 ${String.fromCharCode(64 + i)}`;
-      }
-    })() : `책갈피 ${String.fromCharCode(64 + i)}`;
-
-    buttons.forEach(btn => {
-      btn.textContent = label;
-    });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
-window.addEventListener('pageshow', updateProperBookmarkLabels);
-*/
-
-
 
 
 function clearAllBookmarks() {
@@ -476,46 +438,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/*
-function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
-  const rawData = localStorage.getItem(storageKey);
-  if (rawData) {
-    try {
-      const parsed = JSON.parse(rawData);
-      if (parsed.url) {
-        const match = parsed.url.match(/#(lesson\d+)/);
-        if (match && match[1]) {
-          const lessonId = match[1];
-          window.location.href = `${fallbackFile}?lessonId=${lessonId}`;
-        } else {
-          window.location.href = parsed.url;
-        }
-      } else {
-        alert(missingMessage);
-      }
-    } catch (e) {
-      console.error("책갈피 데이터 파싱 오류:", e);
-      alert(missingMessage);
-    }
-  } else {
-    alert(missingMessage);
-  }
-}
-
-// 아침기도 정과표
-window.goToRememberedLesson1 = function () {
-  goToRememberedLessonGeneric('rememberedLesson1', 'lesson1-text.html', '기억된 성무일과 정과표가 없습니다.');
-};
-
-// 성찬례 정과표
-window.goToRememberedLesson2 = function () {
-  goToRememberedLessonGeneric('rememberedLesson2', 'lesson2-text.html', '기억된 성찬례 정과표가 없습니다.');
-};
-
-*/
-
-
-
 function goToRememberedLessonGeneric(storageKey, fallbackFile, missingMessage) {
   const rawData = localStorage.getItem(storageKey);
   if (rawData) {
@@ -558,49 +480,6 @@ window.goToRememberedLesson2 = function () {
 };
 
 
-
-
-
-/*앱다운 설치, 앱아이콘 설치*/
-/*
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('📦 beforeinstallprompt 발생');
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // 메뉴가 삽입된 뒤 버튼 찾기 (메뉴 생성 이후를 보장)
-  setTimeout(() => {
-    const installBtn = document.getElementById('installPwa');
-    if (installBtn) {
-      installBtn.style.display = 'block';
-      console.log('✅ 설치 버튼 표시됨');
-    } else {
-      console.warn('❗ installPwa 버튼을 찾을 수 없습니다.');
-    }
-  }, 100);  // DOM 생성 직후이므로 약간의 여유시간
-});
-
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((result) => {
-      if (result.outcome === 'accepted') {
-        console.log("✅ 사용자 설치 수락");
-      } else {
-        console.log("❌ 사용자 설치 거부");
-      }
-      deferredPrompt = null;
-    });
-  } else {
-    alert("이미 설치되었거나 설치 조건이 충족되지 않았습니다.");
-  }
-}
-// 설치 완료 후 한 번만 실행되는 메시지
-window.addEventListener('appinstalled', () => {
-  alert("✅ 성공회 기도서 앱이 설치되었습니다!");
-});
-*/
 
 
 /* ================================
@@ -687,6 +566,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
 
