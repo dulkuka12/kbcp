@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'anointing-sick.html', 'commendatory-prayer.html', 'prayer-for-dead.html', 'coffin-prayer.html',
       'departure-prayer.html', 'cremate-prayer.html', 'burial-prayer.html', 'enshrining-prayer.html',
       'reception.html', 'vestry.html', 'maternity.html','matrimony.html', 'memorial-prayer.html',
-      'brief-prayer.html', 'blessing.html'
+      'non-believer.html', 'brief-prayer.html', 'blessing.html'
     ],
     //특정문 부분
     purple: [
@@ -687,6 +687,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
 
