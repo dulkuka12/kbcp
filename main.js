@@ -169,6 +169,42 @@ document.addEventListener('DOMContentLoaded', updateAllBookmarkButtons);
 window.addEventListener('pageshow', updateAllBookmarkButtons);
 
 
+
+function goToProperBookmark(index) {
+  const data = localStorage.getItem(`rememberedProper${index}`);
+  if (data) {
+    const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
+    if (path && targetId) {
+      // 쿼리로 full ID 전달
+      location.href = `${path}?proper=${targetId}#${targetId}`;
+    }
+  } else {
+    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
+  }
+}
+
+
+function updateProperBookmarkLabels() {
+  for (let i = 1; i <= 7; i++) {
+    const buttons = document.querySelectorAll(`#bookmarkProper${i}`);
+    const data = localStorage.getItem(`rememberedProper${i}`);
+    const label = data ? (() => {
+      try {
+        return JSON.parse(data).label || `책갈피 ${String.fromCharCode(64 + i)}`;
+      } catch {
+        return `책갈피 ${String.fromCharCode(64 + i)}`;
+      }
+    })() : `책갈피 ${String.fromCharCode(64 + i)}`;
+
+    buttons.forEach(btn => {
+      btn.textContent = label;
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
+window.addEventListener('pageshow', updateProperBookmarkLabels);
+
 /*
 function goToProperBookmark(index) {
   const data = localStorage.getItem(`rememberedProper${index}`);
@@ -205,42 +241,6 @@ function updateProperBookmarkLabels() {
 document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
 window.addEventListener('pageshow', updateProperBookmarkLabels);
 */
-
-function goToProperBookmark(index) {
-  const data = localStorage.getItem(`rememberedProper${index}`);
-  if (data) {
-    const { path, targetId } = JSON.parse(data); // targetId = section1-proper3 처럼 되어 있어야 함
-    if (path && targetId) {
-      // 쿼리로 full ID 전달
-      location.href = `${path}?proper=${targetId}#${targetId}`;
-    }
-  } else {
-    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
-  }
-}
-
-
-function updateProperBookmarkLabels() {
-  for (let i = 1; i <= 7; i++) {
-    const buttons = document.querySelectorAll(`#bookmarkProper${i}`);
-    const data = localStorage.getItem(`rememberedProper${i}`);
-    const label = data ? (() => {
-      try {
-        return JSON.parse(data).label || `책갈피 ${String.fromCharCode(64 + i)}`;
-      } catch {
-        return `책갈피 ${String.fromCharCode(64 + i)}`;
-      }
-    })() : `책갈피 ${String.fromCharCode(64 + i)}`;
-
-    buttons.forEach(btn => {
-      btn.textContent = label;
-    });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', updateProperBookmarkLabels);
-window.addEventListener('pageshow', updateProperBookmarkLabels);
-
 
 
 
@@ -687,5 +687,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
