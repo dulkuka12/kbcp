@@ -179,7 +179,7 @@ function goToProperBookmark(index) {
       location.href = `${path}?proper=${targetId}#${targetId}`;
     }
   } else {
-    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다.`);
+    alert(`책갈피 ${String.fromCharCode(64 + index)}에는 저장된 내용이 없습니다. 맨 위 특정문 [절기선택버튼]에서 절기를 선택해주세요`);
   }
 }
 
