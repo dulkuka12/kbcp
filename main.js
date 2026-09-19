@@ -495,19 +495,23 @@ function updateStartInstallButton() {
   const btn = document.getElementById('startInstallBtn');
   if (!btn) return;
 
-  if (
-    isStandaloneMode() ||
-    localStorage.getItem('kbcpInstalled') === 'true'
-  ) {
+  // 현재 설치된 앱(PWA)으로 실행 중인 경우
+  if (isStandaloneMode()) {
     btn.textContent = '설치됨';
     btn.disabled = true;
-  } else if (deferredPrompt) {
+    return;
+  }
+
+  // 브라우저가 PWA 설치 가능하다고 알려준 경우
+  if (deferredPrompt) {
     btn.textContent = '앱 설치';
     btn.disabled = false;
-  } else {
-    btn.textContent = '앱 설치';
-    btn.disabled = true;
+    return;
   }
+
+  // 아직 beforeinstallprompt 이벤트를 기다리는 상태
+  btn.textContent = '앱 설치';
+  btn.disabled = true;
 }
 
 function openKbcpMenu() {
@@ -542,12 +546,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 window.addEventListener('appinstalled', () => {
-  localStorage.setItem('kbcpInstalled', 'true');
   deferredPrompt = null;
   updateStartInstallButton();
 
   alert('성공회 기도서 앱이 설치되었습니다!');
 });
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('startKbcpBtn');
