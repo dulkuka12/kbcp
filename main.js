@@ -224,13 +224,6 @@ function clearAllBookmarks() {
     'bookmarkPsalmButton': '책갈피',
     'bookmarkLessonButton1': '책갈피',
     'bookmarkLessonButton2': '책갈피',
-    'bookmarkProper1': '책갈피A',
-    'bookmarkProper2': '책갈피B',
-    'bookmarkProper3': '책갈피C',
-    'bookmarkProper4': '책갈피D',
-    'bookmarkProper5': '책갈피E',
-    'bookmarkProper6': '책갈피F',
-    'bookmarkProper7': '책갈피G',
     'bookmarkCanticleButton1': '책갈피1',
     'bookmarkCanticleButton2': '책갈피2',
     'bookmarkCollectButton1': '책갈피1',
@@ -238,6 +231,13 @@ function clearAllBookmarks() {
     'bookmarkPrayerButton1': '책갈피1',
     'bookmarkPrayerButton2': '책갈피2',
     'bookmarkPrayerButton3': '책갈피3',
+    'bookmarkProper1': '책갈피A',
+    'bookmarkProper2': '책갈피B',
+    'bookmarkProper3': '책갈피C',
+    'bookmarkProper4': '책갈피D',
+    'bookmarkProper5': '책갈피E',
+    'bookmarkProper6': '책갈피F',
+    'bookmarkProper7': '책갈피G',
   };
 
   for (const [id, text] of Object.entries(defaultLabels)) {
@@ -337,7 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const sideMenuHTML = `
   <div id="sideMenu" class="side-menu">
-    <a href="javascript:void(0)" onclick="installPWA()" id="installPwa" style="display: none;">홈 화면에 설치</a>
     <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">사용안내</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">앱설치 방법</a>
@@ -481,63 +480,92 @@ window.goToRememberedLesson2 = function () {
 
 
 
-
 /* ================================
-   ✅ 성공회 기도서 PWA 설치 스크립트
+   성공회 기도서 시작화면 / PWA 설치
    ================================ */
 
 let deferredPrompt = null;
 
-// --- 1️⃣ 설치 안내 이벤트 (beforeinstallprompt) ---
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('📦 beforeinstallprompt 발생');
-  e.preventDefault();
-  deferredPrompt = e;
+function isStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         window.navigator.standalone === true;
+}
 
-  // 메뉴 생성 후 버튼 표시
-  setTimeout(() => {
-    const installBtn = document.getElementById('installPwa');
-    if (installBtn) {
-      installBtn.style.display = 'block';
-      console.log('✅ 설치 버튼 표시됨');
-    } else {
-      console.warn('❗ installPwa 버튼을 찾을 수 없습니다.');
-    }
-  }, 100);
-});
+function updateStartInstallButton() {
+  const btn = document.getElementById('startInstallBtn');
+  if (!btn) return;
 
-// --- 2️⃣ 설치 버튼 클릭 시 동작 ---
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((result) => {
-      if (result.outcome === 'accepted') {
-        console.log("✅ 사용자 설치 수락");
-      } else {
-        console.log("❌ 사용자 설치 거부");
-      }
-      deferredPrompt = null;
-    });
+  if (
+    isStandaloneMode() ||
+    localStorage.getItem('kbcpInstalled') === 'true'
+  ) {
+    btn.textContent = '설치됨';
+    btn.disabled = true;
+  } else if (deferredPrompt) {
+    btn.textContent = '앱 설치';
+    btn.disabled = false;
   } else {
-    alert("이미 설치되었거나 설치 조건이 충족되지 않았습니다.");
+    btn.textContent = '앱 설치';
+    btn.disabled = true;
   }
 }
 
-// --- 3️⃣ 설치 완료 이벤트 (한 번만 표시되게) ---
-if (!window._kbcpAppInstalledListener) {
-  window.addEventListener('appinstalled', () => {
-    console.log("📱 appinstalled 이벤트 발생");
-
-    // 중복 알림 방지 (localStorage 기반)
-    if (!localStorage.getItem('kbcpInstalled')) {
-      alert("✅ 성공회 기도서 앱이 설치되었습니다!");
-      localStorage.setItem('kbcpInstalled', 'true');
-    }
-  });
-
-  // 리스너 중복 등록 방지
-  window._kbcpAppInstalledListener = true;
+function openKbcpMenu() {
+  document.body.classList.remove('start-screen');
+  window.scrollTo(0, 0);
 }
+
+function installPWA() {
+  if (!deferredPrompt) {
+    updateStartInstallButton();
+    return;
+  }
+
+  deferredPrompt.prompt();
+
+  deferredPrompt.userChoice.then((result) => {
+    if (result.outcome === 'accepted') {
+      console.log('사용자 설치 수락');
+    } else {
+      console.log('사용자 설치 거부');
+    }
+
+    deferredPrompt = null;
+    updateStartInstallButton();
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  updateStartInstallButton();
+});
+
+window.addEventListener('appinstalled', () => {
+  localStorage.setItem('kbcpInstalled', 'true');
+  deferredPrompt = null;
+  updateStartInstallButton();
+
+  alert('성공회 기도서 앱이 설치되었습니다!');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const startBtn = document.getElementById('startKbcpBtn');
+  const installBtn = document.getElementById('startInstallBtn');
+
+  if (startBtn) {
+    startBtn.addEventListener('click', openKbcpMenu);
+  }
+
+  if (installBtn) {
+    installBtn.addEventListener('click', installPWA);
+  }
+
+  updateStartInstallButton();
+});
+
+window.addEventListener('pageshow', updateStartInstallButton);
+
 
 
 
