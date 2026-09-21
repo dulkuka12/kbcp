@@ -337,8 +337,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const sideMenuHTML = `
   <div id="sideMenu" class="side-menu">
-    <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('bcp-guide.html')">성공회기도서 안내</a>
+    <a href="javascript:void(0)" onclick="clearAllBookmarks()">책갈피 초기화</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('user-guide.html')">책갈피 사용안내</a>
     <a href="javascript:void(0)" onclick="closeMenuThenNavigate('install-guide.html')">앱설치 방법</a>
     ${settingsHTML}
