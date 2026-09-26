@@ -133,6 +133,9 @@ function showToast(message) {
 
 function setupSilentExit() {
   if (!isHomePage()) return;
+  // 시작버튼 화면에서만 종료 확인을 사용한다.
+  // 시작 후 메뉴 화면에서는 일반 뒤로가기로 시작화면에 먼저 돌아온다.
+  if (!document.body.classList.contains('start-screen')) return;
   if (window.__silentExitSet) return;
   window.__silentExitSet = true;
 
@@ -140,6 +143,15 @@ function setupSilentExit() {
 
   window.addEventListener('popstate', function () {
     if (!isHomePage()) return;
+
+    // 메뉴 화면에서 뒤로가기를 누르면 시작화면으로 복귀
+    if (!document.body.classList.contains('start-screen')) {
+      document.body.classList.add('start-screen');
+      backPressedOnce = false;
+      history.pushState(null, null, location.href);
+      window.scrollTo(0, 0);
+      return;
+    }
 
     if (backPressedOnce) {
       // 두 번째 뒤로가기 → 종료 허용
