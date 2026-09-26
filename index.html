@@ -147,6 +147,9 @@ function setupSilentExit() {
     // 메뉴 화면에서 뒤로가기를 누르면 시작화면으로 복귀
     if (!document.body.classList.contains('start-screen')) {
       document.body.classList.add('start-screen');
+      // 시작화면으로 돌아올 때는 종료 안내를 표시하지 않는다.
+      // 성가앱과 동일하게, 시작화면에서 다시 뒤로가기를 눌렀을 때
+      // 처음으로 "한 번 더 누르면 종료합니다."를 표시한다.
       backPressedOnce = false;
       history.pushState(null, null, location.href);
       window.scrollTo(0, 0);
