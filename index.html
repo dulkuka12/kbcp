@@ -87,68 +87,73 @@
   <script src="main.js" defer></script>
 
   <script>
-    
-let lastBackPress = 0;
-let toastTimer = null;
+  /**** 시작화면 / 메뉴화면 / 종료 제어 ****/
+  const params = new URLSearchParams(location.search);
+  const started = params.get("started") === "1";
 
-function isHomePage() {
-  const path = location.pathname;
-  return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
-}
-
-function showToast(message) {
-  let toast = document.getElementById('back-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'back-toast';
-    toast.style.position = 'fixed';
-    toast.style.bottom = '60px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.background = 'rgba(0, 0, 0, 0.8)';
-    toast.style.color = 'white';
-    toast.style.padding = '10px 20px';
-    toast.style.borderRadius = '20px';
-    toast.style.fontSize = '1em';
-    toast.style.lineHeight = '1.5em';
-    toast.style.maxWidth = '80%';
-    toast.style.whiteSpace = 'nowrap';
-    toast.style.zIndex = '9999';
-    toast.style.transition = 'opacity 0.3s';
-    toast.style.opacity = '0';
-    document.body.appendChild(toast);
+  // ?started=1 이면 실제 메뉴화면으로 표시
+  if (started) {
+    document.body.classList.remove("start-screen");
   }
-  toast.textContent = message;
-  toast.style.opacity = '1';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => (toast.style.opacity = '0'), 1500);
-}
 
-// 성가앱과 같은 방식으로 index.html의 뒤로가기를 한 곳에서 처리한다.
-history.pushState(null, null, location.href);
+  // 시작 버튼은 같은 화면의 class만 바꾸지 않고 실제 URL 이동을 만든다.
+  // 이렇게 해야 뒤로가기 때 브라우저가 시작화면(index.html)으로 확실히 돌아간다.
+  window.addEventListener("DOMContentLoaded", () => {
+    const startBtn = document.getElementById("startKbcpBtn");
+    if (startBtn) {
+      startBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        location.href = "index.html?started=1";
+      }, true);
+    }
+  });
 
-window.addEventListener('popstate', () => {
-  if (!isHomePage()) return;
+  // 종료 메시지는 시작화면에서만 성가앱과 같은 방식으로 처리
+  let lastBackPress = 0;
+  let toastTimer = null;
 
-  // 기도서 메뉴 화면에서는 먼저 시작화면으로만 돌아간다.
-  if (!document.body.classList.contains('start-screen')) {
-    document.body.classList.add('start-screen');
-    lastBackPress = 0;
+  function showToast(message) {
+    let toast = document.getElementById("back-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "back-toast";
+      toast.style.position = "fixed";
+      toast.style.bottom = "60px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.background = "rgba(0,0,0,.8)";
+      toast.style.color = "white";
+      toast.style.padding = "10px 20px";
+      toast.style.borderRadius = "20px";
+      toast.style.fontSize = "1em";
+      toast.style.whiteSpace = "nowrap";
+      toast.style.zIndex = "9999";
+      toast.style.opacity = "0";
+      toast.style.transition = "opacity .3s";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = "1";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.style.opacity = "0", 1500);
+  }
+
+  if (!started) {
+    window.addEventListener("popstate", () => {
+      const now = Date.now();
+      if (now - lastBackPress < 2000) {
+        history.back();
+      } else {
+        showToast("한 번 더 누르면 종료합니다.");
+        lastBackPress = now;
+        history.pushState(null, null, location.href);
+      }
+    });
+
+    // 시작화면의 뒤로가기 감지용 history 한 칸
     history.pushState(null, null, location.href);
-    window.scrollTo(0, 0);
-    return;
   }
-
-  // 시작화면에서는 성가앱과 동일하게 두 번 뒤로가기로 종료한다.
-  const now = Date.now();
-  if (now - lastBackPress < 2000) {
-    history.back();
-  } else {
-    showToast('한 번 더 누르면 종료합니다.');
-    lastBackPress = now;
-    history.pushState(null, null, location.href);
-  }
-});
 </script>
 
 </body>
