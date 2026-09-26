@@ -88,14 +88,13 @@
 
   <script>
     
-let backPressedOnce = false;
+let lastBackPress = 0;
+let toastTimer = null;
 
 function isHomePage() {
   const path = location.pathname;
   return path.endsWith('index.html') || path === '/' || path === '/kbcp/';
 }
-
-
 
 function showToast(message) {
   let toast = document.getElementById('back-toast');
@@ -108,73 +107,48 @@ function showToast(message) {
     toast.style.transform = 'translateX(-50%)';
     toast.style.background = 'rgba(0, 0, 0, 0.8)';
     toast.style.color = 'white';
-    toast.style.padding = '10px 20px'; // 높이 낮춤
+    toast.style.padding = '10px 20px';
     toast.style.borderRadius = '20px';
     toast.style.fontSize = '1em';
-    toast.style.lineHeight = '1.5em'; // 줄 간격 조절
-    toast.style.maxWidth = '80%'; // 화면 기준 최대폭
-    toast.style.whiteSpace = 'nowrap'; // 한 줄 고정
-    toast.style.overflow = 'hidden';
-    toast.style.textOverflow = 'ellipsis'; // 넘치면 ... 처리
+    toast.style.lineHeight = '1.5em';
+    toast.style.maxWidth = '80%';
+    toast.style.whiteSpace = 'nowrap';
     toast.style.zIndex = '9999';
     toast.style.transition = 'opacity 0.3s';
     toast.style.opacity = '0';
     document.body.appendChild(toast);
   }
-
   toast.textContent = message;
   toast.style.opacity = '1';
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-  }, 1500);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (toast.style.opacity = '0'), 1500);
 }
 
+// 성가앱과 같은 방식으로 index.html의 뒤로가기를 한 곳에서 처리한다.
+history.pushState(null, null, location.href);
 
-function setupSilentExit() {
+window.addEventListener('popstate', () => {
   if (!isHomePage()) return;
-  // 시작버튼 화면에서만 종료 확인을 사용한다.
-  // 시작 후 메뉴 화면에서는 일반 뒤로가기로 시작화면에 먼저 돌아온다.
-  if (!document.body.classList.contains('start-screen')) return;
-  if (window.__silentExitSet) return;
-  window.__silentExitSet = true;
 
-  history.pushState(null, null, location.href);
-
-  window.addEventListener('popstate', function () {
-    if (!isHomePage()) return;
-
-    // 메뉴 화면에서 뒤로가기를 누르면 시작화면으로 복귀
-    if (!document.body.classList.contains('start-screen')) {
-      document.body.classList.add('start-screen');
-      // 시작화면으로 돌아올 때는 종료 안내를 표시하지 않는다.
-      // 성가앱과 동일하게, 시작화면에서 다시 뒤로가기를 눌렀을 때
-      // 처음으로 "한 번 더 누르면 종료합니다."를 표시한다.
-      backPressedOnce = false;
-      history.pushState(null, null, location.href);
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (backPressedOnce) {
-      // 두 번째 뒤로가기 → 종료 허용
-      return;
-    }
-
-    // 첫 번째 뒤로가기 → 막고 토스트 메시지 표시
-    backPressedOnce = true;
-    showToast("한 번 더 누르면 종료합니다.");
+  // 기도서 메뉴 화면에서는 먼저 시작화면으로만 돌아간다.
+  if (!document.body.classList.contains('start-screen')) {
+    document.body.classList.add('start-screen');
+    lastBackPress = 0;
     history.pushState(null, null, location.href);
+    window.scrollTo(0, 0);
+    return;
+  }
 
-    setTimeout(() => {
-      backPressedOnce = false;
-    }, 2000);
-  });
-}
-
-window.addEventListener('load', setupSilentExit);
-window.addEventListener('pageshow', setupSilentExit);
-window.addEventListener('DOMContentLoaded', setupSilentExit);
+  // 시작화면에서는 성가앱과 동일하게 두 번 뒤로가기로 종료한다.
+  const now = Date.now();
+  if (now - lastBackPress < 2000) {
+    history.back();
+  } else {
+    showToast('한 번 더 누르면 종료합니다.');
+    lastBackPress = now;
+    history.pushState(null, null, location.href);
+  }
+});
 </script>
 
 </body>
